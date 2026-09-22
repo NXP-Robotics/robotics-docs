@@ -1,0 +1,73 @@
+# Flashing the Cortex-M RTOS Firmware
+
+This section describes how to flash the M7 RTOS firmware to NOR flash on the MR-NavQ95 using the **NXP-Robotics pyOCD fork**.
+
+For boot switch settings and connector locations, see [MR-NavQ95 Board Overview](hardware.md).
+
+---
+
+## Prerequisites
+
+- **Cortex-A image:** The Cortex-A Linux image must be flashed to the board before flashing the Cortex-M firmware. See [Flashing the Cortex-A Linux Image](flash-cortex-a.md).
+- **Host PC:** Ubuntu is required to run pyOCD. Other Linux distributions may work but are not tested.
+- **JTAG probe:** A JTAG debug probe (e.g. NXP MCU-Link or J-Link) must be connected between the host PC and the MR-NavQ95 JTAG connector before flashing.
+- **Firmware image:** Obtain the RTOS firmware as described in [Getting the Cortex-M RTOS Firmware](get-cortex-m-image.md).
+
+---
+
+## Steps
+
+### 1. Install the pyOCD Fork
+
+The i.MX95 target is not available in mainline pyOCD. Install the NXP-Robotics fork on your host PC:
+
+```sh
+git clone https://github.com/NXP-Robotics/pyOCD -b pr-imx95
+cd pyOCD
+python3 -m pip install .
+```
+
+> Tested on Python 3.10 (Python 3.9 also works).
+
+### 2. Prepare the Board
+
+1. Set the boot switches to the boot mode corresponding to the device where the Cortex-A image was written (eMMC or SD).
+2. Connect a **USB Type-C cable** from **DEBUG USB (J10)** on the MR-NavQ95 to your host PC. This exposes two serial consoles - one for Cortex-A, one for Cortex-M.
+3. Connect the **JTAG probe** between the host PC and the MR-NavQ95 JTAG connector (J7).
+4. Apply **9–52 V DC** to the power input connector **J9**.
+5. Open both serial consoles and **wait for the board to reach the Linux login prompt** before proceeding.
+
+### 3. Flash the M7 Image to NOR
+
+Run the following command on the host PC:
+
+```sh
+pyocd flash -t mimx95_cm7_mx25um --base-address 0x28020000 \
+    nxp_imx95_default.mcuboot.bin -f 10m
+```
+
+| Parameter | Value |
+|-----------|-------|
+| Target | `mimx95_cm7_mx25um` |
+| NOR base address | `0x28020000` |
+| Flash clock | `10m` (10 MHz) |
+
+> **Note:** Writing to NOR flash is not fully stable in the current release. **Retry the `pyocd flash` command until pyOCD reports it programmed 0 pages**, which confirms the flash contents match the binary.
+
+> **Note:** You may attempt to reduce the flash clock speed from 10 MHz down to 4 MHz (4m) if you encounter multiple (> 5 failures)
+
+> **Note:** In the unlikely event where the flashing fails with `flash init timed out [__main__]` multiple times, you **may** try to flash using the CM33 AP by following the following steps:
+
+> 1. Reboot the NavQ95 platform in Serial Downloader Mode, see [Serial Downloader mode (flash-cortex-a.md)]
+
+> 2. Write the image to NOR FLASH  via the M33 core with `pyocd flash -t mimx95_cm33_mx25um --base-address 0x28020000 nxp_imx95_default.mcuboot.bin -f 10m`
+
+> 3. Apply the same limitations as explained for the the CM7 direct write related to stability
+
+### 4. Reboot the Board and Open the M7 Console
+
+After reboot, the M7 RTOS shell is accessible from Linux on `/dev/ttynsh` via the serial console:
+
+```sh
+picocom /dev/ttynsh
+```

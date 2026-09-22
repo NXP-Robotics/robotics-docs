@@ -1,0 +1,107 @@
+# Camera Usage
+
+Tested cameras:
+
+1. imx219 (Raspberry Pi Camera Module 2)
+2. imx708 (Raspberry Pi Camera Module 3)
+3. EXPI-os08a20
+
+## Setup
+
+### Connect Camera Cable
+*Note: Inserting the cable in the wrong way will damage the camera or the board. Check carefully the images below.*
+
+1. imx219, imx708, imx477 <br>
+Both cameras are using the same connector (15 pins) and needs the 22 pins to 15 pins adapter (orange cable).<br>
+Both cameras are using the same cable orientation. 
+
+
+*imx708/imx219:*
+  
+
+```{image} resources/imx708_cable.jpg
+:alt: Cable orientation
+:width: 600px
+:align: center
+```
+
+
+
+
+*imx477 (needs lens | not built-in the module):*
+  
+
+```{image} resources/imx477_cable.jpg
+:alt: Cable orientation
+:width: 600px
+:align: center
+```
+
+
+
+*Cable type: same side pins.*
+
+2. EXPI-os08a20
+  
+
+```{image} resources/os08a20_cable.jpg
+:alt: Cable orientation
+:width: 600px
+:align: center
+```
+
+
+
+*Cable type: opposite or same side pins.*
+
+The OS08A20 uses a 22 pins connector directly, no adapter needed. Its connector has pins on top and bottom.<br>
+**!!!ALWAYS make sure to match pin 22 from the camera with pin 1 on the board!!!**
+
+
+### U-Boot Configuration
+In U-boot:
+```bash
+setenv csi_b2b imx95-navqb-csi_b2b-imx708.dtbo           # the specific dtbo for the used camera | or none if nothing connected
+setenv dsicsi_b2b imx95-navqb-dsicsi_b2b-disp-7inch.dtbo # the specific dtbo for the used camera | or none if nothing connected
+saveenv
+boot
+```
+
+Set the variable based on what connector are you using: DSICSI os CSI
+
+*Note: Remove the MR-NAVQ95E-CAM module to see connector name*
+
+  
+
+```{image} resources/csi_dsicsi_adapters.jpg
+:alt: CSI/DSICSI adapters
+:width: 600px
+:align: center
+```
+
+
+
+## Usage
+### RTSP Server + Client
+
+If no display is connected, use RTSP server to stream video to another device.
+Both devices must be in the same network (can be pinged each other).
+
+### Navq (RTSP Server)
+<b>For all cameras:</b>
+```bash
+export LIBCAMERA_PIPELINES_MATCH_LIST='nxp/neo,imx8-isi,uvcvideo'
+test-launch "libcamerasrc ! video/x-raw,format=NV12 ! videoconvert ! v4l2h264enc ! h264parse ! rtph264pay name=pay0 pt=96"
+```
+*Note: Different resolutions can be achieved by adding `,width=X,height=Y` to the video/x-raw caps, check the camera capabilities.*
+
+### External machine (RTSP Client)
+<b>1. Install GStreamer + Add-Ons</b>
+```bash
+sudo apt install -y gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav
+```
+
+<b>2. Connect to RTSP Stream</b>
+```bash
+gst-launch-1.0 rtspsrc location=rtsp://<board-ip>:8554/test latency=100 ! rtph264depay ! avdec_h264 ! autovideosink
+```

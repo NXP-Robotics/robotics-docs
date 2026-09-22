@@ -1,0 +1,14 @@
+Application Notes
+=================
+
+Feature- and peripheral-level application notes for the MR-NavQ95: the
+MIPI-CSI camera pipeline, the automotive Ethernet stack, and on-device AI on
+the eIQ Neutron NPU and the Kinara ARA-240 DNPU.
+
+.. toctree::
+   :maxdepth: 1
+
+   Camera <camera/index>
+   Ethernet <ethernet/index>
+   eIQ Neutron NPU <eiq-neutron-npu/index>
+   ARA-240 DNPU <ara-240-dnpu/index>

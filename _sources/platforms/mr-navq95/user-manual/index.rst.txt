@@ -1,0 +1,18 @@
+User Manual
+===========
+
+Bring up the MR-NavQ95-KIT: review the board hardware, get or build the
+Cortex-A Linux image and the Cortex-M RTOS firmware, flash them, and manage
+device-tree overlays.
+
+.. toctree::
+   :maxdepth: 1
+
+   Hardware Overview <hardware>
+   get-cortex-a-image
+   build-cortex-a-image
+   flash-cortex-a
+   get-cortex-m-image
+   flash-cortex-m
+   flash-image
+   dtb-overlays

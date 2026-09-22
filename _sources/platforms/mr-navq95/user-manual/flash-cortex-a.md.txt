@@ -1,0 +1,62 @@
+# Flashing the Cortex-A Linux Image
+
+This section describes how to flash the Linux image to the MR-NavQ95 eMMC or SD card using the **NXP Universal Update Utility (UUU)**.
+
+For boot switch settings and connector locations, see [MR-NavQ95 Board Overview](hardware.md).
+
+---
+
+## Prerequisites
+
+Before flashing, obtain the Linux image as described in [Getting the Cortex-A Linux Image](get-cortex-a-image.md).
+
+---
+
+## Steps
+
+### 1. Download UUU
+
+Download the latest UUU executable from the [mfgtools GitHub releases page](https://github.com/nxp-imx/mfgtools/releases):
+- **Windows:** download `uuu.exe`
+- **Linux:** download `uuu`
+
+For convenience, place the UUU executable in the same directory as the `.wic` image.
+
+### 2. Prepare the Board
+
+1. Connect a **USB Type-C cable** from **USB1 (J13)** on the MR-NavQ95 to your host PC. J13 is the Serial Download port used by UUU.
+2. Connect a **USB Type-C cable** from **DEBUG USB (J10)** on the MR-NavQ95 to your host PC. This exposes two serial consoles, which you will need in step 4 to monitor the boot output.
+3. Set the boot switches to **Serial Downloader** mode:
+   `SW2[1:4]` = `1001`
+4. Connect a **9–52 V DC power supply** to the power input connector **J9**.
+5. Verify the board is detected by UUU:
+
+    ```sh
+    ./uuu -lsusb
+    ```
+
+    You should see an NXP i.MX95 device listed. If the device is not detected, check the USB cable and boot switch settings.
+
+### 3. Flash the Image
+
+Navigate to the directory containing the `.wic` image and run UUU:
+
+```sh
+# Flash to eMMC
+./uuu -b emmc_all imx-image-robotics-imx95-navq.rootfs-<timestamp>.wic.zst
+# OR
+# Flash to SD card
+./uuu -b sd_all imx-image-robotics-imx95-navq.rootfs-<timestamp>.wic.zst
+```
+
+When flashing completes successfully, UUU will print `Done` and `Success 1`.
+
+### 4. Boot the Board
+
+1. Set the boot switches to match the media you flashed:
+   - **eMMC boot**: `SW2[1:4]` = `0101`
+   - **SD card boot**: `SW2[1:4]` = `1101`
+2. The DEBUG USB port exposes **two serial consoles** — one for the Cortex-A (Linux) and one for the Cortex-M (RTOS). Open both on your host PC at **115200 baud, 8N1**.
+3. Power-cycle the board and monitor the boot output in both consoles.
+
+Default Linux login: **user / user**

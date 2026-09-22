@@ -1,0 +1,12 @@
+# Flashing the MR-NavQ95
+
+The MR-NavQ95 has two types of images that can be flashed separately:
+
+| Domain | Description | Guide |
+|--------|-------------|-------|
+| **Cortex-A Linux image** | Full Linux root filesystem written to eMMC or SD card using UUU | [Flashing the Cortex-A Linux Image](flash-cortex-a.md) |
+| **Cortex-M RTOS firmware** | M7 RTOS firmware written to NOR flash using pyOCD | [Flashing the Cortex-M RTOS Firmware](flash-cortex-m.md) |
+
+> The Cortex-A must be flashed first, prior to flashing the Cortex-M.
+
+For boot switch settings and connector locations, see [MR-NavQ95 Board Overview](hardware.md).

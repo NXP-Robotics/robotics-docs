@@ -1,0 +1,29 @@
+# Getting the Cortex-M RTOS Firmware
+
+There are two ways to obtain the M7 RTOS firmware for the MR-NavQ95:
+
+## Option 1: Download the Pre-built Image
+
+Follow the [NXP Robotics SDK README](https://github.com/nxp-mobilerobotics/nxp-robotics-sdk) to set up the SDK and download the images. The Cortex-M firmware will be located at:
+
+```
+<west_topdir>/bin/navq95/realtime/
+├── nxp_imx95_default.mcuboot.bin   # TCM image, signed (use this for default deployment)
+└── nxp_imx95_ddr.bin               # DDR image, unsigned
+```
+
+> Use the **signed** `nxp_imx95_default.mcuboot.bin` for the default/TCM image — MCUboot verifies it on boot. The DDR image is intentionally unsigned.
+
+## Option 2: Build from Source
+
+Use the NXP Robotics SDK to build the RTOS firmware from source:
+
+```sh
+west sdk build --platform navq95 --stack px4
+```
+
+The output firmware will be located in the `build/` directory and also copied to `bin/navq95/realtime/`.
+
+---
+
+Once you have the firmware, proceed to [Flashing the Cortex-M RTOS Firmware](flash-cortex-m.md) to flash it to the board.

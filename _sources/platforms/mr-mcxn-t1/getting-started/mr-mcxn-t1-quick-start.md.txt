@@ -1,0 +1,73 @@
+# MR-MCXN-T1 — Deploy & Run Quick Start
+
+> Including the MR-MCXN-T1-OFLO, MR-MCXN-T1-GNSS and MR-MCXN-T1-IO shield variants.
+
+## Get the artifacts first
+
+Every platform assumes you already have the images — either downloaded or built with the SDK:
+
+```sh
+# prebuilt (fastest)
+west sdk download --platform <platform>      # lands in <west topdir>/bin/<platform>/
+
+# or build from source
+west sdk build    --platform <platform> [...]  # lands in <west topdir>/{build,bin}/...
+```
+
+- **Docker required.** Downloading and building are done inside a Docker container built from the SDK's `Dockerfile` — see the [NXP ROBOTICS SDK README](https://github.com/nxp-mobilerobotics/nxp-robotics-sdk) for how to set it up. All `west` commands are assumed to run inside that container.
+- The SDK **builds/downloads** images but does **not flash** them — deployment is done with each platform's native tool.
+- **Where do the artifacts land?** `<west topdir>` is your **west workspace root** — the directory containing `.west/`, created by `west init`. The `bin/` directory is created **next to** the `nxp-robotics-sdk/` clone, **not inside it**:
+
+```
+<west topdir>/
+├── .west/
+├── nxp-robotics-sdk/     <- the SDK clone (west init -l)
+├── build/                <- west sdk build intermediates
+└── bin/<platform>/       <- final artifacts land here
+```
+
+For MR-MCXN-T1 the platform is `mr-mcxn-t1`. Run `west sdk list` for the authoritative list.
+
+## What you flash
+
+Every MR-MCXN-T1 example is a **sysbuild** build producing *two* images. The bootloader is typically programmed once, and during normal development, only the application image needs to be updated.
+
+| Image | Build path | Absolute flash address |
+|-------|------------|------------------------|
+| MCUboot bootloader | `build/.../<app>/zephyr/zephyr.bin` | `0x10000000` (flash base = boot_partition) |
+| Signed application | `build/.../<app>/zephyr/zephyr.signed.bin` | `0x10014000` (flash base + slot0 offset 0x14000) |
+
+Collected copies also appear under `<west topdir>/bin/mr-mcxn-t1/<stack>/<shield>/<example>/` as `mcuboot.bin` and `zephyr.signed.bin`.
+
+> ⚠️ Flash the **signed** application (`zephyr.signed.bin`) at the **slot0** address `0x10014000`, not the raw `zephyr.bin` at flash base. MCUboot lives at flash base and chainloads the signed app in slot0. Writing an unsigned image at `0x10000000` will not boot.
+
+## Connect
+
+- USB cable to the **MCU-Link-MR** on-board probe (used for flash + debug).
+- For the sample's serial console, a **second** connection: the board's default console rides **USB CDC-ACM** on the MCXN947's native USB, enumerating as `/dev/ttyACM*` — separate from the probe's VCOM.
+
+## Flash with LinkServer
+
+1. **Flash the bootloader**
+
+   ```sh
+   LinkServer flash MCXN947 load --addr 0x10000000 mcuboot.bin
+   ```
+
+2. **Flash the signed app into slot0**
+
+   ```sh
+   LinkServer flash MCXN947 load --addr 0x10014000 zephyr.signed.bin
+   ```
+
+   Use the **absolute** address (flash base + slot offset), not the bare partition offset. On Windows the LinkServer path is e.g. `C:\NXP\LinkServer_26.6.137\LinkServer`.
+
+3. **Reset & watch the console**
+
+   ```sh
+   screen /dev/ttyACM0 115200      # or: minicom / tio / picocom
+   ```
+
+   MCUboot boots, validates the slot0 image, and chainloads it; sample output appears on the CDC-ACM console.
+
+> ⚠️ **Two gotchas:** (a) J-Link's connector does *not* fit some MR-MCXN-T1 units — use MCU-Link + LinkServer; (b) `LinkServer flash` has *no* remote mode, so run it on the host physically wired to the board (only its gdbserver is network-facing).

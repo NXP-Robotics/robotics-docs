@@ -1,0 +1,5 @@
+MR-ESC-AM32-MCXA133 -- User Manual
+==================================
+
+The **MR-ESC-AM32-MCXA133** is the AM32-based Electronic Speed Controller (ESC)
+motor-control platform of the NXP Mobile Robotics family (MCX A / AM32).

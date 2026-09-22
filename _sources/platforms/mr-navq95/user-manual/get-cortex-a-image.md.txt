@@ -1,0 +1,29 @@
+# Getting the Cortex-A Linux Image
+
+> **Host PC:** An Ubuntu PC is assumed for all steps on this page.
+
+There are two ways to obtain the Linux image for the MR-NavQ95:
+
+## Option 1: Download the Pre-built Image
+
+Follow the [NXP Robotics SDK README](https://github.com/nxp-mobilerobotics/nxp-robotics-sdk) to set up the SDK and download the images. The Cortex-A Linux image will be located at:
+
+```
+<west_topdir>/bin/navq95/ubuntu/imx-image-robotics-imx95-navq.rootfs-<timestamp>.wic.zst
+```
+
+## Option 2: Build from Source (Yocto)
+
+Build the image yourself using the Yocto build system. See [Building the Yocto Image for MR-NavQ95](build-cortex-a-image.md) for the full build instructions.
+
+The output image will be located in:
+
+```
+<yocto_dir>/build/tmp/deploy/images/imx95-navq/imx-image-robotics-imx95-navq.rootfs-<timestamp>.wic.zst
+```
+
+---
+
+> **Note:** The `.wic` image bundles the M7 Cortex-M firmware alongside the Linux root filesystem. By default, the M7 core runs **MCUboot** loaded directly from the core's TCM. To replace the M7 firmware with a custom RTOS image, see [Flashing the Cortex-M RTOS Firmware](flash-cortex-m.md).
+
+Once you have the image, proceed to [Flashing the Cortex-A Linux Image](flash-cortex-a.md) to flash it to the board.

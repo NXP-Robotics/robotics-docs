@@ -1,0 +1,82 @@
+# MR-Tropic — Deploy & Run Quick Start
+
+> MR-Tropic is a PX4/NuttX flight controller on an i.MXRT1064. Flash the **bootloader** and the **application** to external QSPI flash with **LinkServer** (MCU-Link / CMSIS-DAP). The two images go to fixed offsets in the RT1064 flash region.
+
+## Get the artifacts first
+
+Every platform assumes you already have the images — either downloaded or built with the SDK:
+
+```sh
+# prebuilt (fastest)
+west sdk download --platform <platform>      # lands in <west topdir>/bin/<platform>/
+
+# or build from source
+west sdk build    --platform <platform> [...]  # lands in <west topdir>/{build,bin}/...
+```
+
+- **Docker required.** Downloading and building are done inside a Docker container built from the SDK's `Dockerfile` — see the [NXP ROBOTICS SDK README](https://github.com/nxp-mobilerobotics/nxp-robotics-sdk) for how to set it up. All `west` commands are assumed to run inside that container.
+- The SDK **builds/downloads** images but does **not flash** them — deployment is done with each platform's native tool.
+- **Where do the artifacts land?** `<west topdir>` is your **west workspace root** — the directory containing `.west/`, created by `west init`. The `bin/` directory is created **next to** the `nxp-robotics-sdk/` clone, **not inside it**:
+
+```
+<west topdir>/
+├── .west/
+├── nxp-robotics-sdk/     <- the SDK clone (west init -l)
+├── build/                <- west sdk build intermediates
+└── bin/<platform>/       <- final artifacts land here
+```
+
+For MR-Tropic the platform is `tropic`. Run `west sdk list` for the authoritative list.
+
+## Artifacts
+
+- `<west topdir>/bin/tropic/nxp_mr-tropic_bootloader.bin` — bootloader (@ `0x70000000`)
+- `<west topdir>/bin/tropic/nxp_mr-tropic_default.bin` — application firmware (@ `0x70020000`)
+
+## Flash with LinkServer
+
+1. **Flash the bootloader**
+
+   ```sh
+   LinkServer flash MIMXRT1064xxxxA:EVK-MIMXRT1064 load \
+       --addr 0x70000000 nxp_mr-tropic_bootloader.bin
+   ```
+
+2. **Flash the application**
+
+   ```sh
+   LinkServer flash MIMXRT1064xxxxA:EVK-MIMXRT1064 load \
+       --addr 0x70020000 nxp_mr-tropic_default.bin
+   ```
+
+3. **Reset & run**
+
+   Reset the board; the bootloader chainloads the app at `0x70020000`.
+
+## Erase all flash (recovery)
+
+```sh
+LinkServer flash MIMXRT1064xxxxA:EVK-MIMXRT1064 erase
+```
+
+Use this to wipe the QSPI flash before a clean re-flash.
+
+## Zephyr
+
+The Tropic platform also publishes Zephyr sample images for board bring-up and peripheral checks:
+
+```
+<west topdir>/bin/tropic/zephyr/<sample>/zephyr.bin
+```
+
+where `<sample>` is any one of `hello_world`, `gpio`, `bmi08x_icm45686`, `bmm350`, `bmp390`, `pwmLED`, `can`, `sdcard`, `dhcpv4_client`, `usb`, `watchdog`, `rtc`.
+
+Flash one with the same LinkServer command, at the flash base:
+
+```sh
+LinkServer flash MIMXRT1064xxxxA:EVK-MIMXRT1064 load \
+    --addr 0x70000000 zephyr.bin
+```
+
+---
+_MR-Tropic uses hardware-verified LinkServer commands. Grounded in nxp-robotics-sdk 2026.07.0._

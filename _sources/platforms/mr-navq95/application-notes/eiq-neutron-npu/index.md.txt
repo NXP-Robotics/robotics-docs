@@ -1,0 +1,170 @@
+# eIQ Neutron NPU Setup Guide
+
+This guide provides the steps to set up the eIQ Neutron SDK and deploy a model on an
+NXP SoC with an integrated **eIQ Neutron NPU**. Unlike a discrete accelerator module,
+the Neutron NPU is embedded directly in the SoC (for example, i.MX 95), so there is no add-on hardware to install — the workflow centers on
+preparing a model on your host machine and deploying it to the target board.
+
+The examples in this guide use the **MR-NavQ95** board, which is based on the
+i.MX 95 SoC and its integrated Neutron NPU.
+
+This guide covers:
+
+- Prerequisites and host-side setup
+- Obtaining the eIQ Neutron SDK (SDK download or pip install)
+- Converting a model for the Neutron NPU with the `neutron-converter`
+- Deploying and benchmarking the model on the target
+
+## Prerequisites
+
+**Hardware:**
+
+- A target board with an integrated Neutron NPU. This guide uses the **MR-NavQ95** board (based on the i.MX 95 SoC) as the example.
+- Internet access on the host machine to download and install the SDK
+- 4 GB RAM or more, and a multi-core CPU on the host (recommended for reasonable conversion times)
+
+**Software:**
+
+- Host development machine running Linux or Windows
+- Python 3.8 or newer, with `pip`
+- NXP Yocto BSP flashed to the target board, matching the Neutron SDK version (see the compatibility tables in the Neutron SDK User Guide)
+
+## Obtain the eIQ Neutron SDK
+
+You can obtain the eIQ Neutron SDK in one of two ways. Use whichever fits your workflow.
+
+### Option A — Download the SDK archive from nxp.com
+
+1. Download the eIQ Neutron SDK from the NXP eIQ AI Development Environment page:
+
+   <https://www.nxp.com/design/design-center/software/eiq-ai-development-environment/eiq-toolkit-for-end-to-end-model-development-and-deployment:EIQ-TOOLKIT>
+
+2. Extract the downloaded SDK archive. The archive includes a `docs/` folder containing
+   the full documentation set. The most relevant document for this workflow is the
+   **Neutron Converter User Guide** (`docs/NeutronConverterUserGuide.md`), which details
+   the `neutron-converter` tool, its conversion stages, and all command-line options.
+
+   > **Tip:** For the best experience with tables and links, read the `.md` files in a
+   > Markdown viewer such as the built-in preview in Visual Studio Code (**Ctrl+Shift+V**),
+   > or directly on the Git server where they render automatically.
+
+### Option B — Install via pip (alternative)
+
+Alternatively, instead of downloading the SDK archive from nxp.com, you can install the
+eIQ Neutron SDK directly from the NXP eIQ package repository with `pip` (see
+[Host-Side Setup](#host-side-setup)). This is convenient for CI or scripted host
+environments. Note that the documentation set shipped in the archive's `docs/` folder is
+only available with Option A; when installing via pip, refer to the online documentation
+for the same references.
+
+## Host-Side Setup
+
+It is good practice to work inside a Python virtual environment.
+
+**Linux:**
+
+```bash
+python3 -m venv neutron-env
+source neutron-env/bin/activate
+```
+
+**Windows (PowerShell):**
+
+```powershell
+python -m venv neutron-env
+.\neutron-env\Scripts\Activate.ps1
+```
+
+> **Windows note:** If activation is blocked by the execution policy, run PowerShell as
+> Administrator once and execute:
+> `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
+
+If you chose **Option B** above (or want the converter available on your `PATH` regardless
+of how you obtained the SDK), install the eIQ Neutron SDK from the NXP eIQ package
+repository:
+
+```bash
+pip install eiq-neutron-sdk --index-url https://eiq.nxp.com/repository/
+```
+
+Verify the converter is available:
+
+```bash
+neutron-converter --help
+```
+
+> If the command is not found, ensure your virtual environment is activated and that the
+> Python `bin` (Linux) or `Scripts` (Windows) directory is on your `PATH`.
+
+## Convert a Model for the Neutron NPU
+
+The `neutron-converter` consumes a quantized (INT8) TFLite model and produces a custom
+TFLite model in which the operators supported by the NPU are grouped into `NeutronGraph`
+custom operators for on-NPU execution, while unsupported operators remain on the CPU.
+
+1. Check the available targets:
+
+   ```bash
+   neutron-converter --show-targets
+   ```
+
+2. Convert your quantized TFLite model for the target SoC. For the MR-NavQ95 board
+   (i.MX 95), use the `imx95` target:
+
+   ```bash
+   neutron-converter \
+     --input my_model_quantized.tflite \
+     --output my_model_converted.tflite \
+     --target imx95
+   ```
+
+   At minimum, the converter requires the target SoC and a quantized TFLite input model.
+
+   > **Note:** For full details on the conversion stages (optimize, extract, generate),
+   > minimum system requirements, and the complete list of command-line options,
+   > refer to the **Neutron Converter User Guide** (`docs/NeutronConverterUserGuide.md`)
+   > in the SDK archive.
+
+## Deploy and Benchmark on the Target
+
+1. Copy the converted model (`my_model_converted.tflite`) to the MR-NavQ95 board.
+
+2. Run the TensorFlow Lite `benchmark_model` application with the Neutron delegate. This
+   utility is part of the TensorFlow package included in the NXP Yocto BSP:
+
+   ```bash
+   /usr/bin/tensorflow-lite-2.19.0/examples/benchmark_model \
+     --graph=my_model_converted.tflite \
+     --external_delegate_path=/usr/lib/libneutron_delegate.so \
+     --enable_op_profiling=true \
+     --num_threads=5
+   ```
+
+3. In the output, operations executed via the `NeutronDelegate` node correspond to
+   workloads offloaded to the Neutron NPU; all remaining nodes run on the CPU. A high
+   percentage under the `NeutronDelegate` node means most of the computation is being
+   offloaded to the NPU.
+
+## Keep the Runtime and Converter in Sync
+
+Always keep the Neutron **driver**, **firmware**, and **converter** from the **same
+Neutron SDK version**. If the runtime binaries and the converted model are not aligned, a
+**microcode version mismatch** warning is printed and operation may be unreliable:
+
+```
+Microcode version mismatch! Neutron Driver is 3.1.0-0X359f358d but model converted with 3.0.1-0Xd5d7918e. Runtime (driver, firmware) should be aligned with converter
+```
+
+Refer to the SDK/BSP and SDK/MCUXpresso version compatibility tables in the
+**Neutron SDK User Guide** (`docs/NeutronSDKUserGuide.md`) to confirm the correct pairing,
+and to the same guide for the runtime update procedure if you need to upgrade the
+on-target driver, firmware, and delegate.
+
+## Further Documentation
+
+The following documents are located in the `docs/` folder of the eIQ Neutron SDK archive:
+
+1. Quick Start Guide: `docs/QuickStartGuide.md` — how to navigate the docs and deploy your first model.
+2. Neutron SDK User Guide: `docs/NeutronSDKUserGuide.md` — end-to-end deployment workflow, runtime update procedure, and version compatibility tables.
+3. Neutron Converter User Guide: `docs/NeutronConverterUserGuide.md` — full reference for the `neutron-converter` tool.
+4. eIQ AI Development Environment (SDK download): <https://www.nxp.com/design/design-center/software/eiq-ai-development-environment/eiq-toolkit-for-end-to-end-model-development-and-deployment:EIQ-TOOLKIT>

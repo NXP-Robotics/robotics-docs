@@ -1,0 +1,12 @@
+# System Solution Application Note
+
+This section holds the **System Solution Application Note** — the cross-platform,
+system-level document that explains how the NXP Robotics SDK components work together,
+the overall solution architecture, and end-to-end validation results and KPIs.
+
+It complements the per-platform User Manuals and per-function Application Notes under
+`platforms/` by describing integration across multiple boards rather than a single
+board (for example, the [MR-NavQ95 hardware overview](../../platforms/mr-navq95/user-manual/hardware.md)).
+
+> **Status:** Chaptering and content are in progress. This landing page is a placeholder
+> for the System Solution Application Note.

@@ -1,0 +1,65 @@
+# Building the Yocto Image for MR-NavQ95
+
+This section describes the steps to build the Yocto image for the MR-NavQ95 platform from source.
+
+## Prerequisites
+
+Before starting, ensure your host machine meets the following requirements:
+
+- **OS:** Ubuntu 22.04 or later (recommended)
+- **Disk space:** At least 300 GB of free space for a full Yocto build
+- **RAM:** 16 GB minimum recommended
+
+### 1. Install Required Host Packages
+
+Install the required host packages:
+
+```sh
+sudo apt-get install build-essential chrpath cpio debianutils diffstat file gawk \
+  gcc git iputils-ping libacl1 libcrypt-dev locales python3 python3-git python3-jinja2 \
+  python3-pexpect python3-pip python3-subunit socat texinfo unzip wget xz-utils zstd efitools
+```
+
+### 2. Install the Repo Tool
+
+Install the `repo` tool if not already present:
+
+1. Create a `bin` folder in your home directory and download `repo`:
+
+    ```sh
+    mkdir ~/bin
+    curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+    chmod a+x ~/bin/repo
+    ```
+
+2. Add `~/bin` to your `PATH` by appending the following line to your `~/.bashrc`:
+
+    ```sh
+    export PATH=~/bin:$PATH
+    ```
+
+## Steps
+
+### 1. Set Up the Yocto Project
+
+Create a working directory, initialize the manifest repository, and sync all required layers:
+
+```sh
+mkdir imx-yocto-bsp
+cd imx-yocto-bsp
+repo init -u https://github.com/nxp-robotics/robotics-linux-manifest.git -b robotics-0.7.0 -m imx-6.18.20-2.0.0_wrynose.xml
+repo sync
+```
+
+### 2. Build the Image
+
+Source the release setup script to configure the build environment, then kick off the BitBake build:
+
+```sh
+DISTRO=imx-desktop-xwayland MACHINE=imx95-navqdesktop source imx-setup-release.sh -b build
+bitbake imx-image-robotics
+```
+
+> **Note:** The build may take a significant amount of time depending on your host machine's resources. The output image will be located in `build/tmp/deploy/images/imx95-navq/`.
+
+Once the build completes, proceed to [Flashing the Cortex-A Linux Image](flash-cortex-a.md) to write the image to the board.

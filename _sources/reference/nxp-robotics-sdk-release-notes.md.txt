@@ -1,0 +1,239 @@
+# NXP Robotics SDK — Release Notes
+
+This document is the cumulative release-notes record for the NXP Robotics SDK. Each release is
+documented as a **self-contained entry** under [Releases](#releases), with the **newest release
+first**.
+
+---
+
+## About the Robotics SDK
+
+The NXP Robotics SDK provides validated software support across NXP robotics hardware platforms,
+organized into two software domains:
+
+- **Real-Time domain** — flight and motion-control firmware (PX4 on NuttX, Zephyr RTOS, ESC
+  firmware, System Manager, and the real-time control core).
+- **Compute domain (Linux / Application Processor)** — the application-processor software stack
+  (Linux BSP, U-Boot, ROS2, camera and vision pipeline, NPU inference, and connectivity).
+
+Each release entry below lists the supported platforms, the capabilities enabled per platform, the
+new features introduced, and the known limitations for that specific version.
+
+## How to read this document
+
+- **Releases** are listed newest-first. The latest release appears immediately below.
+- Every release entry follows the same fixed structure, so features and limitations can be compared
+  across versions.
+- The capability matrix in each entry reflects the state of that release only.
+
+---
+
+## Releases
+
+### v0.7.0
+
+#### Overview
+
+NXP Robotics SDK v0.7.0 delivers validated software support across **four robotics hardware
+platforms (MR-NavQ95, MR-VMU-Tropic, MR-MCXN-T1, MR-ESC-AM32-MCXA133)**, spanning both the
+Real-Time and Compute domains.
+
+- **Quick Start Guides** are provided for each supported platform.
+- **Platform binaries** are available for all four supported platforms.
+- **Test Plan and Test Report** are available for this release.
+
+#### Software domains
+
+**Real-Time domain (PX4, Zephyr, ESC, System Manager)**
+
+| Component | Description | Platforms |
+| --- | --- | --- |
+| PX4 Autopilot (NuttX) | Flight-control stack running on NuttX | MR-NavQ95 (real-time core), MR-VMU-Tropic |
+| Zephyr RTOS | Sensor and peripheral firmware, shield-node applications | MR-MCXN-T1 (+ shields), MR-VMU-Tropic |
+| ESC firmware (AM32) | Motor-control firmware; DShot / PWM protocols | MR-ESC-AM32-MCXA133 |
+| System Manager | Low-level platform management and resource partitioning | MR-NavQ95 |
+
+**Compute domain (Linux / Application Processor)**
+
+| Component | Description | Platforms |
+| --- | --- | --- |
+| Linux BSP | Kernel 6.18.20-2.0.0, device trees, drivers | MR-NavQ95 |
+| U-Boot | Bootloader | MR-NavQ95 |
+| ROS2 | ROS2 middleware, install scripts, camera / vision nodes | MR-NavQ95 |
+| Camera / Vision | MIPI-CSI camera pipeline | MR-NavQ95 |
+| NPU Inference | ARA240 and Neutron NPU inference | MR-NavQ95 |
+| Connectivity | SJA1110 Ethernet switch, Wi-Fi / Bluetooth, LTE modem | MR-NavQ95 |
+
+#### Software components & versions
+
+The following table lists the versions of the main software components integrated in this release.
+
+| Domain | Component | Version | Notes |
+| --- | --- | --- | --- |
+| — | NXP Robotics SDK | v0.7.0 | Overall release version |
+| Compute | Linux kernel / BSP | 6.18.20-2.0.0 | MR-NavQ95 |
+| Compute | Host OS | Ubuntu 24.04 LTS | Application-processor user space (MR-NavQ95) |
+| Compute | ROS2 |  0.11.0-1noble.20260614.091815 | ROS2 middleware and nodes |
+| Compute | U-Boot | 2026.04 | MR-NavQ95 bootloader |
+| Real-Time | PX4 Autopilot | 1.17.0 (1cc2589cd20ca0c01d1de63d4287ceeeca52bf71 (MR-VMU-Tropic) / d09136b174db99e598095ce9255c52d203e668df (MR-NavQ95)) | Flight-control stack (MR-NavQ95, MR-VMU-Tropic) |
+| Real-Time | NuttX RTOS | 12.12.0 | Underlying RTOS for PX4 |
+| Real-Time | Zephyr RTOS | 4.4.0+ | MR-MCXN-T1 (+ shields), MR-VMU-Tropic |
+| Real-Time | ESC firmware (AM32) | 2.20 | MR-ESC-AM32-MCXA133 |
+| Compute | eIQ Neutron SDK | 3.1.2 | Neutron NPU inference stack (MR-NavQ95) |
+| Compute | Ara SDK | 2.1.1 | ARA240 NPU runtime (rt-ara-sdk, MR-NavQ95) |
+
+#### Supported platforms & capabilities
+
+**MR-NavQ95 (i.MX 95 vehicle computer)** — Compute + Real-Time
+- Compute (Linux): Linux BSP 6.18.20-2.0.0; ROS2; MIPI-CSI camera pipeline.
+- Connectivity: SJA1110 Ethernet switch; Wi-Fi and Bluetooth; LTE modem.
+- AI / NPU inference: ARA240 and Neutron NPU validated. ARA240 delivers up to approximately
+  **10× the inference performance of Neutron** across YOLOv8 / YOLOX models.
+- Real-Time: PX4 on NuttX running on the real-time control core.
+
+**MR-VMU-Tropic (flight controller)** — Real-Time
+- PX4 NuttX flight stack fully validated.
+- All Zephyr peripheral tests fully validated.
+
+**MR-MCXN-T1 (+ shield variants) (sensor / I/O node)** — Real-Time (Zephyr) with ROS2 sensor bridging
+- Three shield variants validated (GNSS, IO, and OFLO).
+- Zephyr peripheral applications and ROS2 sensor bridging.
+
+**MR-ESC-AM32-MCXA133 (electronic speed controller)** — Real-Time (ESC firmware)
+- Boot and PWM validated.
+- DShot300 and DShot600 supported.
+- DShot150 and BDShot are not supported in this release.
+
+**Capability matrix**
+
+| Capability | MR-NavQ95 | MR-VMU-Tropic | MR-MCXN-T1 | MR-ESC-AM32-MCXA133 |
+| --- | :---: | :---: | :---: | :---: |
+| Linux BSP (Compute) | Yes | — | — | — |
+| ROS2 | Yes | — | Sensor bridge | — |
+| Camera (MIPI-CSI) | Yes | — | — | — |
+| NPU inference (ARA240 + Neutron) | Yes | — | — | — |
+| Connectivity (SJA1110 / Wi-Fi+BT / LTE) | Yes | — | — | — |
+| PX4 (NuttX) | Yes | Yes | — | — |
+| Zephyr RTOS | — | Yes | Yes (3 shields) | — |
+| ESC firmware (DShot / PWM) | — | — | — | Yes (DShot300/600) |
+
+Legend: **Yes** = enabled and validated · **—** = not applicable.
+
+#### New features
+
+**Compute domain (Linux / Application Processor)**
+- ROS2 support on MR-NavQ95, including ROS2 install-script integration into the platform
+  image and a ROS-ready image variant.
+- MIPI-CSI camera pipeline enabled and validated on MR-NavQ95.
+- NPU inference on both ARA240 and Neutron, with object-detection models (YOLOv8 / YOLOX).
+- Connectivity stack: SJA1110 Ethernet switch, Wi-Fi / Bluetooth, and LTE modem support.
+- Platform image composition additions, including a MAVLink router and a Remote-ID transmitter.
+- U-Boot board configuration for MR-NavQ95.
+- Docker-based build support for the SDK.
+- Improved Setup / Quick Start documentation: step-by-step flashing guides, hardware photos,
+  boot-switch and power-cycle instructions, and software bill-of-materials in the release images.
+
+**Real-Time domain (PX4, Zephyr, ESC)**
+- PX4 flight stack (NuttX) validated on MR-NavQ95 and MR-VMU-Tropic.
+- Zephyr RTOS applications validated on MR-VMU-Tropic and on the three MR-MCXN-T1 shield variants
+  (GNSS, IO, OFLO), with ROS2 sensor bridging.
+- ESC firmware (AM32) with DShot300 / DShot600 and PWM support on MR-ESC-AM32-MCXA133.
+- PX4 command-line tooling enhancements (GPIO system command).
+
+**Cross-platform / validation**
+- End-to-end validation across all four supported platforms and both software domains, covering
+  BSP, ROS2, camera, connectivity, NPU inference, PX4, Zephyr, and ESC.
+
+#### Known limitations
+
+Limitations are grouped per platform, then split into **Hardware** and **Software** gaps.
+
+**MR-NavQ95**
+
+*Hardware*
+- SPI communication with the SJA1110A switch chip is not functional — the board requires rework.
+  (TARS-399)
+- The current design forces software partitioning of the Ethernet ENETC interfaces between the M7
+  (real-time) and A55 (application) cores; achieving functional-safety compliance may require
+  significant software changes, including redesign of selected components and interfaces. (TARS-400)
+- Thermal: under vision-processing load, both the i.MX 95 (MPU) and the Ara240 (vision AI NPU) run
+  hot, causing pixel degradation / image blurring and eventually a complete processor stall when not
+  actively cooled. Both the NPU and MPU require active cooling, but the board has no dedicated fan
+  power ports, so a fan cannot be driven directly. **Workaround:** supply 5 V to the Ara240 module
+  fans from an existing CAN / I2C port. (TARS-476, TARS-490)
+
+*Software*
+- **Linux:** device trees do not adhere to Linux community standards (e.g. wrong DT node ordering,
+  redundant / commented-out nodes left in the DTS).
+- **U-Boot:** no dedicated board support — software currently relies on the MX95-19×19-EVK board
+  support; users cannot build U-Boot binaries for MR-NavQ95 without Yocto. (TARS-331)
+- **U-Boot:** SJA1110A and camera DT overlays are not applied to the base device tree during NFS
+  boot (faulty boot logic tries to fetch overlays from eMMC/SD). (TARS-325, TARS-344)
+- **U-Boot:** GCC 13 (Ubuntu PoC) is incompatible with GCC 15 (Yocto); resolution is to upgrade to
+  Ubuntu 26.04 (GCC 15) in a future release. (TARS-270)
+- **PX4 / M7:** PyOCD flashing of the M7 image is unstable and requires multiple runs. (TARS-326)
+- **PX4 / M7:** M7 depends on Linux for its filesystem, leading to delayed boot. (TARS-342)
+- **PX4 / M7:** some parameters set for the M7 are not saved across reboots. (TARS-281)
+- **PX4 / M7:** the BMP581 barometer is no longer available after triggering a scan on the I2C bus.
+  (TARS-282)
+- **PX4 / M7:** NuttX version is still reported as 11.0 instead of the actual 12.12. (TARS-319)
+- **PX4 / M7:** different software configuration (SHA commit) than the other two supported PX4
+  platforms (MR-VMU-Tropic). (TARS-343)
+- **PX4 / M7:** The PX4 `reboot` command and A55/Linux reboot recovery are not supported — the M7
+  and A55 do not properly re-initialize shared resources after a reboot, so a full power-cycle
+  of the SoC is required instead.
+- **System Manager:** insecure / improper resource partitioning between M33 / M7 / AP-NS — e.g.
+  LPI2C4 is accessible from M33, M7 and AP-NS simultaneously.
+
+**MR-VMU-Tropic (Board Rev C)**
+
+*Hardware*
+- USB Type-C power only can trigger power-switch latch-up / overheating, causing resets or board
+  damage. (TARS-401)
+- Board Rev F (with validation-relevant changes) is not available before launch; e.g. BMI088 DRDY
+  routing prevents the intended magnetometer DMA path. (TARS-402)
+- Schematic and board packages are not available in a centralised, reusable location. (TARS-403)
+- Pinmux does not allow flow control on the AUX/TEL3 port — a deviation from the PX4 specification.
+  (TARS-404)
+- Boards are not available in sufficient quantities. (TARS-405)
+- The ESC cable 600-10237 (VMU-Tropic to ESC, 150 mm, JST SHR-08V-S-B to Dupont) uses Dupont
+  connectors that require a breakaway pin to fit a standard ESC connector (e.g. MR-ESC-AM32-MCXA133); most
+  users will need to solder cables directly to the ESCs. A JST-SH-to-pin adapter board would be
+  preferred but cannot be built in time for launch. (TARS-406)
+
+*Software*
+- No Ethernet driver is available in NuttX for this board revision.
+- **Zephyr:** sources are in a non-NXP-approved distribution portal (CogniPilot) and are not
+  validated. (TARS-124)
+
+**MR-MCXN-T1 & Shields**
+
+*Hardware*
+- **All variants:** no clear board revision identification on the silk screen — the tested hardware
+  configuration cannot be identified without additional documentation. (TARS-390)
+- **MR-MCXN-T1-IO:** BMM350 magnetometer triggers an I3C bus lock-up. (TARS-391)
+- **MR-MCXN-T1-IO:** BMP581 barometer not usable. (TARS-392)
+- **MR-MCXN-T1-IO:** LPUART1 pins not available (used for I2C). (TARS-393)
+- **MR-MCXN-T1-IO:** adapter cable required to connect the 4-pin Ethernet to MR-NavQ95. (TARS-394)
+- **MR-MCXN-T1-OFLO:** missing LED-driver inversion bodge — signal needs inversion. (TARS-395)
+- **MR-MCXN-T1-GNSS:** shield unusable (shorted out) without removal of DNP resistors. (TARS-396)
+- **MR-MCXN-T1-GNSS:** BMM350 magnetometer Z-axis failure without a bodge and resistor addition.
+  (TARS-397)
+
+*Software*
+- Software configuration based on Zephyr 4.3.0 RC1 (Nov 2025); the current release (4.5) is due
+  October 2026. (TARS-146)
+- Zephyr sources are in a non-NXP-approved distribution portal (CogniPilot). (TARS-146)
+- Sensors (optical flow, GNSS, magnetometer, barometer, etc.) are not available as ROS2 nodes.
+  (TARS-158, TARS-150, TARS-149)
+- USB-CDC is used instead of UART — leads to loss of boot messages and early application prints.
+  (TARS-328)
+
+**MR-ESC-AM32-MCXA133**
+
+*Hardware*
+- Re-configuration of the ESC (for new motors, protocols, etc.) requires an additional Pixhawk
+  6X-RT controller as a pass-through interface. (TARS-398)
+
+*Software*
+- BDSHOT protocol configuration is not supported. (TARS-340)

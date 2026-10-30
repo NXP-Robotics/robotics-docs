@@ -1,0 +1,38 @@
+# MR-MCXN-T1 Hub overview
+
+The MR-MCXN-T1 Hub is the sensor and I/O node reference design of the NXP Mobile Robotics family.
+It is a networked node built around an NXP MCXN947 microcontroller that aggregates sensors and
+distributes them over automotive 100BASE-T1 Ethernet and CAN-FD, acting as a distributed sensor /
+I/O hub in a time-sensitive networking (TSN) robotics system. The board is intended as a validated
+node design that customers can evaluate, reproduce, and extend with their own shields.
+
+The MCXN947 is an NXP Arm Cortex-M33 microcontroller with integrated analog and communication
+peripherals. It runs Zephyr RTOS or the Cerebri (CogniPilot) ROS 2 stack and bridges on-board
+sensors to the robotics network through its Ethernet and CAN-FD interfaces.
+
+## Functional block diagram
+
+<figure>
+  <img src="resources/mr-mcxn-t1-block-diagram.png" alt="MR-MCXN-T1 Hub functional block diagram" width="840">
+</figure>
+
+Figure 1. MR-MCXN-T1 Hub functional block diagram
+
+## Main components
+
+The reference design integrates the following main NXP components and interfaces:
+
+- MCXN947 microcontroller (Arm Cortex-M33)
+- 3.3 V and 1.8 V regulation from a 3S to 12S input through NXP NX5P3363 load switches and a DCDC regulator
+- ICM-45686 inertial sensor, BMM350 magnetometer, and BMP581 barometer
+- 100BASE-T1 automotive Ethernet through the NXP TJA1103 PHY
+- Two CAN-FD channels through NXP TJA1462 transceivers
+- USB 2.0, addressable RGB LED, and an SWD / console debug connector
+- Two DF40TC board-to-board connectors exposing FlexComm, FlexIO, ADC, comparator, DAC, SAI, PDM, and FlexPWM for shields
+
+NXP also provides the complete hardware Bill of Materials and design files, enabling customers to
+evaluate, reproduce, and customize the reference platform for their own products.
+
+For overview information, documentation, software, tools, and ordering details, see the
+[MR-MCXN-T1 product page](https://www.nxp.com/design/design-center/development-boards-and-designs/MR-MCXN-T1)
+on the NXP web site.

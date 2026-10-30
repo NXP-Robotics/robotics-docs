@@ -1,0 +1,13 @@
+Flight Stack
+============
+
+The PX4 flight stack provides the autopilot functionality for the
+MR-NavQ95. It runs on the Cortex-M7 real-time core of the board and delivers
+the flight stack, vehicle setup, sensor calibration, parameter configuration,
+and communication interfaces (uORB, MAVLink, and more) that the NavQ95
+robotics use cases build on.
+
+.. toctree::
+   :maxdepth: 1
+
+   PX4 Documentation Reference <px4/px4-documentation>

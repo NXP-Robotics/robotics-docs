@@ -1,0 +1,64 @@
+NXP Robotic Platforms Documentation
+===================================
+
+Welcome to the NXP Robotic Platforms documentation portal — the single entry point
+for building, flashing, and running robotics applications on the NXP Mobile
+Robotics platforms. It covers the full stack, from real-time flight and
+motion-control firmware to the Linux application processor, on-device AI, and
+robotics middleware, all validated together as part of the NXP Robotic Platforms
+SDK.
+
+The platforms documented here span a complete robotics system: the
+MR-NavQ95 i.MX 95 vehicle computer for compute and perception, the
+MR-VMU-Tropic flight controller, the MR-MCXN-T1 sensor and I/O node,
+and the MR-ESC-AM32 motor-control ESC. Whether you are bringing up
+a board for the first time, integrating a camera or NPU, or wiring nodes
+together over ROS2, the guides here walk you through it step by step.
+
+How to use this portal
+
+- Start with the :doc:`Robotic Platforms SDK Introduction <overview/index>` for a
+  high-level tour of the SDK and its supported platforms.
+- Read the :doc:`System Level Integration Guide <system/system-solution-an/index>`
+  for the overall system context and how the platforms work together.
+- Check the :doc:`Release Notes <reference/nxp-robotics-sdk-release-notes>` for what changed in
+  the current release.
+- Follow :doc:`Getting Started <sdk/index>` to set up your environment and
+  build the SDK.
+- Then dive into your board under Platforms.
+
+Use the navigation on the left to browse, or the search box to jump straight
+to a topic.
+
+.. toctree::
+    :hidden:
+    :caption: Overview
+
+    Robotic Platforms SDK Introduction <overview/index>
+
+.. toctree::
+    :hidden:
+    :caption: System
+
+    System Level Integration Guide <system/system-solution-an/index>
+
+.. toctree::
+    :hidden:
+    :caption: Release Notes
+
+    Release Notes <reference/nxp-robotics-sdk-release-notes>
+
+.. toctree::
+    :hidden:
+    :caption: Getting Started
+
+    SDK Setup and Build <sdk/index>
+
+.. toctree::
+    :hidden:
+    :caption: Platforms
+
+    MR-NavQ95 <platforms/mr-navq95/index>
+    MR-VMU-Tropic <platforms/mr-vmu-tropic/index>
+    MR-MCXN-T1 <platforms/mr-mcxn-t1/index>
+    MR-ESC-AM32 <platforms/mr-esc-am32-mcxa133/index>

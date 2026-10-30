@@ -1,0 +1,20 @@
+User Manual
+===========
+
+Get to know the MR-MCXN-T1 Hub and its add-on shields: review the Hub
+hardware and the software enablement framework, and how to set up and
+configure the IO, F9P, and OFL shields.
+
+.. toctree::
+   :maxdepth: 1
+
+   introduction
+   Finding platform resources <finding-resources>
+   Getting ready <getting-ready>
+   Getting to know the hardware <hardware>
+   shields/io
+   shields/f9p
+   shields/ofl
+   Configuring the hardware <configuring-the-hardware>
+   abbreviations
+   references

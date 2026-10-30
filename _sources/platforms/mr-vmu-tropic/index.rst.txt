@@ -1,0 +1,15 @@
+MR-VMU-Tropic
+=============
+
+The MR-VMU-Tropic is the flight-controller platform of the NXP Mobile
+Robotics family. Start with the quick start, then consult the PX4 flight-stack
+documentation.
+
+.. toctree::
+   :maxdepth: 2
+
+   Overview <overview>
+   getting-started/index
+   User Manual <user-manual/index>
+   application-notes/index
+   flight-stack/index

@@ -1,0 +1,867 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="MR-MCXN-T1-IO input/output shield" href="shields/io.html"><link rel="prev" title="Getting ready" href="getting-ready.html">
+        <link rel="prefetch" href="../../../_static/nxp_logo_small.png" as="image">
+
+    <link rel="shortcut icon" href="../../../_static/nxp_logo_small.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>MR-MCXN-T1 Hub hardware reference - NXP Robotic Platforms</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d6d0172c" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --font-stack: Poppins, sans-serif;
+  --font-stack--headings: Poppins SemiBold, Poppins, sans-serif;
+  --color-foreground-primary: #262626;
+  --color-foreground-secondary: #262626;
+  --color-sidebar-link-text--top-level: #262626;
+  --color-brand-primary: #0EAFE0;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --sidebar-item-spacing-horizontal: 0.6rem;
+  --sidebar-item-spacing-vertical: 0.3rem;
+  --sidebar-caption-font-size: 0.7rem;
+  --admonition-font-size: 0.7rem;
+  --color-sidebar-background: #ffffff;
+  --color-background-primary: #fafafb;
+  --color-background-secondary: #ffffff;
+  --color-sidebar-item-background--hover: #dff4fa;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">NXP Robotic Platforms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../_static/nxp_logo_small.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">NXP Robotic Platforms</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview/index.html">Robotic Platforms SDK Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../system/system-solution-an/index.html">System Level Integration Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/nxp-robotics-sdk-release-notes.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../sdk/index.html">SDK Setup and Build</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../mr-navq95/index.html">MR-NavQ95</a><input aria-label="Toggle navigation of MR-NavQ95" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mr-navq95/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-navq95/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/getting-started/mr-navq95-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-navq95/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-navq95/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/application-notes/camera/index.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/application-notes/ethernet/index.html">Ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/application-notes/modem/index.html">Cellular Modem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/application-notes/eiq-neutron-npu/index.html">eIQ Neutron NPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/application-notes/ara-240-dnpu/index.html">ARA-240 DNPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/application-notes/remote-id-transmitter/bluetooth-remote-id-transmitter.html">Remote ID Transmitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-navq95/middleware/index.html">Middleware</a><input aria-label="Toggle navigation of Middleware" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../mr-navq95/middleware/ros2/index.html">ROS2</a><input aria-label="Toggle navigation of ROS2" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../mr-navq95/middleware/ros2/ros2-setup.html">ROS2 Setup on NavQ95</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../mr-navq95/middleware/ros2/ros2-multinode.html">ROS2 Multinode on NavQ95</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-navq95/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-navq95/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../mr-vmu-tropic/index.html">MR-VMU-Tropic</a><input aria-label="Toggle navigation of MR-VMU-Tropic" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mr-vmu-tropic/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-vmu-tropic/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/getting-started/mr-vmu-tropic-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-vmu-tropic/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/application-notes/fuse-programming/index.html">Programming Boot Configuration Fuses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-vmu-tropic/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">MR-MCXN-T1</a><input aria-label="Toggle navigation of MR-MCXN-T1" checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started/mr-mcxn-t1-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" checked="" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shields/io.html">MR-MCXN-T1-IO input/output shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shields/f9p.html">MR-MCXN-T1-F9P GPS/GNSS RTK shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shields/ofl.html">MR-MCXN-T1-OFL optical-flow shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/zenoh/index.html">Zenoh Communication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../mr-esc-am32-mcxa133/index.html">MR-ESC-AM32</a><input aria-label="Toggle navigation of MR-ESC-AM32" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mr-esc-am32-mcxa133/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-esc-am32-mcxa133/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/getting-started/mr-esc-am32-mcxa133-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/board-components.html">Board components and connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/firmware-features.html">Firmware features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-esc-am32-mcxa133/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../_sources/platforms/mr-mcxn-t1/user-manual/hardware.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="mr-mcxn-t1-hub-hardware-reference">
+<h1>MR-MCXN-T1 Hub hardware reference<a class="headerlink" href="#mr-mcxn-t1-hub-hardware-reference" title="Link to this heading">¶</a></h1>
+<p>Connectors, solder pads and pinouts of the NXP MR-MCXN-T1 Hub, an MCXN947-based multi-purpose base
+board with a modular board-to-board add-on interface. The board carries 100BASE-T1 Ethernet, two
+CAN FD buses, USB, a 9-axis sensor set (IMU, magnetometer, barometer), a debug header and an
+addressable RGB LED. All pin data below comes from the public KiCad design files in the
+<a class="reference external" href="https://github.com/NXP-Robotics/mr_mcxn_t1_hub" rel="noreferer noopener" target="_blank">MR-MCXN-T1 Hub repository</a>.</p>
+<p>Each card shows three things per pin: the function, the net name in the schematic and the
+MCXN947 pad the signal ends up on. Parts in between, such as the CAN transceivers and the
+Ethernet PHY, are shown too. Pin 1 is the square pad.</p>
+<blockquote>
+<div><p>Tip: The pinout cards are interactive: hover over a pin to highlight it, and click a pin to
+copy its net/pad name to the clipboard. On the board-overview figures, click a callout to jump
+to the matching connector card.</p>
+</div></blockquote>
+<section id="board-overview">
+<h2>Board overview<a class="headerlink" href="#board-overview" title="Link to this heading">¶</a></h2>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/overview-top-dark.svg">
+  <img alt="MR-MCXN-T1 Hub top view with connector labels" src="resources/img/overview-top.svg" width="880" height="583">
+</picture>
+</figure>
+<p>Bottom side: <a class="reference internal" href="#hub-j1-vin-t1">J1 VIN + T1</a> · <a class="reference internal" href="#hub-other-connectors">J2 USB</a> · <a class="reference internal" href="#hub-j5-debug">J5 DEBUG</a> · <a class="reference internal" href="#hub-j13-rtc-bat">J13 RTC_BAT</a> · <a class="reference internal" href="#buttons-and-switches">SW1 ISP</a>.</p>
+<p>Bottom side, with the power and Ethernet connector, USB, debug port and the bottom CAN connectors.
+The RTC battery connector J13 was added in the current revision, in the bottom right corner:</p>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/overview-bottom-dark.svg">
+  <img alt="MR-MCXN-T1 Hub bottom view with connector labels" src="resources/img/overview-bottom.svg" width="880" height="660">
+</picture>
+</figure>
+</section>
+<section id="connector-index">
+<h2>Connector index<a class="headerlink" href="#connector-index" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Ref</p></th>
+<th class="head"><p>Function</p></th>
+<th class="head"><p>Connector</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#hub-j1-vin-t1">Hub J1</a> VIN + T1</p></td>
+<td><p>Battery input 3S to 12S and 100BASE-T1 Ethernet on one cable</p></td>
+<td><p>Molex Micro-Lock Plus 1x4 (505578-0421), 1.25 mm, side entry</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hub-other-connectors">Hub J2</a> USB</p></td>
+<td><p>USB 2.0 high-speed device port</p></td>
+<td><p>USB Type-C receptacle (USB4105-GF-A)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hub-j3-can0">Hub J3</a> CAN0</p></td>
+<td><p>CAN FD bus 0 (TJA1462), two connectors in parallel</p></td>
+<td><p>JST-GH 1x4, J3 on the bottom side and J4 on the top side</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hub-j5-debug">Hub J5</a> DEBUG</p></td>
+<td><p>SWD, JTAG and console, DS-009 debug full layout</p></td>
+<td><p>JST-SH 1x10</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hub-j6-can1">Hub J6</a> CAN1</p></td>
+<td><p>CAN FD bus 1 (TJA1462), two connectors in parallel</p></td>
+<td><p>JST-GH 1x4, J6 on the bottom side and J7 on the top side</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hub-j8-b2b-power-io">Hub J8</a> B2B POWER + IO</p></td>
+<td><p>Add-on board connector 1: power rails and FlexComm, I3C, analog and trace pins</p></td>
+<td><p>Hirose DF40 50-pin header, 0.4 mm pitch, 3.0 mm stack (DF40TC(3.0)-50DP-0.4V)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hub-j9-b2b-sdhc-io">Hub J9</a> B2B SDHC + IO</p></td>
+<td><p>Add-on board connector 2: SDHC or FlexComm 9, SmartDMA or FlexComm 6/7, and more FlexComm pins</p></td>
+<td><p>Hirose DF40 50-pin header, 0.4 mm pitch, 3.0 mm stack (DF40TC(3.0)-50DP-0.4V)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hub-j13-rtc-bat">Hub J13</a> RTC_BAT</p></td>
+<td><p>Backup battery for the RTC</p></td>
+<td><p>JST-SH 1x2, side entry</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hub-rgb-led-chain">Hub RGB</a> LED CHAIN</p></td>
+<td><p>Output of the on-board RGB LED, solder pads</p></td>
+<td><p>Three pads marked CKO, SDO and G next to U14, 5 V logic</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="power-ethernet-and-usb">
+<h2>Power, Ethernet and USB<a class="headerlink" href="#power-ethernet-and-usb" title="Link to this heading">¶</a></h2>
+<section id="hub-j1-vin-t1">
+<h3>Hub J1 VIN + T1<a class="headerlink" href="#hub-j1-vin-t1" title="Link to this heading">¶</a></h3>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/main-J1-dark.svg">
+  <img alt="Hub J1 VIN + T1 pinout" src="resources/img/main-J1.svg" width="704" height="226">
+</picture>
+</figure>
+<p>Pin 1 takes the battery, 3S to 12S (about 9 V to 50 V), 10 W budget. An ideal diode (LM74700) blocks
+reverse polarity, a buck converter makes 5 V from it, and 3.3 V and 1.8 V come from the 5 V rail. The
+5 V rail switches on above about 8 V. Pins 2 and 3 are the 100BASE-T1 pair, one twisted pair to the
+TJA1103 PHY. The PHY is the link slave (R41 fitted); remove R41 to make it the master. The other end
+of the T1 link must be the master. Mating parts from the schematic: socket 505570-0401, crimp
+505572-1100, pre-crimped wires 217500-1125 (black) and 217500-2125 (red).</p>
+<blockquote>
+<div><p>Caution: Pin 1 is the only power input besides USB. Keep the battery above 3S, the board does
+not start below about 8 V.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="can">
+<h2>CAN<a class="headerlink" href="#can" title="Link to this heading">¶</a></h2>
+<section id="hub-j3-can0">
+<h3>Hub J3 CAN0<a class="headerlink" href="#hub-j3-can0" title="Link to this heading">¶</a></h3>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/main-J3-dark.svg">
+  <img alt="Hub J3 CAN0 pinout" src="resources/img/main-J3.svg" width="682" height="248">
+</picture>
+</figure>
+<p>J3 (bottom) and J4 (top) carry the same bus, so one cable can come in and another go out. The
+transceiver runs from 5 V and talks to the chip at 3.3 V. Drive P4_14 (CAN0_STB) low to enable it.
+The split termination (R27, R28 and C70) is not fitted, so the bus must be terminated elsewhere, or
+fit the parts if the hub is one end of the bus.</p>
+<blockquote>
+<div><p>Note: Pin 1 is not powered. It is only linked between J3 and J4, so a 5 V supply on one cable
+passes to the other.</p>
+</div></blockquote>
+</section>
+<section id="hub-j6-can1">
+<h3>Hub J6 CAN1<a class="headerlink" href="#hub-j6-can1" title="Link to this heading">¶</a></h3>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/main-J6-dark.svg">
+  <img alt="Hub J6 CAN1 pinout" src="resources/img/main-J6.svg" width="682" height="248">
+</picture>
+</figure>
+<p>Same circuit as CAN0. J6 (bottom) and J7 (top) carry the same bus. Drive P4_17 (CAN1_STB) low to
+enable the transceiver. The split termination (R30, R31 and C75) is not fitted.</p>
+<blockquote>
+<div><p>Note: Pin 1 is not powered. It is only linked between J6 and J7, so a 5 V supply on one cable
+passes to the other.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="debug">
+<h2>Debug<a class="headerlink" href="#debug" title="Link to this heading">¶</a></h2>
+<section id="hub-j5-debug">
+<h3>Hub J5 DEBUG<a class="headerlink" href="#hub-j5-debug" title="Link to this heading">¶</a></h3>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/main-J5-dark.svg">
+  <img alt="Hub J5 DEBUG pinout" src="resources/img/main-J5.svg" width="807" height="394">
+</picture>
+</figure>
+<p>Pin 1 is a 3.3 V reference output for the probe. Pins 2 and 3 are FlexComm 1 as a UART console. Pins
+4 to 7 are the SWD and JTAG lines of the MCXN947, pin 8 is a spare GPIO for the probe, pin 9 is the
+chip reset, pulled up on the board.</p>
+<blockquote>
+<div><p>Warning: Pin 1 is a reference output, not a supply input. Never power the board from it.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="board-to-board-interface">
+<h2>Board-to-board interface<a class="headerlink" href="#board-to-board-interface" title="Link to this heading">¶</a></h2>
+<section id="hub-j8-b2b-power-io">
+<h3>Hub J8 B2B POWER + IO<a class="headerlink" href="#hub-j8-b2b-power-io" title="Link to this heading">¶</a></h3>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/main-J8-dark.svg">
+  <img alt="Hub J8 B2B POWER + IO pinout" src="resources/img/main-J8.svg" width="880" height="784">
+</picture>
+</figure>
+<p>Together with J9 this is the interface for the add-on boards (camera, audio, SDIO, mikroBUS, display,
+ADC, IO). Odd pins are one row, even pins the other, pin 1 at the cut corner. Limits from the
+schematic: 300 mA per pin, 5 V rail 1 A, 3.3 V rail 500 mA, 1.8 V rail 200 mA. Pin 11 is the RTC
+backup supply, shared with J13. The FlexComm blocks (FC2, FC4, FC6) can each be a UART, SPI or I2C.
+The grey chips list the other functions of each pad.</p>
+<blockquote>
+<div><p>Tip: The add-on board designs are in the
+<a class="reference external" href="https://github.com/CogniPilot/spinali_mcxn_t1_shields" rel="noreferer noopener" target="_blank">spinali_mcxn_t1_shields repository</a>.</p>
+</div></blockquote>
+</section>
+<section id="hub-j9-b2b-sdhc-io">
+<h3>Hub J9 B2B SDHC + IO<a class="headerlink" href="#hub-j9-b2b-sdhc-io" title="Link to this heading">¶</a></h3>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/main-J9-dark.svg">
+  <img alt="Hub J9 B2B SDHC + IO pinout" src="resources/img/main-J9.svg" width="880" height="731">
+</picture>
+</figure>
+<p>Second add-on connector. No power pins here, all supplies are on J8. Every signal pin has more than
+one job, that is the point of this interface. The SDHC0 pins carry an 8-bit SD or eMMC interface, but
+the same pads are FlexComm 9 (P0 to P6), so an add-on board can use them as one more UART, SPI or I2C
+instead. The SmartDMA pins are a parallel camera port and double as FlexComm 6 and 7 lines or PWM0
+outputs. FC0, FC3 and FC7 can each be a UART, SPI or I2C. Pin 44 is also the IMU sync input. The grey
+chips list the other functions of each pad.</p>
+</section>
+</section>
+<section id="led-chain-and-rtc-battery">
+<h2>LED chain and RTC battery<a class="headerlink" href="#led-chain-and-rtc-battery" title="Link to this heading">¶</a></h2>
+<section id="hub-rgb-led-chain">
+<h3>Hub RGB LED CHAIN<a class="headerlink" href="#hub-rgb-led-chain" title="Link to this heading">¶</a></h3>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/main-RGB-dark.svg">
+  <img alt="Hub RGB LED CHAIN pinout" src="resources/img/main-RGB.svg" width="491" height="198">
+</picture>
+</figure>
+<p>The MCU drives one SK9822 RGB LED (U14, APA102 compatible) from FlexIO pins P0_8 (data) and P0_9
+(clock). CKO and SDO are the clock and data outputs of that LED, so more LEDs of the same type can be
+chained from here. The LED runs from 5 V, so its outputs are 5 V.</p>
+</section>
+<section id="hub-j13-rtc-bat">
+<h3>Hub J13 RTC_BAT<a class="headerlink" href="#hub-j13-rtc-bat" title="Link to this heading">¶</a></h3>
+<figure class="pinout-figure" data-pinout>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/img/main-J13-dark.svg">
+  <img alt="Hub J13 RTC_BAT pinout" src="resources/img/main-J13.svg" width="399" height="170">
+</picture>
+</figure>
+<p>Keeps the real-time clock of the MCXN947 running without main power. Fits the RPi RTC battery (ML2020
+with a 2-pin JST-SH plug). The same supply is on J8 pin 11 for the add-on board. The board charges the
+cell from 3.3 V through D15 and a 75 Ω resistor.</p>
+<blockquote>
+<div><p>Warning: The board trickle-charges this cell. Use a rechargeable ML2020 type, never a CR2032 or
+other non-rechargeable cell.</p>
+</div></blockquote>
+</section>
+<section id="hub-other-connectors">
+<h3>Hub other connectors<a class="headerlink" href="#hub-other-connectors" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Ref</p></th>
+<th class="head"><p>Function</p></th>
+<th class="head"><p>Connector</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>J2 USB</p></td>
+<td><p>USB 2.0 high-speed device port</p></td>
+<td><p>USB Type-C receptacle (USB4105-GF-A)</p></td>
+<td><p>On USB1 of the MCXN947 (high speed). The board is always a USB device (CC pull-downs). VBUS powers the board through load switch U2 when no battery is connected. With SW1 held at power up the boot ROM listens here for ISP programming.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="buttons-and-switches">
+<h2>Buttons and switches<a class="headerlink" href="#buttons-and-switches" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Ref</p></th>
+<th class="head"><p>Board</p></th>
+<th class="head"><p>Function</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SW1 ISP</p></td>
+<td><p>Hub</p></td>
+<td><p>ISP boot button</p></td>
+<td><p>Tactile switch, bottom side</p></td>
+<td><p>Hold it while power comes up to start the boot ROM in ISP mode (P0_6 ISPMODE_N pulled low), for programming over USB or the debug UART. Normal boot otherwise.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="on-board-devices">
+<h2>On-board devices<a class="headerlink" href="#on-board-devices" title="Link to this heading">¶</a></h2>
+<p>How the sensors, the PHY and the LED are wired to the MCXN947. Useful for a device tree or board
+file.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Device</p></th>
+<th class="head"><p>Bus</p></th>
+<th class="head"><p>MCU pins</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ICM-45686 IMU (U9)</p></td>
+<td><p>SPI on FlexComm 8</p></td>
+<td><p>SCK P3_15, MOSI P3_14, MISO P3_16, CS P3_17, INT1 P3_22, FSYNC/INT2 P0_18</p></td>
+<td><p>P0_18 is also on J9 pin 44 as IMU sync.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BMM350 magnetometer (U10)</p></td>
+<td><p>I3C0 (or I2C)</p></td>
+<td><p>SDA P0_20, SCL P0_21, INT P0_19</p></td>
+<td><p>Address 0x14. Runs from 1.8 V.</p></td>
+</tr>
+<tr class="row-even"><td><p>BMP581 barometer (U11)</p></td>
+<td><p>I3C0 (or I2C)</p></td>
+<td><p>SDA P0_20, SCL P0_21, INT P0_11</p></td>
+<td><p>Address 0x47 (SDO pulled up, R48 not fitted).</p></td>
+</tr>
+<tr class="row-odd"><td><p>TJA1103 100BASE-T1 PHY (U15)</p></td>
+<td><p>RMII on ENET0</p></td>
+<td><p>TXD0 P1_6, TXD1 P1_7, TXEN P1_5, TXER P1_10, RXD0 P1_14, RXD1 P1_15, RXDV P1_13, RXER P1_12, REFCLK P1_4, MDC P1_20, MDIO P1_21, INT P1_19, RESET P1_11, WAKE P0_31</p></td>
+<td><p>Reverse RMII: the PHY supplies the 50 MHz reference clock. PHY address 18. Link slave, because R41 is fitted; remove R41 for master. The two LEDs next to J1 are driven by the PHY GPIO0 and GPIO1.</p></td>
+</tr>
+<tr class="row-even"><td><p>TJA1462 CAN FD transceivers (U12, U13)</p></td>
+<td><p>FlexCAN0, FlexCAN1</p></td>
+<td><p>CAN0 TX P4_13, RX P4_12, STB P4_14; CAN1 TX P4_16, RX P4_15, STB P4_17</p></td>
+<td><p>Drive STB low to enable a transceiver.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SK9822 RGB LED (U14)</p></td>
+<td><p>FlexIO</p></td>
+<td><p>data P0_8, clock P0_9</p></td>
+<td><p>APA102 compatible, 5 V. Chain output on the CKO, SDO and G pads.</p></td>
+</tr>
+<tr class="row-even"><td><p>ISP button (SW1)</p></td>
+<td><p>GPIO</p></td>
+<td><p>P0_6</p></td>
+<td><p>ISPMODE_N, boot ROM ISP mode when held at power up.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Test pads on the bottom side: CLK is the PHY reference clock (P1_4), GND is ground.</p>
+</section>
+<section id="cheat-sheet">
+<h2>Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Link to this heading">¶</a></h2>
+<p>All connector cards on one A4 landscape sheet: <a href="../../../cheatsheets/MR-MCXN-T1-Hub-cheatsheet.pdf">cheat sheet PDF</a>.</p>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>The JST-GH and JST-SH connectors follow the Dronecode
+<a class="reference external" href="https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-009%20Pixhawk%20Connector%20Standard.pdf" rel="noreferer noopener" target="_blank">DS-009 connector standard</a>
+(CAN and debug full), so standard cables fit. The CAN pin 1 is not powered on this board, and the
+CAN termination resistors are not fitted.</p></li>
+<li><p>The board runs from the battery on J1 or from USB. 5 V, 3.3 V and 1.8 V for an add-on board come
+from J8.</p></li>
+<li><p>The photos show the old revision, marked X-MR-MCXN-T1. The RTC battery connector J13 was added in
+the current revision, in the bottom right corner of the bottom side.</p></li>
+</ul>
+<blockquote>
+<div><p>Warning: Never feed power into the 5 V, 3.3 V or 1.8 V pins of J8, or into pin 1 of the debug
+port. Power the board through J1 or USB only.</p>
+</div></blockquote>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/NXP-Robotics/mr_mcxn_t1_hub" rel="noreferer noopener" target="_blank">MR-MCXN-T1 Hub board design and documentation</a></p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+<div class="related-pages">
+  <a class="next-page" href="shields/io.html">
+    <div class="page-info">
+      <div class="context"><span>Next</span></div>
+      <div class="title">MR-MCXN-T1-IO input/output shield</div>
+    </div>
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+  </a>
+  <a class="prev-page" href="getting-ready.html">
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+    <div class="page-info">
+      <div class="context"><span>Previous</span></div>
+      
+      <div class="title">Getting ready</div>
+      
+    </div>
+  </a>
+</div>
+<div class="bottom-of-page">
+  <div class="left-details">
+    <div class="copyright">Copyright 2026 NXP</div>
+    Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+    
+    <a href="https://github.com/pradyunsg/furo">Furo</a>
+    
+  </div>
+  <div class="right-details">
+  </div>
+</div>
+
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">MR-MCXN-T1 Hub hardware reference</a><ul>
+<li><a class="reference internal" href="#board-overview">Board overview</a></li>
+<li><a class="reference internal" href="#connector-index">Connector index</a></li>
+<li><a class="reference internal" href="#power-ethernet-and-usb">Power, Ethernet and USB</a><ul>
+<li><a class="reference internal" href="#hub-j1-vin-t1">Hub J1 VIN + T1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#can">CAN</a><ul>
+<li><a class="reference internal" href="#hub-j3-can0">Hub J3 CAN0</a></li>
+<li><a class="reference internal" href="#hub-j6-can1">Hub J6 CAN1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debug">Debug</a><ul>
+<li><a class="reference internal" href="#hub-j5-debug">Hub J5 DEBUG</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#board-to-board-interface">Board-to-board interface</a><ul>
+<li><a class="reference internal" href="#hub-j8-b2b-power-io">Hub J8 B2B POWER + IO</a></li>
+<li><a class="reference internal" href="#hub-j9-b2b-sdhc-io">Hub J9 B2B SDHC + IO</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#led-chain-and-rtc-battery">LED chain and RTC battery</a><ul>
+<li><a class="reference internal" href="#hub-rgb-led-chain">Hub RGB LED CHAIN</a></li>
+<li><a class="reference internal" href="#hub-j13-rtc-bat">Hub J13 RTC_BAT</a></li>
+<li><a class="reference internal" href="#hub-other-connectors">Hub other connectors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#buttons-and-switches">Buttons and switches</a></li>
+<li><a class="reference internal" href="#on-board-devices">On-board devices</a></li>
+<li><a class="reference internal" href="#cheat-sheet">Cheat sheet</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/pinout-hover.js?v=f98146ba"></script>
+    </body>
+</html>

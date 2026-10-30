@@ -1,0 +1,668 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html"><link rel="next" title="eIQ Neutron NPU Setup Guide" href="../eiq-neutron-npu/index.html"><link rel="prev" title="MR-NavQ95 Ethernet Guide" href="../ethernet/index.html">
+        <link rel="prefetch" href="../../../../_static/nxp_logo_small.png" as="image">
+
+    <link rel="shortcut icon" href="../../../../_static/nxp_logo_small.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>Using a Cellular Modem on MR-NAVQ95 - NXP Robotic Platforms</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d6d0172c" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --font-stack: Poppins, sans-serif;
+  --font-stack--headings: Poppins SemiBold, Poppins, sans-serif;
+  --color-foreground-primary: #262626;
+  --color-foreground-secondary: #262626;
+  --color-sidebar-link-text--top-level: #262626;
+  --color-brand-primary: #0EAFE0;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --sidebar-item-spacing-horizontal: 0.6rem;
+  --sidebar-item-spacing-vertical: 0.3rem;
+  --sidebar-caption-font-size: 0.7rem;
+  --admonition-font-size: 0.7rem;
+  --color-sidebar-background: #ffffff;
+  --color-background-primary: #fafafb;
+  --color-background-secondary: #ffffff;
+  --color-sidebar-item-background--hover: #dff4fa;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">NXP Robotic Platforms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../../_static/nxp_logo_small.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">NXP Robotic Platforms</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview/index.html">Robotic Platforms SDK Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../system/system-solution-an/index.html">System Level Integration Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/nxp-robotics-sdk-release-notes.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sdk/index.html">SDK Setup and Build</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">MR-NavQ95</a><input aria-label="Toggle navigation of MR-NavQ95" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started/mr-navq95-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../camera/index.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ethernet/index.html">Ethernet</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Cellular Modem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eiq-neutron-npu/index.html">eIQ Neutron NPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ara-240-dnpu/index.html">ARA-240 DNPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../remote-id-transmitter/bluetooth-remote-id-transmitter.html">Remote ID Transmitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../middleware/index.html">Middleware</a><input aria-label="Toggle navigation of Middleware" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../middleware/ros2/index.html">ROS2</a><input aria-label="Toggle navigation of ROS2" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../middleware/ros2/ros2-setup.html">ROS2 Setup on NavQ95</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../middleware/ros2/ros2-multinode.html">ROS2 Multinode on NavQ95</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/index.html">MR-VMU-Tropic</a><input aria-label="Toggle navigation of MR-VMU-Tropic" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-vmu-tropic/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/mr-vmu-tropic-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/fuse-programming/index.html">Programming Boot Configuration Fuses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/index.html">MR-MCXN-T1</a><input aria-label="Toggle navigation of MR-MCXN-T1" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-mcxn-t1/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/getting-started/mr-mcxn-t1-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/io.html">MR-MCXN-T1-IO input/output shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/f9p.html">MR-MCXN-T1-F9P GPS/GNSS RTK shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/ofl.html">MR-MCXN-T1-OFL optical-flow shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/zenoh/index.html">Zenoh Communication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/index.html">MR-ESC-AM32</a><input aria-label="Toggle navigation of MR-ESC-AM32" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/getting-started/mr-esc-am32-mcxa133-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/board-components.html">Board components and connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/firmware-features.html">Firmware features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../_sources/platforms/mr-navq95/application-notes/modem/index.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="using-a-cellular-modem-on-mr-navq95">
+<h1>Using a Cellular Modem on MR-NAVQ95<a class="headerlink" href="#using-a-cellular-modem-on-mr-navq95" title="Link to this heading">¶</a></h1>
+<p>This application note explains how to connect and use a WWAN cellular
+modem on the MR-NAVQ95 board’s M.2 Key-B slot. It first covers the
+hardware architecture and general considerations that apply to any
+M.2 Key-B modem, then walks through a bring-up example using the
+Quectel RM520N-EU (5G Sub-6 module).</p>
+<section id="hardware-architecture">
+<h2>1. Hardware architecture<a class="headerlink" href="#hardware-architecture" title="Link to this heading">¶</a></h2>
+<p>MR-NAVQ95 exposes two M.2 sockets: a Key-M slot (NPU accelerator
+cards) and a Key-B slot dedicated to WWAN modems. The Key-B slot
+is located on the back of the main board and is electrically
+wired as a single-lane PCIe interface (PCIe x1) off the i.MX 95.</p>
+<p>A nano-SIM slot is available on the board for the WWAN module.</p>
+<section id="what-to-consider-when-selecting-an-m-2-key-b-modem">
+<h3>1.1 What to consider when selecting an M.2 Key-B modem<a class="headerlink" href="#what-to-consider-when-selecting-an-m-2-key-b-modem" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p>Interface type. The slot only wires a PCIe lane and the usual
+M.2 sideband control signals; it does not carry USB.</p>
+<blockquote>
+<div><p>Attention! On MR-NAVQ95, the M.2 Key-B connector’s USB
+signal pins are not wired to the SoC. Some WWAN modules —
+including the Quectel RM520N-EU used as the example below — ship
+from the factory configured to use their USB interface by
+default. Such a module will not be usable in this slot until
+it has been explicitly reconfigured for PCIe operation (see
+section 2.1 for the RM520N-EU procedure). Always check and, if
+needed, reconfigure the module’s default interface mode
+before installing it on MR-NAVQ95.</p>
+</div></blockquote>
+</li>
+<li><p>Form factor. The socket is a multi-mount M.2 socket for Key-B
+(or B+M) cards — it is not limited to a single card length. Check
+the schematic and confirm the specific module’s
+length/mounting-hole position is supported by the socket footprint
+before selecting it.</p></li>
+</ol>
+</section>
+</section>
+<section id="example-quectel-rm520n-eu">
+<h2>2. Example: Quectel RM520N-EU<a class="headerlink" href="#example-quectel-rm520n-eu" title="Link to this heading">¶</a></h2>
+<p>The RM520N-EU is a 5G Sub-6 M.2 Key-B module that supports both USB
+and PCIe interfaces, shipping configured for USB mode by default.
+Once switched to PCIe mode (see section 2.1) and installed, it is
+supported out of the box on the NXP Robotics Linux image for
+MR-NAVQ95: the module is detected automatically at
+boot and exposed to userspace via ModemManager, without any
+additional configuration on the board itself.</p>
+<section id="one-time-module-configuration-switching-to-pcie-mode">
+<h3>2.1 One-time module configuration: switching to PCIe mode<a class="headerlink" href="#one-time-module-configuration-switching-to-pcie-mode" title="Link to this heading">¶</a></h3>
+<p>Before the module can be used in the MR-NAVQ95 M.2 Key-B slot, it
+must be switched from its default USB mode to PCIe mode. This is a
+one-time configuration step, done outside of MR-NAVQ95 on a Windows
+or Linux PC, and requires:</p>
+<ul class="simple">
+<li><p>A USB-to-M.2 (Key-B) adapter, to connect the module to the PC over
+USB.</p></li>
+<li><p>The Quectel USB driver for the module, installed on the PC.
+Download the driver from the
+<a class="reference external" href="https://www.quectel.com/product/5g-rm520n-series/" rel="noreferer noopener" target="_blank">Quectel product page</a>.</p></li>
+<li><p>A serial terminal application (e.g. PuTTY, Tera Term) to send AT
+commands to the module.</p></li>
+</ul>
+<p>Step 1 — Install the Quectel driver. Install the Quectel USB
+driver for the RM520N-EU on the PC. Once the driver is installed, the
+module enumerates as a set of serial ports.</p>
+<p>Step 2 — Connect the modem to the PC. Insert the modem into the
+USB-to-M.2 adapter, then insert the adapter into a USB port of the
+PC.</p>
+<p>Step 3 — Open a serial session to the module’s AT command port
+at 115200 baud, 8N1, no flow control.</p>
+<p>Step 4 — Query the current interface mode (optional, to confirm
+the module is currently in USB mode):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AT</span><span class="o">+</span><span class="n">QCFG</span><span class="o">=</span><span class="s2">"data_interface"</span>
+</pre></div>
+</div>
+<p>Default response: <code class="docutils literal notranslate"><span class="pre">+QCFG:</span> <span class="pre">&quot;data_interface&quot;,0,0</span></code> (USB mode).</p>
+<p>Step 5 — Switch the module to PCIe mode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AT</span><span class="o">+</span><span class="n">QCFG</span><span class="o">=</span><span class="s2">"data_interface"</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>1 = network data via PCIe;
+0 = diagnostic port stays on USB</p>
+<p>Once switched, the module retains the PCIe configuration in its own
+non-volatile storage, so this step only needs to be done once per
+module, before it is installed in the MR-NAVQ95 M.2 Key-B slot.</p>
+</section>
+<section id="verifying-the-modem-is-detected">
+<h3>2.2 Verifying the modem is detected<a class="headerlink" href="#verifying-the-modem-is-detected" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Power off the board.</p></li>
+<li><p>Insert the modem into the M.2 Key-B connector (J16).</p></li>
+<li><p>Connect the antennas to the modem.</p></li>
+<li><p>Insert a nano-SIM into the SIM slot (J5).</p></li>
+<li><p>Power on the board.</p></li>
+</ul>
+<p>The modem should be visible on the PCIe bus and reported by
+ModemManager:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user@imx95-navq:~# lspci -d 17cb:0308
+0001:01:00.0 Unassigned class [ff00]: Qualcomm Technologies, Inc Device 0308
+
+user@imx95-navq:~# mmcli -L
+    /org/freedesktop/ModemManager1/Modem/0 [generic] RM520N-EU
+</pre></div>
+</div>
+<p>Note: It may take a few seconds for the ModemManager to detect the
+modem.</p>
+<p>Disable the SIM PIN (one-time per SIM):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">mmcli</span> <span class="o">-</span><span class="n">i</span> <span class="mi">0</span> <span class="o">--</span><span class="n">pin</span><span class="o">=&lt;</span><span class="n">PIN</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">pin</span>
+</pre></div>
+</div>
+</section>
+<section id="connecting-to-the-network">
+<h3>2.3 Connecting to the network<a class="headerlink" href="#connecting-to-the-network" title="Link to this heading">¶</a></h3>
+<p>Once the modem is detected, use ModemManager’s <code class="docutils literal notranslate"><span class="pre">mmcli</span></code> to check
+status and bring up a data connection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mmcli</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0</span>
+<span class="n">mmcli</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0</span> <span class="o">--</span><span class="n">simple</span><span class="o">-</span><span class="n">connect</span><span class="o">=</span><span class="s2">"apn=&lt;your-apn&gt;"</span>
+<span class="n">successfully</span> <span class="n">connected</span> <span class="n">the</span> <span class="n">modem</span>
+</pre></div>
+</div>
+<p>Depending on the APN and network configuration, the resulting
+network interface (<code class="docutils literal notranslate"><span class="pre">wwan0</span></code>) can then be configured with the
+carrier-provided IP settings, or managed automatically by
+NetworkManager.</p>
+</section>
+<section id="propagate-the-settings-to-the-network-adapter-wwan0">
+<h3>2.4 Propagate the settings to the network adapter (wwan0)<a class="headerlink" href="#propagate-the-settings-to-the-network-adapter-wwan0" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user@imx95-navq:~$ sudo nmcli connection add type gsm ifname "*" con-name quectel apn &lt;your-apn&gt;
+Connection 'quectel' (426eda0c-d93f-4746-aca3-8caf3481c24c) successfully added.
+
+user@imx95-navq:~$ nmcli con show
+NAME                UUID                                  TYPE      DEVICE     
+quectel             426eda0c-d93f-4746-aca3-8caf3481c24c  gsm
+       wwan0mbim0 
+lo                  86eac6be-dcd5-46c2-aace-9f70549148db  
+loopback  lo         
+Wired connection 1  ce584b2c-9584-33b3-a787-a9863fa15037  ethernet  --         
+Wired connection 2  0694ee2b-c10a-34ff-854b-d7e2014f4e9e  ethernet  --         
+wired               f42fc16a-9c44-43dd-b15d-fb7243d80177  ethernet  --   
+</pre></div>
+</div>
+</section>
+<section id="test-the-internet-connection">
+<h3>2.5 Test the internet connection<a class="headerlink" href="#test-the-internet-connection" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user@imx95-navq:~$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: end0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc mq state DOWN group default qlen 1000
+    link/ether 6a:8c:01:b4:6b:81 brd ff:ff:ff:ff:ff:ff
+    altname enP2p0s0f0
+3: end1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 5a:88:b5:a5:f8:c7 brd ff:ff:ff:ff:ff:ff
+    altname enP2p0s16f0
+4: wwan0: &lt;POINTOPOINT,NOARP,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/[519] 
+    inet 10.131.84.97/30 brd 10.131.84.99 scope global noprefixroute wwan0
+       valid_lft forever preferred_lft forever
+
+user@imx95-navq:~$ sudo ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=114 time=54.4 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=114 time=62.1 ms
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+<div class="related-pages">
+  <a class="next-page" href="../eiq-neutron-npu/index.html">
+    <div class="page-info">
+      <div class="context"><span>Next</span></div>
+      <div class="title">eIQ Neutron NPU Setup Guide</div>
+    </div>
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+  </a>
+  <a class="prev-page" href="../ethernet/index.html">
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+    <div class="page-info">
+      <div class="context"><span>Previous</span></div>
+      
+      <div class="title">MR-NavQ95 Ethernet Guide</div>
+      
+    </div>
+  </a>
+</div>
+<div class="bottom-of-page">
+  <div class="left-details">
+    <div class="copyright">Copyright 2026 NXP</div>
+    Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+    
+    <a href="https://github.com/pradyunsg/furo">Furo</a>
+    
+  </div>
+  <div class="right-details">
+  </div>
+</div>
+
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Using a Cellular Modem on MR-NAVQ95</a><ul>
+<li><a class="reference internal" href="#hardware-architecture">1. Hardware architecture</a><ul>
+<li><a class="reference internal" href="#what-to-consider-when-selecting-an-m-2-key-b-modem">1.1 What to consider when selecting an M.2 Key-B modem</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-quectel-rm520n-eu">2. Example: Quectel RM520N-EU</a><ul>
+<li><a class="reference internal" href="#one-time-module-configuration-switching-to-pcie-mode">2.1 One-time module configuration: switching to PCIe mode</a></li>
+<li><a class="reference internal" href="#verifying-the-modem-is-detected">2.2 Verifying the modem is detected</a></li>
+<li><a class="reference internal" href="#connecting-to-the-network">2.3 Connecting to the network</a></li>
+<li><a class="reference internal" href="#propagate-the-settings-to-the-network-adapter-wwan0">2.4 Propagate the settings to the network adapter (wwan0)</a></li>
+<li><a class="reference internal" href="#test-the-internet-connection">2.5 Test the internet connection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/pinout-hover.js?v=f98146ba"></script>
+    </body>
+</html>

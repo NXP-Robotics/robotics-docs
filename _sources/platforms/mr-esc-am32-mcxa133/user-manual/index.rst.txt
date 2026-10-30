@@ -1,0 +1,19 @@
+User Manual
+===========
+
+Get to know the MR-ESC-AM32 ESC: review the board hardware and components,
+then set up, flash, and operate the board with the AM32 firmware.
+
+.. toctree::
+   :maxdepth: 1
+
+   introduction
+   Finding platform resources <finding-resources>
+   Getting ready <getting-ready>
+   Getting to know the hardware <hardware>
+   board-components
+   firmware-features
+   Installing and configuring software tools <installing-software-tools>
+   Configuring the hardware <configuring-the-hardware>
+   abbreviations
+   references

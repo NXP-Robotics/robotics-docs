@@ -1,0 +1,13 @@
+MR-MCXN-T1
+==========
+
+The MR-MCXN-T1 is the MCX N sensor / shield node of the NXP Mobile Robotics
+family (GNSS, IO, OFLO). Start with the deploy-and-run quick start.
+
+.. toctree::
+   :maxdepth: 2
+
+   Overview <overview>
+   getting-started/index
+   User Manual <user-manual/index>
+   application-notes/index

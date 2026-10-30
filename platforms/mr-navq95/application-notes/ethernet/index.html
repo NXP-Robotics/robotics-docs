@@ -1,0 +1,775 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html"><link rel="next" title="Using a Cellular Modem on MR-NAVQ95" href="../modem/index.html"><link rel="prev" title="MIPI CSI-2 Camera Application Note" href="../camera/index.html">
+        <link rel="prefetch" href="../../../../_static/nxp_logo_small.png" as="image">
+
+    <link rel="shortcut icon" href="../../../../_static/nxp_logo_small.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>MR-NavQ95 Ethernet Guide - NXP Robotic Platforms</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d6d0172c" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --font-stack: Poppins, sans-serif;
+  --font-stack--headings: Poppins SemiBold, Poppins, sans-serif;
+  --color-foreground-primary: #262626;
+  --color-foreground-secondary: #262626;
+  --color-sidebar-link-text--top-level: #262626;
+  --color-brand-primary: #0EAFE0;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --sidebar-item-spacing-horizontal: 0.6rem;
+  --sidebar-item-spacing-vertical: 0.3rem;
+  --sidebar-caption-font-size: 0.7rem;
+  --admonition-font-size: 0.7rem;
+  --color-sidebar-background: #ffffff;
+  --color-background-primary: #fafafb;
+  --color-background-secondary: #ffffff;
+  --color-sidebar-item-background--hover: #dff4fa;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">NXP Robotic Platforms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../../_static/nxp_logo_small.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">NXP Robotic Platforms</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview/index.html">Robotic Platforms SDK Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../system/system-solution-an/index.html">System Level Integration Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/nxp-robotics-sdk-release-notes.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sdk/index.html">SDK Setup and Build</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">MR-NavQ95</a><input aria-label="Toggle navigation of MR-NavQ95" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started/mr-navq95-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../camera/index.html">Camera</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modem/index.html">Cellular Modem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eiq-neutron-npu/index.html">eIQ Neutron NPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ara-240-dnpu/index.html">ARA-240 DNPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../remote-id-transmitter/bluetooth-remote-id-transmitter.html">Remote ID Transmitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../middleware/index.html">Middleware</a><input aria-label="Toggle navigation of Middleware" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../middleware/ros2/index.html">ROS2</a><input aria-label="Toggle navigation of ROS2" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../middleware/ros2/ros2-setup.html">ROS2 Setup on NavQ95</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../middleware/ros2/ros2-multinode.html">ROS2 Multinode on NavQ95</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/index.html">MR-VMU-Tropic</a><input aria-label="Toggle navigation of MR-VMU-Tropic" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-vmu-tropic/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/mr-vmu-tropic-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/fuse-programming/index.html">Programming Boot Configuration Fuses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/index.html">MR-MCXN-T1</a><input aria-label="Toggle navigation of MR-MCXN-T1" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-mcxn-t1/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/getting-started/mr-mcxn-t1-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/io.html">MR-MCXN-T1-IO input/output shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/f9p.html">MR-MCXN-T1-F9P GPS/GNSS RTK shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/ofl.html">MR-MCXN-T1-OFL optical-flow shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/zenoh/index.html">Zenoh Communication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/index.html">MR-ESC-AM32</a><input aria-label="Toggle navigation of MR-ESC-AM32" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/getting-started/mr-esc-am32-mcxa133-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/board-components.html">Board components and connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/firmware-features.html">Firmware features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../_sources/platforms/mr-navq95/application-notes/ethernet/index.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="mr-navq95-ethernet-guide">
+<h1>MR-NavQ95 Ethernet Guide<a class="headerlink" href="#mr-navq95-ethernet-guide" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>This application note describes the Ethernet networking subsystem of the
+MR-NavQ95 vehicle computer (based on the NXP i.MX 95 applications
+processor) and shows how to bring up and use its wired network interfaces on the
+Linux (Cortex-A55) side, including the T1 Switch (SJA1110) expansion
+board.</p>
+<p>It covers the available Ethernet ports and their mapping to Linux interfaces, the
+T1 Switch expansion board and T1 adapter, detecting the SJA1110 switch, VLAN
+configuration and interface partitioning between the Cortex-A55 (Linux) and
+Cortex-M7 (PX4/NuttX) domains, and the known issues and limitations.</p>
+<p>It is intended for engineers integrating MR-NavQ95 into a networked robotics
+application, whether the board is connected over standard Ethernet or over the
+automotive 100BASE-T1 / 1000BASE-T1 ports provided by the SJA1110 switch.</p>
+</section>
+<section id="ethernet-subsystem-architecture">
+<h2>1. Ethernet subsystem architecture<a class="headerlink" href="#ethernet-subsystem-architecture" title="Link to this heading">¶</a></h2>
+<p>The MR-NavQ95 board exposes the following Ethernet ports:</p>
+<ul class="simple">
+<li><p>Standard Ethernet 1 Gbps — RJ45 connector.</p></li>
+<li><p>XGMII-based networking expansion boards:</p>
+<ul>
+<li><p>MR-NAVQ95E-T1S: T1 Switch utilizing the NXP SJA1110 — 6× 100BASE-T1 +
+2× 1000BASE-T1 (1000BASE-T1 ports not currently usable).</p></li>
+</ul>
+</li>
+</ul>
+<section id="ports-mapping-to-linux-interfaces">
+<h3>1.1 Ports mapping to Linux interfaces<a class="headerlink" href="#ports-mapping-to-linux-interfaces" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>1 Gbps RJ45 port mapped to <code class="docutils literal notranslate"><span class="pre">end0</span></code>.</p></li>
+<li><p>6× 100BASE-T1 ports mapped to <code class="docutils literal notranslate"><span class="pre">trx1</span></code>..<code class="docutils literal notranslate"><span class="pre">trx6</span></code>.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../../_images/navq95board.png"><img alt="MR-NavQ95 board with expansion cards" class="align-center" src="../../../../_images/navq95board.png" style="width: 600px;" />
+</a>
+</section>
+<section id="t1-adapter">
+<h3>1.2 T1 adapter<a class="headerlink" href="#t1-adapter" title="Link to this heading">¶</a></h3>
+<p>The T1 adapter is used to connect a 100BASE-T1 port to standard RJ45 equipment:</p>
+<ul class="simple">
+<li><p>T1 connector (JST-2 wire) — to be connected to <code class="docutils literal notranslate"><span class="pre">trx1</span></code>..<code class="docutils literal notranslate"><span class="pre">trx6</span></code>.</p></li>
+<li><p>Power connector (JST-3 wire) — not used.</p></li>
+<li><p>Micro-USB connector — used for power.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../../_images/t1adapter.png"><img alt="T1 adapter" class="align-center" src="../../../../_images/t1adapter.png" style="width: 600px;" />
+</a>
+<p>The T1 adapter is connected to a T1 port and exposes an RJ45 connector to plug
+into other devices.</p>
+</section>
+</section>
+<section id="using-ethernet-via-the-sja1110-interfaces">
+<h2>2. Using Ethernet via the SJA1110 interfaces<a class="headerlink" href="#using-ethernet-via-the-sja1110-interfaces" title="Link to this heading">¶</a></h2>
+<section id="detecting-the-sja1110-switch">
+<h3>2.1 Detecting the SJA1110 switch<a class="headerlink" href="#detecting-the-sja1110-switch" title="Link to this heading">¶</a></h3>
+<p>When the T1S (SJA1110 switch) expansion card is installed, the following output
+can be observed during Linux boot:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@imx95</span><span class="o">-</span><span class="n">navq</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="c1"># dmesg | grep -i sja</span>
+<span class="p">[</span>   <span class="mf">14.944635</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span><span class="p">:</span> <span class="n">Probed</span> <span class="n">switch</span> <span class="n">chip</span><span class="p">:</span> <span class="n">SJA1110A</span>
+<span class="p">[</span>   <span class="mf">15.467874</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span><span class="p">:</span> <span class="n">configuring</span> <span class="k">for</span> <span class="n">fixed</span><span class="o">/</span><span class="mi">2500</span><span class="n">base</span><span class="o">-</span><span class="n">x</span> <span class="n">link</span> <span class="n">mode</span>
+<span class="p">[</span>   <span class="mf">15.521648</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span><span class="p">:</span> <span class="n">Link</span> <span class="ow">is</span> <span class="n">Up</span> <span class="o">-</span> <span class="mf">2.5</span><span class="n">Gbps</span><span class="o">/</span><span class="n">Full</span> <span class="o">-</span> <span class="n">flow</span> <span class="n">control</span> <span class="n">off</span>
+<span class="p">[</span>   <span class="mf">15.534243</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span> <span class="n">trx1</span> <span class="p">(</span><span class="n">uninitialized</span><span class="p">):</span> <span class="n">PHY</span> <span class="p">[</span><span class="n">spi0</span><span class="mf">.1</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">t1</span><span class="p">:</span><span class="mi">01</span><span class="p">]</span> <span class="n">driver</span> <span class="p">[</span><span class="n">NXP</span> <span class="n">C45</span> <span class="n">TJA1103</span><span class="p">]</span> <span class="p">(</span><span class="n">irq</span><span class="o">=</span><span class="n">POLL</span><span class="p">)</span>
+<span class="p">[</span>   <span class="mf">15.546102</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span> <span class="n">trx2</span> <span class="p">(</span><span class="n">uninitialized</span><span class="p">):</span> <span class="n">PHY</span> <span class="p">[</span><span class="n">spi0</span><span class="mf">.1</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">t1</span><span class="p">:</span><span class="mi">02</span><span class="p">]</span> <span class="n">driver</span> <span class="p">[</span><span class="n">NXP</span> <span class="n">C45</span> <span class="n">TJA1103</span><span class="p">]</span> <span class="p">(</span><span class="n">irq</span><span class="o">=</span><span class="n">POLL</span><span class="p">)</span>
+<span class="p">[</span>   <span class="mf">15.559029</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span> <span class="n">trx3</span> <span class="p">(</span><span class="n">uninitialized</span><span class="p">):</span> <span class="n">PHY</span> <span class="p">[</span><span class="n">spi0</span><span class="mf">.1</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">t1</span><span class="p">:</span><span class="mi">03</span><span class="p">]</span> <span class="n">driver</span> <span class="p">[</span><span class="n">NXP</span> <span class="n">C45</span> <span class="n">TJA1103</span><span class="p">]</span> <span class="p">(</span><span class="n">irq</span><span class="o">=</span><span class="n">POLL</span><span class="p">)</span>
+<span class="p">[</span>   <span class="mf">15.573131</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span> <span class="n">trx4</span> <span class="p">(</span><span class="n">uninitialized</span><span class="p">):</span> <span class="n">PHY</span> <span class="p">[</span><span class="n">spi0</span><span class="mf">.1</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">t1</span><span class="p">:</span><span class="mi">04</span><span class="p">]</span> <span class="n">driver</span> <span class="p">[</span><span class="n">NXP</span> <span class="n">C45</span> <span class="n">TJA1103</span><span class="p">]</span> <span class="p">(</span><span class="n">irq</span><span class="o">=</span><span class="n">POLL</span><span class="p">)</span>
+<span class="p">[</span>   <span class="mf">15.586113</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span> <span class="n">trx5</span> <span class="p">(</span><span class="n">uninitialized</span><span class="p">):</span> <span class="n">PHY</span> <span class="p">[</span><span class="n">spi0</span><span class="mf">.1</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">t1</span><span class="p">:</span><span class="mi">05</span><span class="p">]</span> <span class="n">driver</span> <span class="p">[</span><span class="n">NXP</span> <span class="n">C45</span> <span class="n">TJA1103</span><span class="p">]</span> <span class="p">(</span><span class="n">irq</span><span class="o">=</span><span class="n">POLL</span><span class="p">)</span>
+<span class="p">[</span>   <span class="mf">15.601885</span><span class="p">]</span> <span class="n">sja1105</span> <span class="n">spi0</span><span class="mf">.1</span> <span class="n">trx6</span> <span class="p">(</span><span class="n">uninitialized</span><span class="p">):</span> <span class="n">PHY</span> <span class="p">[</span><span class="n">spi0</span><span class="mf">.1</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">t1</span><span class="p">:</span><span class="mi">06</span><span class="p">]</span> <span class="n">driver</span> <span class="p">[</span><span class="n">NXP</span> <span class="n">C45</span> <span class="n">TJA1103</span><span class="p">]</span> <span class="p">(</span><span class="n">irq</span><span class="o">=</span><span class="n">POLL</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using a T1 adapter is required for connecting to other equipment, in the absence
+of a T1-compatible device.</p>
+</section>
+<section id="preventing-networkmanager-from-managing-the-t1-interfaces">
+<h3>2.2 Preventing NetworkManager from managing the T1 interfaces<a class="headerlink" href="#preventing-networkmanager-from-managing-the-t1-interfaces" title="Link to this heading">¶</a></h3>
+<p>NetworkManager should be disabled and/or the interfaces associated with the
+SJA1110 should not be managed by NetworkManager, which could cause IP settings
+to be overridden. This is achieved by creating
+<code class="docutils literal notranslate"><span class="pre">/etc/NetworkManager/conf.d/99-trx-unmanaged.conf</span></code> with the following content:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">device</span><span class="o">-</span><span class="n">trx</span><span class="o">-</span><span class="n">unmanaged</span><span class="p">]</span>
+<span class="k">match</span><span class="o">-</span><span class="n">device</span><span class="o">=</span><span class="n">interface</span><span class="o">-</span><span class="n">name</span><span class="p">:</span><span class="n">trx1</span><span class="p">;</span><span class="n">interface</span><span class="o">-</span><span class="n">name</span><span class="p">:</span><span class="n">trx2</span><span class="p">;</span><span class="n">interface</span><span class="o">-</span><span class="n">name</span><span class="p">:</span><span class="n">trx3</span><span class="p">;</span><span class="n">interface</span><span class="o">-</span><span class="n">name</span><span class="p">:</span><span class="n">trx4</span><span class="p">;</span><span class="n">interface</span><span class="o">-</span><span class="n">name</span><span class="p">:</span><span class="n">trx5</span><span class="p">;</span><span class="n">interface</span><span class="o">-</span><span class="n">name</span><span class="p">:</span><span class="n">trx6</span>
+<span class="n">managed</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>Then restart NetworkManager:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>NetworkManager
+</pre></div>
+</div>
+</section>
+<section id="usage-scenarios">
+<h3>2.3 Usage scenarios<a class="headerlink" href="#usage-scenarios" title="Link to this heading">¶</a></h3>
+<p>The interfaces of the SJA1110 can be used in two different scenarios:</p>
+<ul class="simple">
+<li><p>No VLAN configuration (default):</p>
+<ul>
+<li><p>Each <code class="docutils literal notranslate"><span class="pre">trx1</span></code>..<code class="docutils literal notranslate"><span class="pre">trx6</span></code> can be used as a standalone interface.</p></li>
+<li><p>IP addresses can be assigned individually.</p></li>
+<li><p>Basic tests with ping traffic can be performed.</p></li>
+</ul>
+</li>
+<li><p>VLAN configuration: each interface can belong to a different VLAN.</p></li>
+</ul>
+</section>
+</section>
+<section id="vlan-membership-and-a55-m7-interface-partitioning">
+<h2>3. VLAN membership and A55/M7 interface partitioning<a class="headerlink" href="#vlan-membership-and-a55-m7-interface-partitioning" title="Link to this heading">¶</a></h2>
+<p>This section demonstrates VLAN membership and interface partitioning between the
+Cortex-A55 (Linux) and the Cortex-M7 (PX4/NuttX) domains.</p>
+<section id="create-vlans-and-assign-ports">
+<h3>3.1 Create VLANs and assign ports<a class="headerlink" href="#create-vlans-and-assign-ports" title="Link to this heading">¶</a></h3>
+<p>The example bash script below (must be executed as <code class="docutils literal notranslate"><span class="pre">root</span></code>) creates VLANs 10
+and 20, assigning <code class="docutils literal notranslate"><span class="pre">trx1</span></code>, <code class="docutils literal notranslate"><span class="pre">trx2</span></code>, <code class="docutils literal notranslate"><span class="pre">trx3</span></code> to VLAN 10 and <code class="docutils literal notranslate"><span class="pre">trx4</span></code>, <code class="docutils literal notranslate"><span class="pre">trx5</span></code>, <code class="docutils literal notranslate"><span class="pre">trx6</span></code> to
+VLAN 20:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># 1. Create bridge with VLAN filtering</span>
+ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>name<span class="w"> </span>br0<span class="w"> </span><span class="nb">type</span><span class="w"> </span>bridge
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>br0<span class="w"> </span><span class="nb">type</span><span class="w"> </span>bridge<span class="w"> </span>vlan_filtering<span class="w"> </span><span class="m">1</span>
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>br0<span class="w"> </span>up
+
+<span class="c1"># 2. Attach all ports to the bridge</span>
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span>trx1<span class="w"> </span>trx2<span class="w"> </span>trx3<span class="w"> </span>trx4<span class="w"> </span>trx5<span class="w"> </span>trx6<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">$i</span><span class="w"> </span>master<span class="w"> </span>br0
+<span class="w">    </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">$i</span><span class="w"> </span>up
+<span class="k">done</span>
+
+<span class="c1"># 3. Remove default VLAN 1 from all ports and br0</span>
+bridge<span class="w"> </span>vlan<span class="w"> </span>del<span class="w"> </span>dev<span class="w"> </span>br0<span class="w"> </span>vid<span class="w"> </span><span class="m">1</span><span class="w"> </span>self
+
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span>trx1<span class="w"> </span>trx2<span class="w"> </span>trx3<span class="w"> </span>trx4<span class="w"> </span>trx5<span class="w"> </span>trx6<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>bridge<span class="w"> </span>vlan<span class="w"> </span>del<span class="w"> </span>dev<span class="w"> </span><span class="nv">$i</span><span class="w"> </span>vid<span class="w"> </span><span class="m">1</span>
+<span class="k">done</span>
+
+<span class="c1"># 4. Assign trx1, trx2, trx3 to VLAN 10 (untagged access ports)</span>
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span>trx1<span class="w"> </span>trx2<span class="w"> </span>trx3<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>bridge<span class="w"> </span>vlan<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span><span class="nv">$i</span><span class="w"> </span>vid<span class="w"> </span><span class="m">10</span><span class="w"> </span>pvid<span class="w"> </span>untagged
+<span class="k">done</span>
+
+<span class="c1"># 5. Assign trx4, trx5, trx6 to VLAN 20 (untagged access ports)</span>
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span>trx4<span class="w"> </span>trx5<span class="w"> </span>trx6<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>bridge<span class="w"> </span>vlan<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span><span class="nv">$i</span><span class="w"> </span>vid<span class="w"> </span><span class="m">20</span><span class="w"> </span>pvid<span class="w"> </span>untagged
+<span class="k">done</span>
+
+<span class="c1"># 6. Add both VLANs to the bridge (CPU port)</span>
+bridge<span class="w"> </span>vlan<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>br0<span class="w"> </span>vid<span class="w"> </span><span class="m">10</span><span class="w"> </span>self
+bridge<span class="w"> </span>vlan<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>br0<span class="w"> </span>vid<span class="w"> </span><span class="m">20</span><span class="w"> </span>self
+</pre></div>
+</div>
+<p>Verify the result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@imx95</span><span class="o">-</span><span class="n">navq</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="c1"># bridge vlan show</span>
+<span class="n">port</span>              <span class="n">vlan</span><span class="o">-</span><span class="nb">id</span>
+<span class="n">trx1</span>              <span class="mi">10</span> <span class="n">PVID</span> <span class="n">Egress</span> <span class="n">Untagged</span>
+<span class="n">trx2</span>              <span class="mi">10</span> <span class="n">PVID</span> <span class="n">Egress</span> <span class="n">Untagged</span>
+<span class="n">trx3</span>              <span class="mi">10</span> <span class="n">PVID</span> <span class="n">Egress</span> <span class="n">Untagged</span>
+<span class="n">trx4</span>              <span class="mi">20</span> <span class="n">PVID</span> <span class="n">Egress</span> <span class="n">Untagged</span>
+<span class="n">trx5</span>              <span class="mi">20</span> <span class="n">PVID</span> <span class="n">Egress</span> <span class="n">Untagged</span>
+<span class="n">trx6</span>              <span class="mi">20</span> <span class="n">PVID</span> <span class="n">Egress</span> <span class="n">Untagged</span>
+<span class="n">br0</span>               <span class="mi">10</span>
+                  <span class="mi">20</span>
+</pre></div>
+</div>
+<p>Devices connected to ports in VLAN 10 can communicate with each other, and
+devices connected to ports in VLAN 20 can communicate with each other. Traffic
+between VLAN 10 and VLAN 20 is isolated.</p>
+</section>
+<section id="assign-ip-addresses-and-the-m7-virtual-interface">
+<h3>3.2 Assign IP addresses and the M7 virtual interface<a class="headerlink" href="#assign-ip-addresses-and-the-m7-virtual-interface" title="Link to this heading">¶</a></h3>
+<p>To perform basic traffic tests involving Linux, bridge interfaces for VLANs 10
+and 20 must be created and IP addresses assigned. The script below must be
+executed as <code class="docutils literal notranslate"><span class="pre">root</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Step 1 — Create VLAN interfaces on the bridge</span>
+ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>link<span class="w"> </span>br0<span class="w"> </span>name<span class="w"> </span>br0.10<span class="w"> </span><span class="nb">type</span><span class="w"> </span>vlan<span class="w"> </span>id<span class="w"> </span><span class="m">10</span>
+ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>link<span class="w"> </span>br0<span class="w"> </span>name<span class="w"> </span>br0.20<span class="w"> </span><span class="nb">type</span><span class="w"> </span>vlan<span class="w"> </span>id<span class="w"> </span><span class="m">20</span>
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>br0.10<span class="w"> </span>up
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>br0.20<span class="w"> </span>up
+
+<span class="c1"># Step 2 — Add IP addresses to interfaces</span>
+ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.10.1/24<span class="w"> </span>dev<span class="w"> </span>br0.10
+ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.20.1/24<span class="w"> </span>dev<span class="w"> </span>br0.20
+
+<span class="c1"># Step 3 — Assign M7 virtual ethernet to a VLAN (20)</span>
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dev<span class="w"> </span>end1<span class="w"> </span>vf<span class="w"> </span><span class="m">0</span><span class="w"> </span>trust<span class="w"> </span>on
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dev<span class="w"> </span>end1<span class="w"> </span>vf<span class="w"> </span><span class="m">1</span><span class="w"> </span>trust<span class="w"> </span>on
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>end1<span class="w"> </span>vf<span class="w"> </span><span class="m">1</span><span class="w"> </span>vlan<span class="w"> </span><span class="m">20</span>
+</pre></div>
+</div>
+</section>
+<section id="basic-connectivity-test">
+<h3>3.3 Basic connectivity test<a class="headerlink" href="#basic-connectivity-test" title="Link to this heading">¶</a></h3>
+<p>To test basic connectivity/traffic, connect devices to ports assigned to VLAN 10
+and VLAN 20, assign IP addresses, and run a ping test.</p>
+<p>Assuming the following connected devices:</p>
+<ul class="simple">
+<li><p>Device connected to <code class="docutils literal notranslate"><span class="pre">trx1</span></code> (VLAN 10) with IP address 192.168.10.100.</p></li>
+<li><p>Device connected to <code class="docutils literal notranslate"><span class="pre">trx6</span></code> (VLAN 20) with IP address 192.168.20.100.</p></li>
+</ul>
+<p>From the Linux host, devices from both VLANs are accessible as long as the
+corresponding <code class="docutils literal notranslate"><span class="pre">br0.X</span></code> interfaces are UP and the configured IP settings are
+correct.</p>
+</section>
+<section id="using-ethernet-from-the-m7-px4-nuttx">
+<h3>3.4 Using Ethernet from the M7 (PX4/NuttX)<a class="headerlink" href="#using-ethernet-from-the-m7-px4-nuttx" title="Link to this heading">¶</a></h3>
+<p>Using Ethernet from the M7 running PX4/NuttX requires accessing the NSH console
+of PX4 and setting an IP address for the <code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface. The default IP
+address set by NuttX is 10.0.0.2/24.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@imx95</span><span class="o">-</span><span class="n">navq</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="c1"># picocom /dev/ttynsh</span>
+<span class="n">nsh</span><span class="o">&gt;</span>
+<span class="n">nsh</span><span class="o">&gt;</span> <span class="n">ifconfig</span> <span class="n">eth0</span> <span class="mf">192.168.20.200</span> <span class="n">netmask</span> <span class="mf">255.255.255.0</span>
+<span class="n">nsh</span><span class="o">&gt;</span> <span class="n">ifconfig</span>
+<span class="o">...</span>
+<span class="n">eth0</span>    <span class="n">Link</span> <span class="n">encap</span><span class="p">:</span><span class="n">Ethernet</span> <span class="n">HWaddr</span> <span class="mi">02</span><span class="p">:</span><span class="mi">04</span><span class="p">:</span><span class="mi">9</span><span class="n">f</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">00</span> <span class="n">at</span> <span class="n">RUNNING</span> <span class="n">mtu</span> <span class="mi">576</span>
+        <span class="n">inet</span> <span class="n">addr</span><span class="p">:</span><span class="mf">192.168.20.200</span> <span class="n">DRaddr</span><span class="p">:</span><span class="mf">192.168.20.1</span> <span class="n">Mask</span><span class="p">:</span><span class="mf">255.255.255.0</span>
+
+<span class="n">nsh</span><span class="o">&gt;</span>
+<span class="n">nsh</span><span class="o">&gt;</span> <span class="n">ping</span> <span class="mf">192.168.20.100</span>
+<span class="n">PING</span> <span class="mf">192.168.20.100</span> <span class="mi">56</span> <span class="nb">bytes</span> <span class="n">of</span> <span class="n">data</span>
+<span class="mi">56</span> <span class="nb">bytes</span> <span class="kn">from</span><span class="w"> </span><span class="mf">192.168.20.100</span><span class="p">:</span> <span class="n">icmp_seq</span><span class="o">=</span><span class="mi">0</span> <span class="n">time</span><span class="o">=</span><span class="mf">2.0</span> <span class="n">ms</span>
+<span class="mi">56</span> <span class="nb">bytes</span> <span class="kn">from</span><span class="w"> </span><span class="mf">192.168.20.100</span><span class="p">:</span> <span class="n">icmp_seq</span><span class="o">=</span><span class="mi">1</span> <span class="n">time</span><span class="o">=</span><span class="mf">1.0</span> <span class="n">ms</span>
+<span class="o">...</span>
+<span class="mi">56</span> <span class="nb">bytes</span> <span class="kn">from</span><span class="w"> </span><span class="mf">192.168.20.100</span><span class="p">:</span> <span class="n">icmp_seq</span><span class="o">=</span><span class="mi">9</span> <span class="n">time</span><span class="o">=</span><span class="mf">2.0</span> <span class="n">ms</span>
+<span class="mi">10</span> <span class="n">packets</span> <span class="n">transmitted</span><span class="p">,</span> <span class="mi">10</span> <span class="n">received</span><span class="p">,</span> <span class="mi">0</span><span class="o">%</span> <span class="n">packet</span> <span class="n">loss</span><span class="p">,</span> <span class="n">time</span> <span class="mi">10010</span> <span class="n">ms</span>
+<span class="n">rtt</span> <span class="nb">min</span><span class="o">/</span><span class="n">avg</span><span class="o">/</span><span class="nb">max</span><span class="o">/</span><span class="n">mdev</span> <span class="o">=</span> <span class="mf">1.000</span><span class="o">/</span><span class="mf">1.300</span><span class="o">/</span><span class="mf">2.000</span><span class="o">/</span><span class="mf">0.458</span> <span class="n">ms</span>
+<span class="n">nsh</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Modifying the VLAN membership for the M7 and assigning it to VLAN 10, followed by
+new IP settings in NSH, allows pinging the device connected to the <code class="docutils literal notranslate"><span class="pre">trx1</span></code>
+interface with IP 192.168.10.100. Modify step 3 of the previous script as
+follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 3 — Assign M7 virtual ethernet to a VLAN (10)</span>
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dev<span class="w"> </span>end1<span class="w"> </span>vf<span class="w"> </span><span class="m">0</span><span class="w"> </span>trust<span class="w"> </span>on
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dev<span class="w"> </span>end1<span class="w"> </span>vf<span class="w"> </span><span class="m">1</span><span class="w"> </span>trust<span class="w"> </span>on
+ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>end1<span class="w"> </span>vf<span class="w"> </span><span class="m">1</span><span class="w"> </span>vlan<span class="w"> </span><span class="m">10</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="known-issues-and-limitations">
+<h2>4. Known issues and limitations<a class="headerlink" href="#known-issues-and-limitations" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p>Traffic from M7 (PX4) to A55 (Linux) is not currently possible; however, both
+the M7 and the A55 can communicate (ping) an external device connected over T1
+Ethernet.</p></li>
+<li><p>Low throughput when using a Windows PC connected to the MR-NavQ95 board.
+Disable the Energy Efficient Ethernet (EEE) feature for the NIC (Windows
+PowerShell command):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Set</span><span class="o">-</span><span class="n">NetAdapterAdvancedProperty</span> <span class="o">-</span><span class="n">Name</span> <span class="s2">"Ethernet"</span> <span class="o">-</span><span class="n">DisplayName</span> <span class="s2">"Energy Efficient Ethernet"</span> <span class="o">-</span><span class="n">DisplayValue</span> <span class="s2">"Off"</span>
+</pre></div>
+</div>
+</li>
+<li><p>The SJA1110 <code class="docutils literal notranslate"><span class="pre">end1</span></code> interface is impacted by the DSA (Distributed Switch
+Architecture) conduit, and TCP checksum offload is not applied across the
+<code class="docutils literal notranslate"><span class="pre">end1</span> <span class="pre">-&gt;</span> <span class="pre">SJA</span> <span class="pre">switch</span> <span class="pre">-&gt;</span> <span class="pre">trx*</span></code> forwarding path. As a result, frames leave with an
+unfinished checksum, arrive corrupted at the external device, and
+eventually get dropped. Force software checksumming:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">ethtool</span> <span class="o">-</span><span class="n">K</span> <span class="n">end1</span> <span class="n">tx</span> <span class="n">off</span> <span class="n">tso</span> <span class="n">off</span> <span class="n">gso</span> <span class="n">off</span> <span class="n">gro</span> <span class="n">off</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>NXP SJA1110 automotive Ethernet switch — <a class="reference external" href="https://www.nxp.com/products/SJA1110" rel="noreferer noopener" target="_blank">https://www.nxp.com/products/SJA1110</a></p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+<div class="related-pages">
+  <a class="next-page" href="../modem/index.html">
+    <div class="page-info">
+      <div class="context"><span>Next</span></div>
+      <div class="title">Using a Cellular Modem on MR-NAVQ95</div>
+    </div>
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+  </a>
+  <a class="prev-page" href="../camera/index.html">
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+    <div class="page-info">
+      <div class="context"><span>Previous</span></div>
+      
+      <div class="title">MIPI CSI-2 Camera Application Note</div>
+      
+    </div>
+  </a>
+</div>
+<div class="bottom-of-page">
+  <div class="left-details">
+    <div class="copyright">Copyright 2026 NXP</div>
+    Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+    
+    <a href="https://github.com/pradyunsg/furo">Furo</a>
+    
+  </div>
+  <div class="right-details">
+  </div>
+</div>
+
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">MR-NavQ95 Ethernet Guide</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#ethernet-subsystem-architecture">1. Ethernet subsystem architecture</a><ul>
+<li><a class="reference internal" href="#ports-mapping-to-linux-interfaces">1.1 Ports mapping to Linux interfaces</a></li>
+<li><a class="reference internal" href="#t1-adapter">1.2 T1 adapter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-ethernet-via-the-sja1110-interfaces">2. Using Ethernet via the SJA1110 interfaces</a><ul>
+<li><a class="reference internal" href="#detecting-the-sja1110-switch">2.1 Detecting the SJA1110 switch</a></li>
+<li><a class="reference internal" href="#preventing-networkmanager-from-managing-the-t1-interfaces">2.2 Preventing NetworkManager from managing the T1 interfaces</a></li>
+<li><a class="reference internal" href="#usage-scenarios">2.3 Usage scenarios</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vlan-membership-and-a55-m7-interface-partitioning">3. VLAN membership and A55/M7 interface partitioning</a><ul>
+<li><a class="reference internal" href="#create-vlans-and-assign-ports">3.1 Create VLANs and assign ports</a></li>
+<li><a class="reference internal" href="#assign-ip-addresses-and-the-m7-virtual-interface">3.2 Assign IP addresses and the M7 virtual interface</a></li>
+<li><a class="reference internal" href="#basic-connectivity-test">3.3 Basic connectivity test</a></li>
+<li><a class="reference internal" href="#using-ethernet-from-the-m7-px4-nuttx">3.4 Using Ethernet from the M7 (PX4/NuttX)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-issues-and-limitations">4. Known issues and limitations</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/pinout-hover.js?v=f98146ba"></script>
+    </body>
+</html>

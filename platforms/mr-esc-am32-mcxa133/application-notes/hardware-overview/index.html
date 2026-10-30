@@ -1,0 +1,774 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html"><link rel="prev" title="Application Notes" href="../index.html">
+        <link rel="prefetch" href="../../../../_static/nxp_logo_small.png" as="image">
+
+    <link rel="shortcut icon" href="../../../../_static/nxp_logo_small.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>MR-ESC-AM32 Hardware Architecture and Reference Design - NXP Robotic Platforms</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d6d0172c" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --font-stack: Poppins, sans-serif;
+  --font-stack--headings: Poppins SemiBold, Poppins, sans-serif;
+  --color-foreground-primary: #262626;
+  --color-foreground-secondary: #262626;
+  --color-sidebar-link-text--top-level: #262626;
+  --color-brand-primary: #0EAFE0;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --sidebar-item-spacing-horizontal: 0.6rem;
+  --sidebar-item-spacing-vertical: 0.3rem;
+  --sidebar-caption-font-size: 0.7rem;
+  --admonition-font-size: 0.7rem;
+  --color-sidebar-background: #ffffff;
+  --color-background-primary: #fafafb;
+  --color-background-secondary: #ffffff;
+  --color-sidebar-item-background--hover: #dff4fa;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">NXP Robotic Platforms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../../_static/nxp_logo_small.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">NXP Robotic Platforms</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview/index.html">Robotic Platforms SDK Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../system/system-solution-an/index.html">System Level Integration Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/nxp-robotics-sdk-release-notes.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sdk/index.html">SDK Setup and Build</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-navq95/index.html">MR-NavQ95</a><input aria-label="Toggle navigation of MR-NavQ95" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-navq95/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/getting-started/mr-navq95-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/camera/index.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/ethernet/index.html">Ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/modem/index.html">Cellular Modem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/eiq-neutron-npu/index.html">eIQ Neutron NPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/ara-240-dnpu/index.html">ARA-240 DNPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/remote-id-transmitter/bluetooth-remote-id-transmitter.html">Remote ID Transmitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/middleware/index.html">Middleware</a><input aria-label="Toggle navigation of Middleware" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/index.html">ROS2</a><input aria-label="Toggle navigation of ROS2" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/ros2-setup.html">ROS2 Setup on NavQ95</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/ros2-multinode.html">ROS2 Multinode on NavQ95</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/index.html">MR-VMU-Tropic</a><input aria-label="Toggle navigation of MR-VMU-Tropic" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-vmu-tropic/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/mr-vmu-tropic-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/fuse-programming/index.html">Programming Boot Configuration Fuses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/index.html">MR-MCXN-T1</a><input aria-label="Toggle navigation of MR-MCXN-T1" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-mcxn-t1/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/getting-started/mr-mcxn-t1-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/io.html">MR-MCXN-T1-IO input/output shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/f9p.html">MR-MCXN-T1-F9P GPS/GNSS RTK shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/shields/ofl.html">MR-MCXN-T1-OFL optical-flow shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-mcxn-t1/application-notes/zenoh/index.html">Zenoh Communication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">MR-ESC-AM32</a><input aria-label="Toggle navigation of MR-ESC-AM32" checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started/mr-esc-am32-mcxa133-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/board-components.html">Board components and connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/firmware-features.html">Firmware features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" checked="" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Hardware Architecture and Reference Design</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../_sources/platforms/mr-esc-am32-mcxa133/application-notes/hardware-overview/index.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="mr-esc-am32-hardware-architecture-and-reference-design">
+<h1>MR-ESC-AM32 Hardware Architecture and Reference Design<a class="headerlink" href="#mr-esc-am32-hardware-architecture-and-reference-design" title="Link to this heading">¶</a></h1>
+<p>The MR-ESC-AM32 is a brushless DC (BLDC) electronic speed controller (ESC) based on the open-source AM32 firmware and implemented using NXP MCX microcontrollers. It is designed for drones, robotic vehicles, and other applications requiring sensorless BLDC motor control. The controller implements six-step commutation using back-EMF (BEMF) zero-cross detection and is intended to operate under the control of an external flight controller or motor-control system. Supported control interfaces include RC-PWM, DShot, and bidirectional DShot.</p>
+<p>The hardware consists of an NXP MCXA133 microcontroller, a DRV8300N three-phase gate driver, a MOSFET-based power stage, and the associated analog circuitry required for BEMF sensing and power regulation. In addition to the motor-control functions, the design includes support for an addressable RGB status LED and provisions for quadrature encoder feedback. The quadrature encoder interface is intended for future applications requiring rotor position or wheel-odometry feedback but is not currently implemented in the AM32 firmware.</p>
+<p>This application note describes the hardware architecture and major functional blocks of the MR-ESC-AM32 reference design for hardware engineers and ESC designers. The AM32 firmware algorithms and configuration are described in the <a class="reference internal" href="#../../user-manual/index.md"><span class="xref myst">MR-ESC-AM32 User Manual</span></a> and in the upstream AM32 project.</p>
+<section id="about-the-am32-community">
+<h2>About the AM32 community<a class="headerlink" href="#about-the-am32-community" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/am32-logo.svg"><img alt="AM32 firmware logo" class="align-center" src="../../../../_images/am32-logo.svg" style="width: 120px;" />
+</a>
+<p>While the NXP SDK provides a tested version of the AM32 software on the MR-ESC-AM32, AM32 is an open-source, community-supported firmware project. Firmware, configuration tools, and documentation are available through <a class="reference external" href="https://am32.ca" rel="noreferer noopener" target="_blank">am32.ca</a> and <a class="reference external" href="https://wiki.am32.ca" rel="noreferer noopener" target="_blank">wiki.am32.ca</a>, while source code, issue tracking, and contributions are managed by the am32-firmware organization on GitHub.</p>
+<p>The AM32 community maintains a Discord server for user support, developer discussions, hardware-target questions, and community interaction. The current invitation is provided through the Support &amp; Community section of the AM32 website.</p>
+</section>
+<section id="hardware-description">
+<h2>Hardware description<a class="headerlink" href="#hardware-description" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/esc-block-diagram.svg"><img alt="ESC system block diagram" class="align-center" src="../../../../_images/esc-block-diagram.svg" style="width: 640px;" />
+</a>
+<p>Figure 1. ESC system block diagram</p>
+<p>The design consists of an NXP MCXA133 MCU, a DRV8300N gate driver, a three-phase MOSFET bridge, and a sensorless BEMF-detection network used by the AM32 firmware for six-step commutation. This BLDC motor-driver architecture is common and is not covered in detail here.</p>
+<p>The board also includes:</p>
+<ul class="simple">
+<li><p>Modified Pixhawk Debug Mini connector for programming and debugging</p></li>
+<li><p>Green power LED and an addressable RGB status LED (extendable off board)</p></li>
+<li><p>Optional Hall-sensor / encoder solder pads (hardware provision only)</p></li>
+<li><p>Telemetry support through the bidirectional DShot protocol</p></li>
+</ul>
+<blockquote>
+<div><p>Note: The Hall-sensor / encoder interface is present on the PCB but is not supported by the AM32 software implementation.</p>
+</div></blockquote>
+</section>
+<section id="pwm-input-interface">
+<h2>PWM input interface<a class="headerlink" href="#pwm-input-interface" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/pwm-rcpwm-dshot-tx-interface.svg"><img alt="PWM, RC-PWM, DShot and TX interface" class="align-center" src="../../../../_images/pwm-rcpwm-dshot-tx-interface.svg" style="width: 480px;" />
+</a>
+<p>Figure 2. PWM, RC-PWM, DShot and TX interface</p>
+<p>The MR-ESC-AM32 is intended to be controlled by a flight controller such as the MR-VMU-RT1176 or MR-VMU-TROPIC, or any other device capable of generating RC-PWM control signals, rather than operating standalone. The primary control interface is a standard 3-pin RC connector supporting RC-PWM input.</p>
+<p>The AM32 firmware also supports DShot and bidirectional DShot telemetry modes for modern flight-controller integration.</p>
+<p>The control signal is routed directly to the MCXA133 MCU, where timer-capture and PWM peripherals decode the throttle command. The MCU executes the AM32 sensorless commutation algorithm and generates six gate-drive control signals through its FlexPWM peripherals.</p>
+<section id="tx-telemetry-pin">
+<h3>TX telemetry pin<a class="headerlink" href="#tx-telemetry-pin" title="Link to this heading">¶</a></h3>
+<p>The TX signal is supported by the NXP AM32 port as a dedicated serial-telemetry output. TX is routed from an MCXA133 UART transmit pin to a solder pad and also to pin 3 of the debug connector (J13).</p>
+<p>AM32 uses it for KISS-format serial telemetry, reporting:</p>
+<ul class="simple">
+<li><p>temperature</p></li>
+<li><p>battery voltage</p></li>
+<li><p>current</p></li>
+<li><p>accumulated consumption</p></li>
+<li><p>electrical RPM</p></li>
+</ul>
+<p>TX is optional and is not required for motor control. It is separate from bidirectional DShot telemetry, which returns eRPM over the main DShot signal wire and does not require TX. TX may be connected to a compatible flight-controller telemetry input or to a suitable 3.3 V USB-to-UART receiver for diagnostics.</p>
+<blockquote>
+<div><p>Note: TX should not normally be connected to the debugger through J13. A modified debug cable must be used with pin 3 removed: a debugger or probe could load or drive the telemetry signal and interfere with operation or SWD access.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="power-supply">
+<h2>Power supply<a class="headerlink" href="#power-supply" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/power-regulators.svg"><img alt="Power regulators" class="align-center" src="../../../../_images/power-regulators.svg" style="width: 480px;" />
+</a>
+<p>Figure 3. Power regulators</p>
+<p>The ESC is powered directly from a 3S to 6S LiPo battery input.</p>
+<ul class="simple">
+<li><p>Approximately 6 V to 25 V input is possible.</p></li>
+<li><p>A 3S LiPo has a typical usable range of 10.5 V to 12.6 V.</p></li>
+<li><p>A 6S LiPo has a typical usable range of 21.0 V to 25.2 V.</p></li>
+</ul>
+<blockquote>
+<div><p>Note: Although the design may operate with a 2S battery, this configuration has not been validated.</p>
+</div></blockquote>
+<p>The battery voltage serves two purposes:</p>
+<ul class="simple">
+<li><p>It supplies the high-current three-phase inverter stage.</p></li>
+<li><p>It feeds the onboard linear regulators.</p></li>
+</ul>
+<p>The board contains two regulated rails:</p>
+<ul class="simple">
+<li><p>5 V power supply — an LDO generates 5 V from the battery input. This rail powers the DRV8300N gate driver and supporting analog circuitry.</p></li>
+<li><p>3.3 V power supply — a second LDO generates 3.3 V for the MCXA133 MCU, the BEMF-sensing circuitry, logic interfaces, and status LEDs.</p></li>
+</ul>
+<p>This simple dual-LDO architecture minimizes BOM cost, minimizes noise, and follows the original AM32 reference-hardware philosophy.</p>
+</section>
+<section id="back-emf-bemf-detection-network">
+<h2>Back-EMF (BEMF) detection network<a class="headerlink" href="#back-emf-bemf-detection-network" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/bemf-network.svg"><img alt="BEMF network" class="align-center" src="../../../../_images/bemf-network.svg" style="width: 640px;" />
+</a>
+<p>Figure 4. BEMF network</p>
+<p>Rotor position is estimated from motor back electromotive force (BEMF) rather than from Hall sensors.</p>
+<p>During operation:</p>
+<ul class="simple">
+<li><p>Two motor phases are actively driven.</p></li>
+<li><p>The third phase is left floating.</p></li>
+<li><p>The floating-phase voltage contains the motor’s back-EMF waveform.</p></li>
+</ul>
+<p>The BEMF network scales and filters this voltage before presenting it to the MCU comparator and ADC inputs. The MCXA133 MCU uses ADC channels and an internal analog comparator (COMP) to detect the BEMF zero-crossing event.</p>
+<p>The BEMF network typically performs:</p>
+<ul class="simple">
+<li><p>Voltage division of the motor-phase voltage.</p></li>
+<li><p>RC filtering to suppress switching noise.</p></li>
+<li><p>Creation of a virtual neutral reference.</p></li>
+<li><p>Comparator-input conditioning.</p></li>
+</ul>
+<p>When the floating phase crosses the virtual-neutral voltage, the comparator generates a zero-cross event. The AM32 firmware then predicts the next commutation point and advances the motor to the next state. This approach eliminates the need for rotor-position sensors while maintaining low cost and compact size.</p>
+</section>
+<section id="gate-driver-and-power-stage">
+<h2>Gate driver and power stage<a class="headerlink" href="#gate-driver-and-power-stage" title="Link to this heading">¶</a></h2>
+<p>The power stage consists of a DRV8300N gate driver controlling a three-phase MOSFET inverter.</p>
+<section id="drv8300n-gate-driver">
+<h3>DRV8300N gate driver<a class="headerlink" href="#drv8300n-gate-driver" title="Link to this heading">¶</a></h3>
+<a class="reference internal image-reference" href="../../../../_images/gate-driver.svg"><img alt="Gate driver" class="align-center" src="../../../../_images/gate-driver.svg" style="width: 360px;" />
+</a>
+<p>Figure 5. Gate driver</p>
+<p>The DRV8300N performs several functions:</p>
+<ul class="simple">
+<li><p>Level shifting between MCU logic and MOSFET gates</p></li>
+<li><p>High-side gate-drive generation</p></li>
+<li><p>Low-side gate-drive generation</p></li>
+<li><p>Dead-time management</p></li>
+<li><p>Fast switching of large MOSFET gate capacitances</p></li>
+</ul>
+<p>The MCU FlexPWM module generates the PWM waveforms while the DRV8300N provides the current required to rapidly charge and discharge the MOSFET gates. The mode and dead-time settings configure the device for “6 PWM” control mode, where software controls the dead time rather than the gate driver itself.</p>
+</section>
+<section id="three-phase-inverter">
+<h3>Three-phase inverter<a class="headerlink" href="#three-phase-inverter" title="Link to this heading">¶</a></h3>
+<a class="reference internal image-reference" href="../../../../_images/power-fets-current-measurement.svg"><img alt="Power FETs and current measurement" class="align-center" src="../../../../_images/power-fets-current-measurement.svg" style="width: 480px;" />
+</a>
+<p>Figure 6. Power FETs and current measurement</p>
+<p>The inverter consists of six N-channel MOSFETs arranged as:</p>
+<ul class="simple">
+<li><p>Phase A high-side / low-side</p></li>
+<li><p>Phase B high-side / low-side</p></li>
+<li><p>Phase C high-side / low-side</p></li>
+</ul>
+<p>The design uses Nexperia PSMN1R4-40 MOSFETs.</p>
+<blockquote>
+<div><p>Note: This board is provided as an example implementation and does not establish a guaranteed current rating. Although the MOSFETs are rated for approximately 190 A to 240 A at the device level, the achievable ESC current is substantially lower and depends on the complete thermal design, including PCB copper area, airflow, cooling, and operating conditions. The user is responsible for implementing and validating a thermal design that supports the desired continuous and peak current ratings. Current estimates of approximately 50 A peak have been discussed but remain subject to full validation testing.</p>
+</div></blockquote>
+</section>
+<section id="motor-drive-operation">
+<h3>Motor-drive operation<a class="headerlink" href="#motor-drive-operation" title="Link to this heading">¶</a></h3>
+<p>The AM32 firmware implements:</p>
+<ul class="simple">
+<li><p>Sensorless six-step commutation</p></li>
+<li><p>Trapezoidal drive</p></li>
+<li><p>Variable PWM frequency (optional / configurable)</p></li>
+<li><p>Adjustable dead time</p></li>
+<li><p>Sinusoidal startup sequence (optional / configurable)</p></li>
+</ul>
+<p>The MCU calculates the active commutation sector, drives the appropriate gate-driver inputs, and regulates motor power through PWM modulation of the active MOSFET pair. The AM32 software and algorithms are outside the scope of this document; refer to the upstream AM32 repositories and community forums for support.</p>
+</section>
+</section>
+<section id="debug-interface">
+<h2>Debug interface<a class="headerlink" href="#debug-interface" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/debug-mini-interface.svg"><img alt="Modified DroneCode Debug Mini interface" class="align-center" src="../../../../_images/debug-mini-interface.svg" style="width: 480px;" />
+</a>
+<p>Figure 7. Modified DroneCode Debug Mini interface</p>
+<p>J13 is a 6-pin JST-GH connector and provides the hardware programming and debug connection for the MCXA133 MCU. The connector is based on the standard Pixhawk Debug Mini interface but uses a modified pin assignment for this board. A correspondingly modified debug cable must be used: pin 3, which is assigned as a console output on the MR-ESC-AM32, should normally be left disconnected from the debugger. Connecting an unmodified debugger cable may drive or load this console signal and is not recommended.</p>
+<p>Any SWD-capable programmer supporting MCX MCUs may be used to program this board. The MCU-Link-MR already includes the corresponding 6-pin JST-GH Dronecode Debug Mini and Standard interface connectors. Otherwise, a Dronecode / PX4 / Pixhawk JTAG-connector debug adapter may be required as documented at <a class="reference external" href="https://docs.px4.io" rel="noreferer noopener" target="_blank">docs.px4.io</a>.</p>
+<a class="reference internal image-reference" href="../../../../_images/swd-jtag-adapter.svg"><img alt="Example SWD (JTAG) hardware debugging interface adapter" class="align-center" src="../../../../_images/swd-jtag-adapter.svg" style="width: 480px;" />
+</a>
+<p>Figure 8. Example SWD (JTAG) hardware debugging interface adapter</p>
+</section>
+<section id="power-led-and-voltage-sense">
+<h2>Power LED and voltage sense<a class="headerlink" href="#power-led-and-voltage-sense" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/power-led-voltage-sense.svg"><img alt="Power LED and voltage sensing circuit" class="align-center" src="../../../../_images/power-led-voltage-sense.svg" style="width: 480px;" />
+</a>
+<p>Figure 9. Power LED and voltage sensing circuit</p>
+<p>A green LED indicates that the 3.3 V rail is present.</p>
+<p>The VOLTSENSE circuit uses a 100 kΩ / 10 kΩ divider to scale the battery voltage by approximately 11:1 for measurement by an MCU ADC input. AM32 converts the ADC result to the estimated battery voltage and uses it for voltage telemetry and configured low-voltage protection. A dedicated test point provides the divided signal. VOLTSENSE is independent of the phase BEMF-sensing network.</p>
+</section>
+<section id="addressable-rgb-led-and-interface">
+<h2>Addressable RGB LED and interface<a class="headerlink" href="#addressable-rgb-led-and-interface" title="Link to this heading">¶</a></h2>
+<p>The board includes a BB-2020BGR-TRB individually addressable RGB LED using an APA102/SK9822-compatible two-wire synchronous serial interface with separate clock and data signals.</p>
+<p>Power, ground, clock, and data are also available on interface solder pads, allowing additional compatible LEDs to be connected off board in a daisy chain.</p>
+<p>The AM32 firmware includes software commands for controlling LED color and lighting behavior. The onboard LED and any external LEDs can be used to indicate controller or flight status, forward and reverse operation, or application-defined colors.</p>
+<blockquote>
+<div><p>Note: AM32 software does not currently control LED-strip sequences or lighting patterns. The external supply and interconnect must be reviewed and sized to accommodate the number of added LEDs and their maximum current.</p>
+</div></blockquote>
+<p>The NXP port’s observed default status colors are:</p>
+<ul class="simple">
+<li><p>Bootloader mode: RGB LED off</p></li>
+<li><p>Main application running, EEPROM configured, but no flight-controller signal: red</p></li>
+<li><p>ESC armed: green</p></li>
+</ul>
+</section>
+<section id="hall-encoder-interface">
+<h2>Hall / encoder interface<a class="headerlink" href="#hall-encoder-interface" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/hall-encoder-interface.svg"><img alt="Hall encoder interface (not used)" class="align-center" src="../../../../_images/hall-encoder-interface.svg" style="width: 480px;" />
+</a>
+<p>Figure 10. Hall encoder interface (not used)</p>
+<p>The board provides solder-pad connections for an optional Hall-effect or quadrature-encoder interface. The encoder A and encoder C signals are routed directly to GPIO pins on the MCXA133 MCU that can be configured for the MCU’s eQDC quadrature-decoder peripheral. A nearby ground pad provides the signal reference. This hardware provision could support rotor-position or wheel-odometry feedback in a custom motor-control application.</p>
+<blockquote>
+<div><p>Note: The interface is not implemented or supported by the current AM32 firmware; using it requires alternative firmware or additional software development.</p>
+</div></blockquote>
+</section>
+<section id="ispmode-switch">
+<h2>ISPMODE switch<a class="headerlink" href="#ispmode-switch" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="../../../../_images/ispmode-switch.svg"><img alt="ISPMODE switch (not used)" class="align-center" src="../../../../_images/ispmode-switch.svg" style="width: 480px;" />
+</a>
+<p>Figure 11. ISPMODE switch (not used)</p>
+<p>The board includes an onboard switch (SW1) connected to an MCU input labeled ISPMODE. This input is not used by the current AM32 firmware and has no function during normal ESC operation. The switch and its associated circuitry may be omitted when adapting or copying the design.</p>
+</section>
+<section id="schematic-board-layout-and-bill-of-materials">
+<h2>Schematic, board layout, and bill of materials<a class="headerlink" href="#schematic-board-layout-and-bill-of-materials" title="Link to this heading">¶</a></h2>
+<p>The schematic, board layout, and bill of materials for the MR-ESC-AM32 board are available on the NXP product page.</p>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h2>
+<p>The MR-ESC-AM32 combines a compact NXP MCXA133-based hardware platform with AM32, a widely used open-source ESC firmware for drone applications. The reference design provides a turnkey sensorless three-phase BLDC motor-control solution as implemented, including the gate driver, MOSFET power stage, BEMF sensing, and supporting interfaces. For applications with different current-handling requirements, the MOSFETs and associated power and thermal design may be resized, subject to appropriate electrical and thermal validation. The same hardware may also support additional software features or alternative motor-control firmware; however, their design, implementation, validation, and support are outside the scope of this document.</p>
+</section>
+<section id="abbreviations">
+<h2>Abbreviations<a class="headerlink" href="#abbreviations" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Acronym</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ADC</p></td>
+<td><p>Analog-to-digital converter</p></td>
+</tr>
+<tr class="row-odd"><td><p>BEMF</p></td>
+<td><p>Back electromotive force</p></td>
+</tr>
+<tr class="row-even"><td><p>BLDC</p></td>
+<td><p>Brushless DC</p></td>
+</tr>
+<tr class="row-odd"><td><p>DShot</p></td>
+<td><p>Digital Shot (digital ESC control protocol)</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC</p></td>
+<td><p>Electronic speed controller</p></td>
+</tr>
+<tr class="row-odd"><td><p>LDO</p></td>
+<td><p>Low-dropout regulator</p></td>
+</tr>
+<tr class="row-even"><td><p>MCU</p></td>
+<td><p>Microcontroller unit</p></td>
+</tr>
+<tr class="row-odd"><td><p>MOSFET</p></td>
+<td><p>Metal-oxide-semiconductor field-effect transistor</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM</p></td>
+<td><p>Pulse-width modulation</p></td>
+</tr>
+<tr class="row-odd"><td><p>RC-PWM</p></td>
+<td><p>Radio-control pulse-width modulation</p></td>
+</tr>
+<tr class="row-even"><td><p>RGB</p></td>
+<td><p>Red-green-blue (addressable LED)</p></td>
+</tr>
+<tr class="row-odd"><td><p>SWD</p></td>
+<td><p>Serial Wire Debug</p></td>
+</tr>
+<tr class="row-even"><td><p>UART</p></td>
+<td><p>Universal asynchronous receiver-transmitter</p></td>
+</tr>
+<tr class="row-odd"><td><p>VMU</p></td>
+<td><p>Vehicle management unit</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#../../user-manual/index.md"><span class="xref myst">MR-ESC-AM32 User Manual</span></a> — AM32 firmware setup, flashing, and operation</p></li>
+<li><p><a class="reference external" href="https://github.com/am32-firmware/AM32" rel="noreferer noopener" target="_blank">AM32 firmware project (GitHub)</a></p></li>
+<li><p><a class="reference external" href="https://wiki.am32.ca/" rel="noreferer noopener" target="_blank">AM32 wiki</a></p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+<div class="related-pages">
+  
+  <a class="prev-page" href="../index.html">
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+    <div class="page-info">
+      <div class="context"><span>Previous</span></div>
+      
+      <div class="title">Application Notes</div>
+      
+    </div>
+  </a>
+</div>
+<div class="bottom-of-page">
+  <div class="left-details">
+    <div class="copyright">Copyright 2026 NXP</div>
+    Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+    
+    <a href="https://github.com/pradyunsg/furo">Furo</a>
+    
+  </div>
+  <div class="right-details">
+  </div>
+</div>
+
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">MR-ESC-AM32 Hardware Architecture and Reference Design</a><ul>
+<li><a class="reference internal" href="#about-the-am32-community">About the AM32 community</a></li>
+<li><a class="reference internal" href="#hardware-description">Hardware description</a></li>
+<li><a class="reference internal" href="#pwm-input-interface">PWM input interface</a><ul>
+<li><a class="reference internal" href="#tx-telemetry-pin">TX telemetry pin</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#power-supply">Power supply</a></li>
+<li><a class="reference internal" href="#back-emf-bemf-detection-network">Back-EMF (BEMF) detection network</a></li>
+<li><a class="reference internal" href="#gate-driver-and-power-stage">Gate driver and power stage</a><ul>
+<li><a class="reference internal" href="#drv8300n-gate-driver">DRV8300N gate driver</a></li>
+<li><a class="reference internal" href="#three-phase-inverter">Three-phase inverter</a></li>
+<li><a class="reference internal" href="#motor-drive-operation">Motor-drive operation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debug-interface">Debug interface</a></li>
+<li><a class="reference internal" href="#power-led-and-voltage-sense">Power LED and voltage sense</a></li>
+<li><a class="reference internal" href="#addressable-rgb-led-and-interface">Addressable RGB LED and interface</a></li>
+<li><a class="reference internal" href="#hall-encoder-interface">Hall / encoder interface</a></li>
+<li><a class="reference internal" href="#ispmode-switch">ISPMODE switch</a></li>
+<li><a class="reference internal" href="#schematic-board-layout-and-bill-of-materials">Schematic, board layout, and bill of materials</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li><a class="reference internal" href="#abbreviations">Abbreviations</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/pinout-hover.js?v=f98146ba"></script>
+    </body>
+</html>

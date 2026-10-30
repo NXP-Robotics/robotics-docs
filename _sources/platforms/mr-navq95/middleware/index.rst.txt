@@ -1,0 +1,10 @@
+Middleware
+==========
+
+Robotics middleware on the MR-NavQ95: set up ROS2 and connect multi-node
+topologies across the robotics platforms.
+
+.. toctree::
+   :maxdepth: 2
+
+   ros2/index

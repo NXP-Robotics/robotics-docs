@@ -1,0 +1,773 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html"><link rel="next" title="MR-ESC-AM32" href="../../../mr-esc-am32-mcxa133/index.html"><link rel="prev" title="MR-MCXN-T1 Hardware Architecture and Reference Design" href="../hardware-overview/index.html">
+        <link rel="prefetch" href="../../../../_static/nxp_logo_small.png" as="image">
+
+    <link rel="shortcut icon" href="../../../../_static/nxp_logo_small.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>MR-MCXN-T1 Zenoh Communication Modes - NXP Robotic Platforms</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d6d0172c" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --font-stack: Poppins, sans-serif;
+  --font-stack--headings: Poppins SemiBold, Poppins, sans-serif;
+  --color-foreground-primary: #262626;
+  --color-foreground-secondary: #262626;
+  --color-sidebar-link-text--top-level: #262626;
+  --color-brand-primary: #0EAFE0;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --sidebar-item-spacing-horizontal: 0.6rem;
+  --sidebar-item-spacing-vertical: 0.3rem;
+  --sidebar-caption-font-size: 0.7rem;
+  --admonition-font-size: 0.7rem;
+  --color-sidebar-background: #ffffff;
+  --color-background-primary: #fafafb;
+  --color-background-secondary: #ffffff;
+  --color-sidebar-item-background--hover: #dff4fa;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">NXP Robotic Platforms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../../_static/nxp_logo_small.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">NXP Robotic Platforms</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview/index.html">Robotic Platforms SDK Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../system/system-solution-an/index.html">System Level Integration Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/nxp-robotics-sdk-release-notes.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sdk/index.html">SDK Setup and Build</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-navq95/index.html">MR-NavQ95</a><input aria-label="Toggle navigation of MR-NavQ95" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-navq95/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/getting-started/mr-navq95-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/camera/index.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/ethernet/index.html">Ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/modem/index.html">Cellular Modem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/eiq-neutron-npu/index.html">eIQ Neutron NPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/ara-240-dnpu/index.html">ARA-240 DNPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/remote-id-transmitter/bluetooth-remote-id-transmitter.html">Remote ID Transmitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/middleware/index.html">Middleware</a><input aria-label="Toggle navigation of Middleware" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/index.html">ROS2</a><input aria-label="Toggle navigation of ROS2" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/ros2-setup.html">ROS2 Setup on NavQ95</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/ros2-multinode.html">ROS2 Multinode on NavQ95</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/index.html">MR-VMU-Tropic</a><input aria-label="Toggle navigation of MR-VMU-Tropic" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-vmu-tropic/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/mr-vmu-tropic-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/fuse-programming/index.html">Programming Boot Configuration Fuses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">MR-MCXN-T1</a><input aria-label="Toggle navigation of MR-MCXN-T1" checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started/mr-mcxn-t1-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/shields/io.html">MR-MCXN-T1-IO input/output shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/shields/f9p.html">MR-MCXN-T1-F9P GPS/GNSS RTK shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/shields/ofl.html">MR-MCXN-T1-OFL optical-flow shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" checked="" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Zenoh Communication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/index.html">MR-ESC-AM32</a><input aria-label="Toggle navigation of MR-ESC-AM32" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/getting-started/mr-esc-am32-mcxa133-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/board-components.html">Board components and connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/firmware-features.html">Firmware features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../_sources/platforms/mr-mcxn-t1/application-notes/zenoh/index.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="mr-mcxn-t1-zenoh-communication-modes">
+<h1>MR-MCXN-T1 Zenoh Communication Modes<a class="headerlink" href="#mr-mcxn-t1-zenoh-communication-modes" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>This guide describes how to configure an MR-MCXN-T1 node to publish its sensor
+samples as CDR-encoded <code class="docutils literal notranslate"><span class="pre">px4_msgs</span></code> over zenoh. The <code class="docutils literal notranslate"><span class="pre">zenoh_px4</span></code> bridge encodes each
+ZROS sensor sample as a CDR <code class="docutils literal notranslate"><span class="pre">px4_msgs</span></code> payload and publishes it on
+<code class="docutils literal notranslate"><span class="pre">&lt;domain&gt;/fmu/in/&lt;topic&gt;/...</span></code> over zenoh-pico. The MR-MCXN-T1 node supports two link
+topologies that are covered by this document (the CDR wire payload is
+byte-identical in both):</p>
+<ul class="simple">
+<li><p>client/server — the MR-MCXN-T1 node is a zenoh client that connects to an
+zenoh router (the server), typically on a Linux host / NavQ95 A55 core running Linux. The samples
+then appear as native ROS 2 topics to any <code class="docutils literal notranslate"><span class="pre">rmw_zenoh</span></code> application.</p></li>
+<li><p>peer-to-peer — a direct, router-free link to PX4. Here the MR-MCXN-T1 node is the
+listener and PX4 connects to it; the samples are fused into PX4’s uORB.
+There is no ROS 2 graph discovery; only the CDR payload matters.</p></li>
+</ul>
+<p>It also lists general commands for checking the current network interface, ROS 2 and the zenoh state.</p>
+</section>
+<section id="topology">
+<h2>Topology<a class="headerlink" href="#topology" title="Link to this heading">¶</a></h2>
+<p><img alt="(mr-mcxn-t1-topology" src="../../../../_images/mr-mcxn-t1-topology.svg" /></p>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Build the MR-MCXN-T1 GNSS / OFLO / IO application and flash it on MR-MCXN-T1. Follow these MR-MCXN-T1 build and flash <a class="reference external" href="https://github.com/nxp-robotics/robotics-docs/blob/robotics-0.7.0/platforms/mr-mcxn-t1/getting-started/mr-mcxn-t1-quick-start.md" rel="noreferer noopener" target="_blank">steps</a>.</p></li>
+<li><p>The end-device the MR-MCXN-T1 node is communicating with, depending on the setup:</p>
+<ul>
+<li><p>Zenoh router (zenoh server) running on a Linux host / NavQ95 A55 core running Linux. If NavQ95 A55 is used, follow these ROS2 setup <a class="reference internal" href="../../../mr-navq95/middleware/ros2/ros2-multinode.html"><span class="std std-doc">steps</span></a>.</p></li>
+<li><p>PX4 device (zenoh peer) running on RT1176, Tropic, NavQ95 M7 core.</p></li>
+</ul>
+</li>
+<li><p>The MR-MCXN-T1 node’s Ethernet interface must have an IP address on the same subnet as the server/peer it communicates with (rmw_zenoh, PX4 target device).</p></li>
+</ul>
+</section>
+<section id="default-mr-mcxn-t1-node-configuration-and-general-commands-to-check-its-current-state">
+<h2>Default MR-MCXN-T1 node configuration and general commands to check its current state<a class="headerlink" href="#default-mr-mcxn-t1-node-configuration-and-general-commands-to-check-its-current-state" title="Link to this heading">¶</a></h2>
+<p>Each application ships with a different static IP address:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Application</p></th>
+<th class="head"><p>MR-MCXN-T1 node IP</p></th>
+<th class="head"><p>Zenoh mode</p></th>
+<th class="head"><p>Locator</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gnss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.58.0.13/16</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">client</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tcp/10.58.0.1:7447</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">optical_flow</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.58.0.12/16</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">peer</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tcp/0.0.0.0:7447</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">io_exp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.58.0.14/16</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">client</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tcp/10.58.0.1:7447</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The mode and the locator are runtime parameters set from the shell; the values
+above are only the power-on defaults supplied by the application <code class="docutils literal notranslate"><span class="pre">prj.conf</span></code>.
+A <code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">net</span></code> change is staged only — the session is reopened on the explicit
+<code class="docutils literal notranslate"><span class="pre">zenoh_px4</span> <span class="pre">restart</span></code>.</p>
+<section id="network-interface-commands">
+<h3>Network interface commands<a class="headerlink" href="#network-interface-commands" title="Link to this heading">¶</a></h3>
+<p>Check the current network interface status (such as the IP address and the link state)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>net<span class="w"> </span>iface
+</pre></div>
+</div>
+<p>Confirm <code class="docutils literal notranslate"><span class="pre">oper=UP,</span> <span class="pre">carrier=ON</span></code> and <code class="docutils literal notranslate"><span class="pre">100</span> <span class="pre">Mbits</span> <span class="pre">full-duplex</span></code> before anything else.</p>
+<p>Network interface stats</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>net<span class="w"> </span>stats
+</pre></div>
+</div>
+<p>Show the active network connections — look for an <code class="docutils literal notranslate"><span class="pre">ESTABLISHED</span></code> entry to port <code class="docutils literal notranslate"><span class="pre">7447</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>net<span class="w"> </span>conn
+</pre></div>
+</div>
+</section>
+<section id="zros-commands">
+<h3>ZROS commands<a class="headerlink" href="#zros-commands" title="Link to this heading">¶</a></h3>
+<p>List every ZROS topic on the MR-MCXN-T1 node</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zros<span class="w"> </span>topic<span class="w"> </span>list
+</pre></div>
+</div>
+<p>Show which ZROS nodes are running (<code class="docutils literal notranslate"><span class="pre">zenoh_px4</span></code> must be present)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zros<span class="w"> </span>node<span class="w"> </span>list
+</pre></div>
+</div>
+<p>Inspect the ZROS topics (example: OFLO application)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zros<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>optical_flow_raw
+zros<span class="w"> </span>topic<span class="w"> </span>info<span class="w"> </span>optical_flow_raw
+</pre></div>
+</div>
+</section>
+<section id="zenoh-commands">
+<h3>Zenoh commands<a class="headerlink" href="#zenoh-commands" title="Link to this heading">¶</a></h3>
+<p>Check whether the zenoh is running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh_px4<span class="w"> </span>status
+</pre></div>
+</div>
+</section>
+</section>
+<section id="scenario-1-mr-mcxn-t1-node-client-zenoh-router-server">
+<h2>Scenario 1: MR-MCXN-T1 node (client) - Zenoh router (server)<a class="headerlink" href="#scenario-1-mr-mcxn-t1-node-client-zenoh-router-server" title="Link to this heading">¶</a></h2>
+<p>In client mode the MR-MCXN-T1 node connects to a remote zenoh router (<code class="docutils literal notranslate"><span class="pre">rmw_zenohd</span></code>), so
+the <code class="docutils literal notranslate"><span class="pre">&lt;ip&gt;:&lt;port&gt;</span></code> given to <code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">net</span> <span class="pre">client</span></code> is the remote router address.
+The MR-MCXN-T1 node appears in the ROS 2 graph and PX4 (or any ROS 2 consumer) reaches it
+through the router.</p>
+<p>Check the zenoh configuration.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh_px4<span class="w"> </span>config<span class="w"> </span>show
+</pre></div>
+</div>
+<p>Expected <code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">show</span></code> output: <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">client</span></code>, the configured locator, and <code class="docutils literal notranslate"><span class="pre">running:</span> <span class="pre">1</span></code>.</p>
+<p>If the mode is not in <code class="docutils literal notranslate"><span class="pre">client</span></code> mode, run (or adapt per the locator IP address):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh_px4<span class="w"> </span>config<span class="w"> </span>net<span class="w"> </span>client<span class="w"> </span>tcp/10.58.0.1:7447
+</pre></div>
+</div>
+<p>Start the communication</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh_px4<span class="w"> </span>start
+</pre></div>
+</div>
+<p>Start the communication on the other device (the server) and confirm MR-MCXN-T1 topics are visible there.</p>
+</section>
+<section id="scenario-2-mr-mcxn-t1-node-peer-px4-peer">
+<h2>Scenario 2: MR-MCXN-T1 node (peer) - PX4 (peer)<a class="headerlink" href="#scenario-2-mr-mcxn-t1-node-peer-px4-peer" title="Link to this heading">¶</a></h2>
+<p>PX4’s zenoh module glue (<code class="docutils literal notranslate"><span class="pre">ZENOH::setupSession()</span></code>) only ever inserts the zenoh
+<code class="docutils literal notranslate"><span class="pre">MODE</span></code> and <code class="docutils literal notranslate"><span class="pre">CONNECT</span></code> config keys; it never inserts <code class="docutils literal notranslate"><span class="pre">LISTEN</span></code>. So a stock PX4 can
+only be a connector in peer mode — it cannot open a listening peer transport.
+To make a direct peer link work without patching PX4, the roles are reversed
+from the usual embedded pattern: the MR-MCXN-T1 node is the LISTENER and PX4 connects
+to it. zenoh-pico supports this on the MR-MCXN-T1 node side via <code class="docutils literal notranslate"><span class="pre">Z_FEATURE_UNICAST_PEER</span></code>
+plus the <code class="docutils literal notranslate"><span class="pre">LISTEN</span></code> config key.
+Semantic caveat (peer mode). Unlike PX4, where <code class="docutils literal notranslate"><span class="pre">net</span> <span class="pre">peer</span> <span class="pre">&lt;ip&gt;:&lt;port&gt;</span></code> is the
+REMOTE connect target, here peer mode makes the MR-MCXN-T1 node the LISTENER, so the
+<code class="docutils literal notranslate"><span class="pre">&lt;ip&gt;:&lt;port&gt;</span></code> is this MR-MCXN-T1 node’s LOCAL bind/listen address. Leave it at
+<code class="docutils literal notranslate"><span class="pre">tcp/0.0.0.0:7447</span></code> to accept on all interfaces, or pin it to the MR-MCXN-T1 node’s own
+address (<code class="docutils literal notranslate"><span class="pre">tcp/10.58.0.12:7447</span></code> for optical_flow, <code class="docutils literal notranslate"><span class="pre">tcp/10.58.0.13:7447</span></code> for
+gnss) to bind a single interface.</p>
+<p>Check the zenoh configuration.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh_px4<span class="w"> </span>config<span class="w"> </span>show
+</pre></div>
+</div>
+<p>Expected <code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">show</span></code> output: <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">peer</span></code>, locator <code class="docutils literal notranslate"><span class="pre">tcp/0.0.0.0:7447</span></code>, and <code class="docutils literal notranslate"><span class="pre">running:</span> <span class="pre">1</span></code>.</p>
+<p>If the mode is not in <code class="docutils literal notranslate"><span class="pre">peer</span></code> mode, run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh_px4<span class="w"> </span>config<span class="w"> </span>net<span class="w"> </span>peer<span class="w"> </span>tcp/0.0.0.0:7447
+zenoh_px4<span class="w"> </span>restart
+</pre></div>
+</div>
+<p>Start the communication</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh_px4<span class="w"> </span>start
+</pre></div>
+</div>
+<p>Start the communication on the other device (the peer) and confirm MR-MCXN-T1 topics are visible there.</p>
+<section id="px4-steps-in-communication-with-mr-mcxn-t1-node">
+<h3>PX4 steps (in communication with MR-MCXN-T1 node)<a class="headerlink" href="#px4-steps-in-communication-with-mr-mcxn-t1-node" title="Link to this heading">¶</a></h3>
+<p>The key parameters must match on both sides, otherwise the key match silently
+breaks and no sample is ever delivered:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ZENOH_DOMAIN_ID</span></code> == <code class="docutils literal notranslate"><span class="pre">CONFIG_SYNAPSE_ZENOH_PX4_DOMAIN_ID</span></code> (both default 0).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ZENOH_KEY_TYPE_HASH</span></code> == <code class="docutils literal notranslate"><span class="pre">CONFIG_SYNAPSE_ZENOH_PX4_RIHS_HASH</span></code> (both default <code class="docutils literal notranslate"><span class="pre">y</span></code>).</p></li>
+</ul>
+<p>There is a known limitation on PX4: the Zenoh communication is not working with the standard publishers/subscribers default configuration. It needs to be trimmed.
+<code class="docutils literal notranslate"><span class="pre">sensor_optical_flow</span></code> and <code class="docutils literal notranslate"><span class="pre">distance_sensor</span></code> ship stock in <code class="docutils literal notranslate"><span class="pre">dds_topics.yaml</span></code> (no
+PX4 rebuild). <code class="docutils literal notranslate"><span class="pre">sensor_gps</span></code> / <code class="docutils literal notranslate"><span class="pre">sensor_mag</span></code> must be added under <code class="docutils literal notranslate"><span class="pre">subscriptions:</span></code>
+and PX4 rebuilt.
+Run these commands on PX4 NSH shell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh<span class="w"> </span>stop
+<span class="nb">cd</span><span class="w"> </span>/fs/microsd/zenoh
+<span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">""</span><span class="w"> </span>&gt;<span class="w"> </span>pub.csv
+<span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">""</span><span class="w"> </span>&gt;<span class="w"> </span>sub.csv
+
+<span class="o">(</span><span class="k">for</span><span class="w"> </span>oflo<span class="o">)</span>
+zenoh<span class="w"> </span>config<span class="w"> </span>add<span class="w"> </span>subscriber<span class="w"> </span>/fmu/in/distance_sensor<span class="w"> </span>distance_sensor
+zenoh<span class="w"> </span>config<span class="w"> </span>add<span class="w"> </span>subscriber<span class="w"> </span>/fmu/in/sensor_optical_flow<span class="w"> </span>sensor_optical_flow
+
+<span class="o">(</span><span class="k">for</span><span class="w"> </span>gnss<span class="o">)</span>
+zenoh<span class="w"> </span>config<span class="w"> </span>add<span class="w"> </span>subscriber<span class="w"> </span>/fmu/in/sensor_gps<span class="w"> </span>sensor_gps
+</pre></div>
+</div>
+<p>Check the current Ethernet configuration on PX4. Make sure the IP address is on the same subnet as the MR-MCXN-T1 node and change it if necessary:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ifconfig
+
+ifconfig<span class="w"> </span>eth0<span class="w"> </span><span class="m">10</span>.58.0.10<span class="w"> </span>netmask<span class="w"> </span><span class="m">255</span>.255.0.0
+</pre></div>
+</div>
+<p>Configure the zenoh network peer connection with the MR-MCXN-T1 node IP address and port.
+Example command for communication with the MR-MCXN-T1 OFLO (optical flow) application:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh<span class="w"> </span>config<span class="w"> </span>net<span class="w"> </span>peer<span class="w"> </span>tcp/10.58.0.12:7447#iface<span class="o">=</span>eth0
+</pre></div>
+</div>
+<p>Start the communication</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zenoh<span class="w"> </span>start
+</pre></div>
+</div>
+<p>Monitor the topics in real time</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uorb<span class="w"> </span>top<span class="w"> </span>sensor_optical_flow<span class="w"> </span>distance_sensor
+</pre></div>
+</div>
+<p>Listen the topics</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>listener<span class="w"> </span>distance_sensor
+listener<span class="w"> </span>sensor_optical_flow
+</pre></div>
+</div>
+</section>
+</section>
+<section id="additional-notes">
+<h2>Additional Notes<a class="headerlink" href="#additional-notes" title="Link to this heading">¶</a></h2>
+<section id="enabling-uart-messaging-on-the-holybro-dronecan-h-rtk-f9p-helical-mr-mcxn-t1-io-application-use-case">
+<h3>Enabling UART messaging on the Holybro DroneCAN H-RTK F9P Helical (MR-MCXN-T1 IO application use case)<a class="headerlink" href="#enabling-uart-messaging-on-the-holybro-dronecan-h-rtk-f9p-helical-mr-mcxn-t1-io-application-use-case" title="Link to this heading">¶</a></h3>
+<p>The MR-MCXN-T1 IO is connected, through UART1, to the Holybro DroneCAN H-RTK F9P Helical UART port in order to receive GNSS packets. The following steps are needed on the Holybro DroneCAN H-RTK F9P Helical to enable UART messaging because it is silent by default. This is a one-time receiver configuration, applied over the module’s USB port — which connects directly to the u-blox ZED-F9P and enumerates as a COM port — and written to the receiver’s flash so that it survives a power cycle.</p>
+<ol class="arabic">
+<li><p>Connect the F9P’s USB port to the host and open u-center (classic, 22.07 or
+newer — not u-center 2, which targets M10/X20 receivers).</p></li>
+<li><p>Select <code class="docutils literal notranslate"><span class="pre">Receiver</span> <span class="pre">-&gt;</span> <span class="pre">Port</span> <span class="pre">-&gt;</span></code> the F9P’s COM port. The baud rate is irrelevant over
+USB CDC. Confirm the green data-flow indicator at the bottom right.</p></li>
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">-&gt;</span> <span class="pre">Generation</span> <span class="pre">9</span> <span class="pre">Configuration</span> <span class="pre">View</span></code>. This is the CFG-VALSET editor used
+by the F9 generation.</p></li>
+<li><p>Set the configuration keys below. For each key, tick RAM, BBR and Flash
+in the Layers checkboxes before applying, then press
+Load into Configuration / Set.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Configuration key</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CFG-MSGOUT-UBX_NAV_PVT_UART2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Required. The only message the MR-MCXN-T1 node consumes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CFG-UART2-ENABLED</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Verify; usually already set</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CFG-UART2-BAUDRATE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">38400</span></code></p></td>
+<td><p>Verify; must match the MR-MCXN-T1 node’s <code class="docutils literal notranslate"><span class="pre">current-speed</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CFG-UART2INPROT-UBX</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Verify; required for the MR-MCXN-T1 node to query the receiver</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CFG-UART2OUTPROT-UBX</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Verify; required for the receiver to answer</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CFG-UART2OUTPROT-NMEA</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>Optional; keeps the port free of unparsed NMEA</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ol>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+<div class="related-pages">
+  <a class="next-page" href="../../../mr-esc-am32-mcxa133/index.html">
+    <div class="page-info">
+      <div class="context"><span>Next</span></div>
+      <div class="title">MR-ESC-AM32</div>
+    </div>
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+  </a>
+  <a class="prev-page" href="../hardware-overview/index.html">
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+    <div class="page-info">
+      <div class="context"><span>Previous</span></div>
+      
+      <div class="title">MR-MCXN-T1 Hardware Architecture and Reference Design</div>
+      
+    </div>
+  </a>
+</div>
+<div class="bottom-of-page">
+  <div class="left-details">
+    <div class="copyright">Copyright 2026 NXP</div>
+    Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+    
+    <a href="https://github.com/pradyunsg/furo">Furo</a>
+    
+  </div>
+  <div class="right-details">
+  </div>
+</div>
+
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">MR-MCXN-T1 Zenoh Communication Modes</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#topology">Topology</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#default-mr-mcxn-t1-node-configuration-and-general-commands-to-check-its-current-state">Default MR-MCXN-T1 node configuration and general commands to check its current state</a><ul>
+<li><a class="reference internal" href="#network-interface-commands">Network interface commands</a></li>
+<li><a class="reference internal" href="#zros-commands">ZROS commands</a></li>
+<li><a class="reference internal" href="#zenoh-commands">Zenoh commands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scenario-1-mr-mcxn-t1-node-client-zenoh-router-server">Scenario 1: MR-MCXN-T1 node (client) - Zenoh router (server)</a></li>
+<li><a class="reference internal" href="#scenario-2-mr-mcxn-t1-node-peer-px4-peer">Scenario 2: MR-MCXN-T1 node (peer) - PX4 (peer)</a><ul>
+<li><a class="reference internal" href="#px4-steps-in-communication-with-mr-mcxn-t1-node">PX4 steps (in communication with MR-MCXN-T1 node)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#additional-notes">Additional Notes</a><ul>
+<li><a class="reference internal" href="#enabling-uart-messaging-on-the-holybro-dronecan-h-rtk-f9p-helical-mr-mcxn-t1-io-application-use-case">Enabling UART messaging on the Holybro DroneCAN H-RTK F9P Helical (MR-MCXN-T1 IO application use case)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/pinout-hover.js?v=f98146ba"></script>
+    </body>
+</html>

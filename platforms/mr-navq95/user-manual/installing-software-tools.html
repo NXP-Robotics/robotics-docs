@@ -1,0 +1,817 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Configuring the hardware" href="configuring-the-hardware.html"><link rel="prev" title="MR-NAVQ95 hardware reference" href="hardware.html">
+        <link rel="prefetch" href="../../../_static/nxp_logo_small.png" as="image">
+
+    <link rel="shortcut icon" href="../../../_static/nxp_logo_small.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>Installing and configuring software tools - NXP Robotic Platforms</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d6d0172c" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --font-stack: Poppins, sans-serif;
+  --font-stack--headings: Poppins SemiBold, Poppins, sans-serif;
+  --color-foreground-primary: #262626;
+  --color-foreground-secondary: #262626;
+  --color-sidebar-link-text--top-level: #262626;
+  --color-brand-primary: #0EAFE0;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --sidebar-item-spacing-horizontal: 0.6rem;
+  --sidebar-item-spacing-vertical: 0.3rem;
+  --sidebar-caption-font-size: 0.7rem;
+  --admonition-font-size: 0.7rem;
+  --color-sidebar-background: #ffffff;
+  --color-background-primary: #fafafb;
+  --color-background-secondary: #ffffff;
+  --color-sidebar-item-background--hover: #dff4fa;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">NXP Robotic Platforms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../_static/nxp_logo_small.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">NXP Robotic Platforms</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview/index.html">Robotic Platforms SDK Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../system/system-solution-an/index.html">System Level Integration Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/nxp-robotics-sdk-release-notes.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../sdk/index.html">SDK Setup and Build</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">MR-NavQ95</a><input aria-label="Toggle navigation of MR-NavQ95" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started/mr-navq95-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/camera/index.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/ethernet/index.html">Ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/modem/index.html">Cellular Modem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/eiq-neutron-npu/index.html">eIQ Neutron NPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/ara-240-dnpu/index.html">ARA-240 DNPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application-notes/remote-id-transmitter/bluetooth-remote-id-transmitter.html">Remote ID Transmitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../middleware/index.html">Middleware</a><input aria-label="Toggle navigation of Middleware" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../middleware/ros2/index.html">ROS2</a><input aria-label="Toggle navigation of ROS2" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../middleware/ros2/ros2-setup.html">ROS2 Setup on NavQ95</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../middleware/ros2/ros2-multinode.html">ROS2 Multinode on NavQ95</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../mr-vmu-tropic/index.html">MR-VMU-Tropic</a><input aria-label="Toggle navigation of MR-VMU-Tropic" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mr-vmu-tropic/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-vmu-tropic/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/getting-started/mr-vmu-tropic-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-vmu-tropic/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/application-notes/fuse-programming/index.html">Programming Boot Configuration Fuses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-vmu-tropic/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-vmu-tropic/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../mr-mcxn-t1/index.html">MR-MCXN-T1</a><input aria-label="Toggle navigation of MR-MCXN-T1" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mr-mcxn-t1/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-mcxn-t1/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/getting-started/mr-mcxn-t1-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/shields/io.html">MR-MCXN-T1-IO input/output shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/shields/f9p.html">MR-MCXN-T1-F9P GPS/GNSS RTK shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/shields/ofl.html">MR-MCXN-T1-OFL optical-flow shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-mcxn-t1/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-mcxn-t1/application-notes/zenoh/index.html">Zenoh Communication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../mr-esc-am32-mcxa133/index.html">MR-ESC-AM32</a><input aria-label="Toggle navigation of MR-ESC-AM32" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mr-esc-am32-mcxa133/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-esc-am32-mcxa133/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/getting-started/mr-esc-am32-mcxa133-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/board-components.html">Board components and connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/firmware-features.html">Firmware features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mr-esc-am32-mcxa133/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mr-esc-am32-mcxa133/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../_sources/platforms/mr-navq95/user-manual/installing-software-tools.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="installing-and-configuring-software-tools">
+<h1>Installing and configuring software tools<a class="headerlink" href="#installing-and-configuring-software-tools" title="Link to this heading">¶</a></h1>
+<p>This section describes how to obtain or build the two images the MR-NavQ95 runs — the Cortex-A Linux image and the Cortex-M RTOS firmware — and how to manage the device-tree overlays applied at boot.</p>
+<section id="getting-the-cortex-a-linux-image">
+<h2>Getting the Cortex-A Linux image<a class="headerlink" href="#getting-the-cortex-a-linux-image" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><p>Host PC: An Ubuntu PC is assumed for all steps on this page.</p>
+</div></blockquote>
+<p>There are two ways to obtain the Linux image for the MR-NavQ95:</p>
+<section id="option-1-download-the-pre-built-image">
+<h3>Option 1: Download the Pre-built Image<a class="headerlink" href="#option-1-download-the-pre-built-image" title="Link to this heading">¶</a></h3>
+<p>Follow the <a class="reference external" href="https://github.com/nxp-robotics/robotics-sdk/blob/robotics-0.7.0/README.md" rel="noreferer noopener" target="_blank">NXP Robotic Platforms SDK README</a> to set up the SDK and download the images. The Cortex-A Linux image will be located at:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">west_topdir</span><span class="o">&gt;/</span><span class="nb">bin</span><span class="o">/</span><span class="n">navq95</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">imx</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">robotics</span><span class="o">-</span><span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">.</span><span class="n">rootfs</span><span class="o">-&lt;</span><span class="n">timestamp</span><span class="o">&gt;.</span><span class="n">wic</span><span class="o">.</span><span class="n">zst</span>
+</pre></div>
+</div>
+</section>
+<section id="option-2-build-from-source-yocto">
+<h3>Option 2: Build from Source (Yocto)<a class="headerlink" href="#option-2-build-from-source-yocto" title="Link to this heading">¶</a></h3>
+<p>Build the image from source using the Yocto build system. See <a class="reference internal" href="#building-the-cortex-a-linux-image-from-source"><span class="std std-ref">Building the Yocto Image for MR-NavQ95</span></a> for the full build instructions.</p>
+<p>The output image will be located in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">yocto_dir</span><span class="o">&gt;/</span><span class="n">build</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">deploy</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">/</span><span class="n">imx</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">robotics</span><span class="o">-</span><span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">.</span><span class="n">rootfs</span><span class="o">-&lt;</span><span class="n">timestamp</span><span class="o">&gt;.</span><span class="n">wic</span><span class="o">.</span><span class="n">zst</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<blockquote>
+<div><p>Note: The <code class="docutils literal notranslate"><span class="pre">.wic</span></code> image bundles the M7 Cortex-M firmware alongside the Linux root filesystem. By default, the M7 core runs MCUboot loaded directly from the core’s TCM. To replace the M7 firmware with a custom RTOS image, see <a class="reference internal" href="configuring-the-hardware.html#flashing-the-cortex-m-rtos-firmware"><span class="std std-ref">Flashing the Cortex-M RTOS Firmware</span></a>.</p>
+</div></blockquote>
+<p>Once the image is available, proceed to <a class="reference internal" href="configuring-the-hardware.html#flashing-the-cortex-a-linux-image"><span class="std std-ref">Flashing the Cortex-A Linux Image</span></a> to flash it to the board.</p>
+</section>
+</section>
+<section id="building-the-cortex-a-linux-image-from-source">
+<h2>Building the Cortex-A Linux image from source<a class="headerlink" href="#building-the-cortex-a-linux-image-from-source" title="Link to this heading">¶</a></h2>
+<p>This section describes the steps to build the Yocto image for the MR-NavQ95 platform from source.</p>
+<section id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h3>
+<p>Before starting, ensure the host machine meets the following requirements:</p>
+<ul class="simple">
+<li><p>OS: Ubuntu 22.04 or later (recommended)</p></li>
+<li><p>Disk space: At least 300 GB of free space for a full Yocto build</p></li>
+<li><p>RAM: 16 GB minimum recommended</p></li>
+</ul>
+<section id="install-required-host-packages">
+<h4>1. Install Required Host Packages<a class="headerlink" href="#install-required-host-packages" title="Link to this heading">¶</a></h4>
+<p>Install the required host packages:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>chrpath<span class="w"> </span>cpio<span class="w"> </span>debianutils<span class="w"> </span>diffstat<span class="w"> </span>file<span class="w"> </span>gawk<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>gcc<span class="w"> </span>git<span class="w"> </span>iputils-ping<span class="w"> </span>libacl1<span class="w"> </span>libcrypt-dev<span class="w"> </span>locales<span class="w"> </span>python3<span class="w"> </span>python3-git<span class="w"> </span>python3-jinja2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>python3-pexpect<span class="w"> </span>python3-pip<span class="w"> </span>python3-subunit<span class="w"> </span>socat<span class="w"> </span>texinfo<span class="w"> </span>unzip<span class="w"> </span>wget<span class="w"> </span>xz-utils<span class="w"> </span>zstd<span class="w"> </span>efitools
+</pre></div>
+</div>
+</section>
+<section id="install-the-repo-tool">
+<h4>2. Install the Repo Tool<a class="headerlink" href="#install-the-repo-tool" title="Link to this heading">¶</a></h4>
+<p>Install the <code class="docutils literal notranslate"><span class="pre">repo</span></code> tool if not already present:</p>
+<ol class="arabic">
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">bin</span></code> folder in the home directory and download <code class="docutils literal notranslate"><span class="pre">repo</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>~/bin
+curl<span class="w"> </span>https://storage.googleapis.com/git-repo-downloads/repo<span class="w"> </span>&gt;<span class="w"> </span>~/bin/repo
+chmod<span class="w"> </span>a+x<span class="w"> </span>~/bin/repo
+</pre></div>
+</div>
+</li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">~/bin</span></code> to the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> by appending the following line to <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>~/bin:<span class="nv">$PATH</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="steps">
+<h3>Steps<a class="headerlink" href="#steps" title="Link to this heading">¶</a></h3>
+<section id="set-up-the-yocto-project">
+<h4>1. Set Up the Yocto Project<a class="headerlink" href="#set-up-the-yocto-project" title="Link to this heading">¶</a></h4>
+<p>Create a working directory, initialize the manifest repository, and sync all required layers:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>imx-yocto-bsp
+<span class="nb">cd</span><span class="w"> </span>imx-yocto-bsp
+repo<span class="w"> </span>init<span class="w"> </span>-u<span class="w"> </span>https://github.com/nxp-robotics/robotics-linux-manifest.git<span class="w"> </span>-b<span class="w"> </span>robotics-0.7.0<span class="w"> </span>-m<span class="w"> </span>imx-6.18.20-2.0.0_wrynose.xml
+repo<span class="w"> </span>sync
+</pre></div>
+</div>
+</section>
+<section id="build-the-image">
+<h4>2. Build the Image<a class="headerlink" href="#build-the-image" title="Link to this heading">¶</a></h4>
+<p>Source the release setup script to configure the build environment, then kick off the BitBake build:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">DISTRO</span><span class="o">=</span>imx-desktop-xwayland<span class="w"> </span><span class="nv">MACHINE</span><span class="o">=</span>imx95-navqdesktop<span class="w"> </span><span class="nb">source</span><span class="w"> </span>imx-setup-release.sh<span class="w"> </span>-b<span class="w"> </span>build
+bitbake<span class="w"> </span>imx-image-robotics
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note: The build may take a significant amount of time depending on the host machine’s resources. The output image will be located in <code class="docutils literal notranslate"><span class="pre">build/tmp/deploy/images/imx95-navq/</span></code>.</p>
+</div></blockquote>
+<p>Once the build completes, proceed to <a class="reference internal" href="configuring-the-hardware.html#flashing-the-cortex-a-linux-image"><span class="std std-ref">Flashing the Cortex-A Linux Image</span></a> to write the image to the board.</p>
+</section>
+</section>
+</section>
+<section id="getting-the-cortex-m-rtos-firmware">
+<h2>Getting the Cortex-M RTOS firmware<a class="headerlink" href="#getting-the-cortex-m-rtos-firmware" title="Link to this heading">¶</a></h2>
+<p>There are two ways to obtain the M7 RTOS firmware for the MR-NavQ95:</p>
+<section id="id1">
+<h3>Option 1: Download the Pre-built Image<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>Follow the <a class="reference external" href="https://github.com/nxp-robotics/robotics-sdk/blob/robotics-0.7.0/README.md" rel="noreferer noopener" target="_blank">NXP Robotic Platforms SDK README</a> to set up the SDK and download the images. The Cortex-M firmware will be located at:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;west_topdir&gt;/bin/navq95/realtime/
+├── nxp_imx95_default.mcuboot.bin   # TCM image, signed (use this for default deployment)
+└── nxp_imx95_ddr.bin               # DDR image, unsigned
+</pre></div>
+</div>
+<blockquote>
+<div><p>Use the signed <code class="docutils literal notranslate"><span class="pre">nxp_imx95_default.mcuboot.bin</span></code> for the default/TCM image — MCUboot verifies it on boot. The DDR image is intentionally unsigned.</p>
+</div></blockquote>
+</section>
+<section id="option-2-build-from-source">
+<h3>Option 2: Build from Source<a class="headerlink" href="#option-2-build-from-source" title="Link to this heading">¶</a></h3>
+<p>Use the NXP Robotic Platforms SDK to build the RTOS firmware from source:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>sdk<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>navq95<span class="w"> </span>--stack<span class="w"> </span>px4
+</pre></div>
+</div>
+<p>The output firmware will be located in the <code class="docutils literal notranslate"><span class="pre">build/</span></code> directory and also copied to <code class="docutils literal notranslate"><span class="pre">bin/navq95/realtime/</span></code>.</p>
+<hr class="docutils" />
+<p>Once the firmware is available, proceed to <a class="reference internal" href="configuring-the-hardware.html#flashing-the-cortex-m-rtos-firmware"><span class="std std-ref">Flashing the Cortex-M RTOS Firmware</span></a> to flash it to the board.</p>
+</section>
+</section>
+<section id="device-tree-overlays-in-u-boot">
+<h2>Device-tree overlays in U-Boot<a class="headerlink" href="#device-tree-overlays-in-u-boot" title="Link to this heading">¶</a></h2>
+<p>The MR-NavQ95 board uses a single base device tree blob (<code class="docutils literal notranslate"><span class="pre">imx95-navq.dtb</span></code>)
+combined with per-connector <code class="docutils literal notranslate"><span class="pre">.dtbo</span></code> overlay files that are applied at boot time by U-Boot.
+This design allows cameras, displays, or Ethernet adapters to be swapped on the board’s B2B connectors
+without rebuilding the kernel.</p>
+<hr class="docutils" />
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h3>
+<p>At boot, U-Boot:</p>
+<ol class="arabic simple">
+<li><p>Loads the base DTB from the boot medium into memory at <code class="docutils literal notranslate"><span class="pre">fdt_addr_r</span></code>.</p></li>
+<li><p>Resizes the in-memory DTB to leave room for overlay data.</p></li>
+<li><p>Iterates over the three connector overlay variables (<code class="docutils literal notranslate"><span class="pre">csi_b2b</span></code>, <code class="docutils literal notranslate"><span class="pre">dsicsi_b2b</span></code>, <code class="docutils literal notranslate"><span class="pre">eth_b2b</span></code>).</p></li>
+<li><p>For each variable that is not <code class="docutils literal notranslate"><span class="pre">none</span></code> and not empty, loads the named <code class="docutils literal notranslate"><span class="pre">.dtbo</span></code> file into
+<code class="docutils literal notranslate"><span class="pre">ov_addr_r</span></code> and calls <code class="docutils literal notranslate"><span class="pre">fdt</span> <span class="pre">apply</span></code> to merge the overlay into the in-memory DTB.</p></li>
+<li><p>Boots the kernel with the fully patched device tree.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="environment-variables">
+<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading">¶</a></h3>
+<p>The relevant variables are defined in
+<code class="docutils literal notranslate"><span class="pre">board/nxp/imx95_evk/imx95_evk.env</span></code> under the <code class="docutils literal notranslate"><span class="pre">CONFIG_TARGET_IMX95_NAVQ</span></code> guard.</p>
+<section id="overlay-selection-variables">
+<h4>Overlay selection variables<a class="headerlink" href="#overlay-selection-variables" title="Link to this heading">¶</a></h4>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Connector / function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">csi_b2b</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">imx95-navq-csi-imx219.dtbo</span></code></p></td>
+<td><p>Port A — CSI-only (camera)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dsicsi_b2b</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">imx95-navq-dsicsi-imx219.dtbo</span></code></p></td>
+<td><p>Port B — DSI/CSI combo</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">eth_b2b</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">imx95-navq-sja1110a.dtbo</span></code></p></td>
+<td><p>Ethernet B2B (SJA1110A switch)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Set any variable to <code class="docutils literal notranslate"><span class="pre">none</span></code> (or leave it empty) to skip that overlay entirely.</p>
+</section>
+<section id="helper-commands">
+<h4>Helper commands<a class="headerlink" href="#helper-commands" title="Link to this heading">¶</a></h4>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>What it does</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">apply_one</span></code></p></td>
+<td><p>Loads <code class="docutils literal notranslate"><span class="pre">${ovfile}</span></code> using <code class="docutils literal notranslate"><span class="pre">${get_cmd}</span></code>, then calls <code class="docutils literal notranslate"><span class="pre">fdt</span> <span class="pre">apply</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">apply_overlays</span></code></p></td>
+<td><p>Sets the FDT address, resizes the blob, then runs <code class="docutils literal notranslate"><span class="pre">apply_one</span></code> for each active connector variable</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">boot_os</span></code></p></td>
+<td><p>Runs <code class="docutils literal notranslate"><span class="pre">apply_overlays</span></code>, then boots the kernel with <code class="docutils literal notranslate"><span class="pre">booti</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">modules_help</span></code></p></td>
+<td><p>Prints the list of available <code class="docutils literal notranslate"><span class="pre">.dtbo</span></code> files for each connector</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="how-apply-overlays-works">
+<h3>How <code class="docutils literal notranslate"><span class="pre">apply_overlays</span></code> Works<a class="headerlink" href="#how-apply-overlays-works" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>apply_overlays=
+    fdt addr ${fdt_addr_r};
+    fdt resize 0x20000;
+    echo "NavQ-B connectors: csi_b2b=${csi_b2b} dsicsi_b2b=${dsicsi_b2b}";
+    if test "${csi_b2b}" != none; then if test "${csi_b2b}" != ""; then
+        setenv ovfile ${csi_b2b}; run apply_one; fi; fi;
+    if test "${dsicsi_b2b}" != none; then if test "${dsicsi_b2b}" != ""; then
+        setenv ovfile ${dsicsi_b2b}; run apply_one; fi; fi;
+    if test "${eth_b2b}" != none; then if test "${eth_b2b}" != ""; then
+        setenv ovfile ${eth_b2b}; run apply_one; fi; fi;
+</pre></div>
+</div>
+<p>For each connector, <code class="docutils literal notranslate"><span class="pre">apply_one</span></code> does:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>apply_one=
+    echo "  overlay: ${ovfile}";
+    if ${get_cmd} ${ov_addr_r} ${ovfile}; then
+        if fdt apply ${ov_addr_r}; then true;
+        else echo "  WARN: failed to apply ${ovfile}"; fi;
+    else echo "  WARN: ${ovfile} not found on boot partition"; fi;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">${get_cmd}</span></code> is set by the active boot path (<code class="docutils literal notranslate"><span class="pre">mmcboot</span></code> sets it to
+<code class="docutils literal notranslate"><span class="pre">fatload</span> <span class="pre">mmc</span> <span class="pre">${mmcdev}:${mmcpart}</span></code>, while <code class="docutils literal notranslate"><span class="pre">netboot</span></code> sets it to <code class="docutils literal notranslate"><span class="pre">dhcp</span></code> or <code class="docutils literal notranslate"><span class="pre">tftp</span></code>).
+This ensures overlay loading works for both MMC and network boot.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fdt</span> <span class="pre">apply</span></code> merges the overlay blob at <code class="docutils literal notranslate"><span class="pre">ov_addr_r</span></code> into the base DTB already
+set active via <code class="docutils literal notranslate"><span class="pre">fdt</span> <span class="pre">addr</span></code>. Phandle fixups are performed automatically by U-Boot’s
+<code class="docutils literal notranslate"><span class="pre">fdt_overlay_apply_verbose()</span></code> (see <code class="docutils literal notranslate"><span class="pre">boot/fdt_support.c</span></code>).</p></li>
+</ul>
+<section id="overlay-application-sequence">
+<h4>Overlay application sequence<a class="headerlink" href="#overlay-application-sequence" title="Link to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mmcboot
+  |-- fatload mmc  -&gt;  loadaddr  (kernel Image)
+  |-- fatload mmc  -&gt;  fdt_addr_r  (imx95-navq.dtb)
+  `-- boot_os
+        |-- apply_overlays
+        |     |-- fdt addr ${fdt_addr_r}
+        |     |-- fdt resize 0x20000
+        |     |-- apply_one  (csi_b2b overlay)
+        |     |     |-- fatload mmc -&gt; ov_addr_r  (.dtbo)
+        |     |     `-- fdt apply ${ov_addr_r}
+        |     |-- apply_one  (dsicsi_b2b overlay)
+        |     `-- apply_one  (eth_b2b overlay)
+        `-- booti ${loadaddr} - ${fdt_addr_r}
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="selecting-a-different-module">
+<h3>Selecting a Different Module<a class="headerlink" href="#selecting-a-different-module" title="Link to this heading">¶</a></h3>
+<p>From the U-Boot prompt, run <code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">modules_help</span></code> to see all available overlays:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">run</span> <span class="n">modules_help</span>
+<span class="n">NavQ</span><span class="o">-</span><span class="n">B</span> <span class="n">module</span> <span class="n">selection</span> <span class="p">(</span><span class="n">one</span> <span class="o">.</span><span class="n">dtbo</span> <span class="n">per</span> <span class="n">connector</span><span class="p">):</span>
+  <span class="n">csi_b2b</span>    <span class="p">(</span><span class="n">port</span> <span class="n">A</span><span class="p">,</span> <span class="n">CSI</span><span class="o">-</span><span class="n">only</span><span class="p">):</span> <span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">-</span><span class="n">csi</span><span class="o">-</span><span class="p">{</span><span class="n">imx219</span><span class="p">,</span><span class="n">imx477</span><span class="p">}</span><span class="o">.</span><span class="n">dtbo</span> <span class="o">|</span> <span class="n">none</span>
+  <span class="n">dsicsi_b2b</span> <span class="p">(</span><span class="n">port</span> <span class="n">B</span><span class="p">,</span> <span class="n">DSI</span><span class="o">/</span><span class="n">CSI</span><span class="p">):</span> <span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">-</span><span class="n">dsicsi</span><span class="o">-</span><span class="p">{</span><span class="n">imx219</span><span class="p">,</span><span class="n">imx477</span><span class="p">,</span><span class="n">disp</span><span class="o">-</span><span class="mi">7</span><span class="n">inch</span><span class="p">,</span><span class="n">disp</span><span class="o">-</span><span class="mi">5</span><span class="n">inch</span><span class="p">,</span><span class="n">lt8912b</span><span class="p">}</span><span class="o">.</span><span class="n">dtbo</span> <span class="o">|</span> <span class="n">none</span>
+  <span class="n">current</span><span class="p">:</span> <span class="n">csi_b2b</span><span class="o">=</span><span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">-</span><span class="n">csi</span><span class="o">-</span><span class="n">imx219</span><span class="o">.</span><span class="n">dtbo</span> <span class="n">dsicsi_b2b</span><span class="o">=</span><span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">-</span><span class="n">dsicsi</span><span class="o">-</span><span class="n">imx219</span><span class="o">.</span><span class="n">dtbo</span>
+  <span class="n">example</span><span class="p">:</span> <span class="n">setenv</span> <span class="n">dsicsi_b2b</span> <span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">-</span><span class="n">dsicsi</span><span class="o">-</span><span class="n">disp</span><span class="o">-</span><span class="mi">7</span><span class="n">inch</span><span class="o">.</span><span class="n">dtbo</span><span class="p">;</span> <span class="n">saveenv</span>
+</pre></div>
+</div>
+<p>To permanently switch, for example, port B to an imx477 camera:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">setenv</span> <span class="n">dsicsi_b2b</span> <span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">-</span><span class="n">dsicsi</span><span class="o">-</span><span class="n">imx477</span><span class="o">.</span><span class="n">dtbo</span>
+<span class="o">=&gt;</span> <span class="n">saveenv</span>
+<span class="o">=&gt;</span> <span class="n">reset</span>
+</pre></div>
+</div>
+<p>To disable a connector overlay (e.g. no camera on port A):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">setenv</span> <span class="n">csi_b2b</span> <span class="n">none</span>
+<span class="o">=&gt;</span> <span class="n">saveenv</span>
+<span class="o">=&gt;</span> <span class="n">reset</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="adding-a-new-overlay">
+<h3>Adding a New Overlay<a class="headerlink" href="#adding-a-new-overlay" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p>Create the DTS overlay source (<code class="docutils literal notranslate"><span class="pre">.dtso</span></code>) for the target
+hardware and build it to produce a <code class="docutils literal notranslate"><span class="pre">.dtbo</span></code> binary.</p></li>
+<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">.dtbo</span></code> file to the FAT boot partition of the eMMC or SD card
+(the same partition that holds <code class="docutils literal notranslate"><span class="pre">Image</span></code> and <code class="docutils literal notranslate"><span class="pre">imx95-navq.dtb</span></code>).</p></li>
+<li><p>At the U-Boot prompt, point the appropriate connector variable to the new file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=&gt;</span> <span class="n">setenv</span> <span class="n">csi_b2b</span> <span class="n">imx95</span><span class="o">-</span><span class="n">navq</span><span class="o">-</span><span class="n">csi</span><span class="o">-</span><span class="n">mymodule</span><span class="o">.</span><span class="n">dtbo</span>
+<span class="o">=&gt;</span> <span class="n">saveenv</span>
+</pre></div>
+</div>
+</li>
+<li><p>Reboot — <code class="docutils literal notranslate"><span class="pre">apply_overlays</span></code> will load and apply the overlay automatically.</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+<div class="related-pages">
+  <a class="next-page" href="configuring-the-hardware.html">
+    <div class="page-info">
+      <div class="context"><span>Next</span></div>
+      <div class="title">Configuring the hardware</div>
+    </div>
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+  </a>
+  <a class="prev-page" href="hardware.html">
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+    <div class="page-info">
+      <div class="context"><span>Previous</span></div>
+      
+      <div class="title">MR-NAVQ95 hardware reference</div>
+      
+    </div>
+  </a>
+</div>
+<div class="bottom-of-page">
+  <div class="left-details">
+    <div class="copyright">Copyright 2026 NXP</div>
+    Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+    
+    <a href="https://github.com/pradyunsg/furo">Furo</a>
+    
+  </div>
+  <div class="right-details">
+  </div>
+</div>
+
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Installing and configuring software tools</a><ul>
+<li><a class="reference internal" href="#getting-the-cortex-a-linux-image">Getting the Cortex-A Linux image</a><ul>
+<li><a class="reference internal" href="#option-1-download-the-pre-built-image">Option 1: Download the Pre-built Image</a></li>
+<li><a class="reference internal" href="#option-2-build-from-source-yocto">Option 2: Build from Source (Yocto)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-the-cortex-a-linux-image-from-source">Building the Cortex-A Linux image from source</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li><a class="reference internal" href="#install-required-host-packages">1. Install Required Host Packages</a></li>
+<li><a class="reference internal" href="#install-the-repo-tool">2. Install the Repo Tool</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#steps">Steps</a><ul>
+<li><a class="reference internal" href="#set-up-the-yocto-project">1. Set Up the Yocto Project</a></li>
+<li><a class="reference internal" href="#build-the-image">2. Build the Image</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#getting-the-cortex-m-rtos-firmware">Getting the Cortex-M RTOS firmware</a><ul>
+<li><a class="reference internal" href="#id1">Option 1: Download the Pre-built Image</a></li>
+<li><a class="reference internal" href="#option-2-build-from-source">Option 2: Build from Source</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#device-tree-overlays-in-u-boot">Device-tree overlays in U-Boot</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a><ul>
+<li><a class="reference internal" href="#overlay-selection-variables">Overlay selection variables</a></li>
+<li><a class="reference internal" href="#helper-commands">Helper commands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-apply-overlays-works">How <code class="docutils literal notranslate"><span class="pre">apply_overlays</span></code> Works</a><ul>
+<li><a class="reference internal" href="#overlay-application-sequence">Overlay application sequence</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#selecting-a-different-module">Selecting a Different Module</a></li>
+<li><a class="reference internal" href="#adding-a-new-overlay">Adding a New Overlay</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/pinout-hover.js?v=f98146ba"></script>
+    </body>
+</html>

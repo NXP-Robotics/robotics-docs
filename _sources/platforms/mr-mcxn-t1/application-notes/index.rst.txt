@@ -1,0 +1,13 @@
+Application Notes
+=================
+
+Hardware- and feature-level notes for the MR-MCXN-T1 node: the hardware
+architecture and reference design of the Hub and the IO, F9P, and OFL add-on
+boards, and the zenoh transport bridge for publishing sensor samples to a
+router or PX4.
+
+.. toctree::
+   :maxdepth: 1
+
+   Hardware Architecture and Reference Design <hardware-overview/index>
+   Zenoh Communication <zenoh/index>

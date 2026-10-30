@@ -1,0 +1,52 @@
+# MR-VMU-Tropic overview
+
+The MR-VMU-Tropic is the flight-controller (vehicle management unit) reference design of the NXP
+Mobile Robotics family. It is a PX4 / NuttX autopilot built around an NXP i.MX RT1064 crossover
+MCU, providing the real-time flight-control and I/O functions of a drone or mobile robot. The board
+is intended as a validated flight-controller starting point that customers can evaluate, reproduce,
+and adapt for their own vehicles.
+
+The i.MX RT1064 is an NXP crossover MCU based on an Arm Cortex-M7 core with integrated flash and
+on-chip real-time clock. It runs the PX4 flight stack on the NuttX RTOS and drives the motor
+outputs, sensor interfaces, and communication links required for autonomous flight and motion
+control.
+
+## Functional block diagram
+
+  
+
+```{image} resources/mr-vmu-tropic-block-diagram.png
+:alt: MR-VMU-Tropic functional block diagram
+:width: 840px
+:align: center
+```
+
+
+
+Figure 1. MR-VMU-Tropic functional block diagram
+
+## Main components
+
+The reference design integrates the following main NXP components and interfaces:
+
+- i.MX RT1064 crossover MCU (Arm Cortex-M7) with internal RTC
+- 3.3 V regulation from a 9 V to 52 V input through the NXP PM02DHV power module
+- Redundant inertial sensors, magnetometer, and a Bosch BMP390 or BMP388 barometer
+- CAN-FD / DroneCAN through the NXP TJA1462 transceiver
+- 100BASE-T1 automotive Ethernet through the NXP TJA1103 PHY
+- UART telemetry, GPS / safety, and RC / ELRS inputs
+- RC-PWM / DShot motor outputs and SPI OSD expansion
+- USB-C console and SWD / JTAG debug through the Dronecode debug connector
+
+NXP also provides the complete hardware Bill of Materials and design files, enabling customers to
+evaluate, reproduce, and customize the reference platform for their own products.
+
+For overview information, documentation, software, tools, and ordering details, see the
+[MR-VMU-Tropic product page](https://www.nxp.com/design/design-center/development-boards-and-designs/MR-VMU-TROPIC)
+on the NXP web site.
+
+> Note: The barometric pressure sensor is either a Bosch BMP390 or a Bosch BMP388, depending on
+> component availability at manufacturing time. The BMP388 is a drop-in, functionally equivalent
+> replacement for the BMP390; the two parts differ only in minor specifications that do not affect
+> the flight-controller use case. The software supports both sensors, so no user action is required
+> regardless of which part is fitted.

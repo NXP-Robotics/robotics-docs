@@ -1,0 +1,1142 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html"><link rel="next" title="MR-MCXN-T1 Zenoh Communication Modes" href="../zenoh/index.html"><link rel="prev" title="Application Notes" href="../index.html">
+        <link rel="prefetch" href="../../../../_static/nxp_logo_small.png" as="image">
+
+    <link rel="shortcut icon" href="../../../../_static/nxp_logo_small.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>MR-MCXN-T1 Hardware Architecture and Reference Design - NXP Robotic Platforms</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d6d0172c" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --font-stack: Poppins, sans-serif;
+  --font-stack--headings: Poppins SemiBold, Poppins, sans-serif;
+  --color-foreground-primary: #262626;
+  --color-foreground-secondary: #262626;
+  --color-sidebar-link-text--top-level: #262626;
+  --color-brand-primary: #0EAFE0;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --sidebar-item-spacing-horizontal: 0.6rem;
+  --sidebar-item-spacing-vertical: 0.3rem;
+  --sidebar-caption-font-size: 0.7rem;
+  --admonition-font-size: 0.7rem;
+  --color-sidebar-background: #ffffff;
+  --color-background-primary: #fafafb;
+  --color-background-secondary: #ffffff;
+  --color-sidebar-item-background--hover: #dff4fa;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #BFBFBF;
+  --color-brand-content: #0EAFE0;
+  --color-brand-visited: #0EAFE0;
+  --color-foreground-primary: #e2e2e2;
+  --color-foreground-secondary: #e2e2e2;
+  --color-sidebar-link-text--top-level: #e2e2e2;
+  --color-sidebar-background: #121212;
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #121212;
+  --color-sidebar-item-background--hover: #292929;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">NXP Robotic Platforms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../../_static/nxp_logo_small.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">NXP Robotic Platforms</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview/index.html">Robotic Platforms SDK Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../system/system-solution-an/index.html">System Level Integration Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/nxp-robotics-sdk-release-notes.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sdk/index.html">SDK Setup and Build</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-navq95/index.html">MR-NavQ95</a><input aria-label="Toggle navigation of MR-NavQ95" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-navq95/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/getting-started/mr-navq95-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/camera/index.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/ethernet/index.html">Ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/modem/index.html">Cellular Modem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/eiq-neutron-npu/index.html">eIQ Neutron NPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/ara-240-dnpu/index.html">ARA-240 DNPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/application-notes/remote-id-transmitter/bluetooth-remote-id-transmitter.html">Remote ID Transmitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/middleware/index.html">Middleware</a><input aria-label="Toggle navigation of Middleware" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/index.html">ROS2</a><input aria-label="Toggle navigation of ROS2" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/ros2-setup.html">ROS2 Setup on NavQ95</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../mr-navq95/middleware/ros2/ros2-multinode.html">ROS2 Multinode on NavQ95</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-navq95/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-navq95/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/index.html">MR-VMU-Tropic</a><input aria-label="Toggle navigation of MR-VMU-Tropic" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-vmu-tropic/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/getting-started/mr-vmu-tropic-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/application-notes/fuse-programming/index.html">Programming Boot Configuration Fuses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/index.html">Flight Stack</a><input aria-label="Toggle navigation of Flight Stack" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-vmu-tropic/flight-stack/px4/px4-documentation.html">PX4 Documentation Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">MR-MCXN-T1</a><input aria-label="Toggle navigation of MR-MCXN-T1" checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started/mr-mcxn-t1-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/shields/io.html">MR-MCXN-T1-IO input/output shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/shields/f9p.html">MR-MCXN-T1-F9P GPS/GNSS RTK shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/shields/ofl.html">MR-MCXN-T1-OFL optical-flow shield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" checked="" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Hardware Architecture and Reference Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zenoh/index.html">Zenoh Communication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/index.html">MR-ESC-AM32</a><input aria-label="Toggle navigation of MR-ESC-AM32" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/getting-started/index.html">Getting Started</a><input aria-label="Toggle navigation of Getting Started" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/getting-started/mr-esc-am32-mcxa133-quick-start.html">Deploy and Run Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/index.html">User Manual</a><input aria-label="Toggle navigation of User Manual" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/finding-resources.html">Finding platform resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/getting-ready.html">Getting ready</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/hardware.html">Getting to know the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/board-components.html">Board components and connectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/firmware-features.html">Firmware features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/installing-software-tools.html">Installing and configuring software tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/configuring-the-hardware.html">Configuring the hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/abbreviations.html">Abbreviations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/user-manual/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/application-notes/index.html">Application Notes</a><input aria-label="Toggle navigation of Application Notes" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mr-esc-am32-mcxa133/application-notes/hardware-overview/index.html">Hardware Architecture and Reference Design</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../_sources/platforms/mr-mcxn-t1/application-notes/hardware-overview/index.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="mr-mcxn-t1-hardware-architecture-and-reference-design">
+<h1>MR-MCXN-T1 Hardware Architecture and Reference Design<a class="headerlink" href="#mr-mcxn-t1-hardware-architecture-and-reference-design" title="Link to this heading">¶</a></h1>
+<p>The MR-MCXN-T1 is a compact, open hardware reference design for distributed sensing, connectivity, and edge processing in mobile robotics systems. It is based on the cost-effective NXP MCXN947 microcontroller and is intended to act as an intelligent 100BASE-T1 Ethernet sensor and actuator node. This application note describes the system architecture, board functions, electrical interfaces, connectors, power distribution, and hardware integration considerations for hardware engineers integrating the MR-MCXN-T1 into a robotics system.</p>
+<p>This document covers the MR-MCXN-T1 Hub and the following add-on boards:</p>
+<ul class="simple">
+<li><p>MR-MCXN-T1 Hub: main hub board for the MR-MCXN-T1 system</p></li>
+<li><p>MR-MCXN-T1-IO: input/output shield with Dronecode standard connectors</p></li>
+<li><p>MR-MCXN-T1-F9P: GPS/GNSS shield with RTK capability</p></li>
+<li><p>MR-MCXN-T1-OFL: optical-flow shield with distance sensor and optical-flow measurement</p></li>
+</ul>
+<p>This document is hardware focused. Software is referenced only where needed to explain the intended use of a hardware function. Detailed software installation, configuration, APIs, middleware, and application development are covered in the <a class="reference internal" href="#../../user-manual/index.md"><span class="xref myst">MR-MCXN-T1 User Manual</span></a> and the NXP Robotic Platforms SDK documentation.</p>
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<section id="the-mr-mcxn-t1-hub">
+<h3>1.1 The MR-MCXN-T1 Hub<a class="headerlink" href="#the-mr-mcxn-t1-hub" title="Link to this heading">¶</a></h3>
+<p>The MR-MCXN-T1 node board, also referred to as the MR-MCXN-T1 Hub, is based on the cost-effective MCXN947 microcontroller and is intended to act as an intelligent 100BASE-T1 Ethernet sensor and actuator node. Supported example shield designs demonstrate several input/output use cases.</p>
+<p>The design demonstrates the convenience of a single-connector sensor node that carries both raw battery power and two-wire 100BASE-T1 Ethernet to a compact edge device. This approach simplifies distributed sensor placement on a robot by reducing wiring, keeping local processing close to the sensor, and sending data to a flight controller, companion computer, or ROS 2 system over Ethernet.</p>
+<p>The design intent is to provide a seamless Ethernet-connected node for roboticists using ROS 2. In this sense, the hardware can be considered the physical embodiment of a ROS 2 node.</p>
+<p>The key value of the design is the combination of the low-cost MCXN microcontroller, the 100BASE-T1 Ethernet interface, the wide-input-range power stage supporting typical robotics battery voltages up to 60 V, and the off-board connection to a sensor or actuator through an add-on board.</p>
+<p>A typical product implementation would likely flatten the Hub and add-on board into the smallest practical single-board solution. The additional interfaces provided on the Hub are intended primarily for evaluation and experimentation, as they can be included with minimal additional design overhead. A standalone Ethernet-to-CAN gateway is the only identified production-oriented exception.</p>
+</section>
+<section id="system-design-objectives">
+<h3>1.2 System design objectives<a class="headerlink" href="#system-design-objectives" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Provide an example of offloading hard real-time ROS 2 nodes to a low-cost MCU implementation for distributed robotic sensing and actuation.</p></li>
+<li><p>Combine direct battery power and two-wire 100BASE-T1 Ethernet in a streamlined node connection.</p></li>
+<li><p>Provide an efficient, ROS 2 developer-friendly Zephyr, ZROS, and Zenoh framework for hard real-time ROS 2 nodes, enabling developers to focus on sensor or actuator drivers while reusing the underlying RTOS and transport mechanisms.</p></li>
+<li><p>Act as the physical embodiment of a ROS 2 node.</p></li>
+</ul>
+</section>
+</section>
+<section id="system-hardware-architecture">
+<h2>2. System hardware architecture<a class="headerlink" href="#system-hardware-architecture" title="Link to this heading">¶</a></h2>
+<section id="system-overview">
+<h3>2.1 System overview<a class="headerlink" href="#system-overview" title="Link to this heading">¶</a></h3>
+<p>The MR-MCXN-T1 family consists of the Hub board and application-specific add-on boards. The Hub provides processing, Ethernet connectivity, power handling, and the common expansion interface. Each add-on board places a specific sensor or input/output function close to the MCXN947-based node.</p>
+</section>
+<section id="functional-partitioning">
+<h3>2.2 Functional partitioning<a class="headerlink" href="#functional-partitioning" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Hub board: provides the core processing, 100BASE-T1 connectivity, power distribution, debugging, and shield interface. Several additional interfaces were included for evaluation convenience because they could be implemented with minimal design overhead; however, they are generally superfluous to the intended node function and would normally be omitted from an optimized production design.</p></li>
+<li><p>IO board: an example actuator and general-purpose I/O shield that transforms the T1 node into an I/O interface using common robotics connectors; a production implementation would typically integrate the shield and Hub into an optimized single-board node.</p></li>
+<li><p>F9P board: an example GNSS sensor shield with RTK capability that transforms the T1 node into a precision-positioning node; a production implementation would typically integrate the shield and Hub into an optimized single-board node.</p></li>
+<li><p>OFL board: an example optical-flow and distance-sensor shield that transforms the T1 node into a local motion-sensing node; a production implementation would typically integrate the shield and Hub into an optimized single-board node.</p></li>
+</ul>
+</section>
+<section id="single-connector-node-concept">
+<h3>2.3 Single-connector node concept<a class="headerlink" href="#single-connector-node-concept" title="Link to this heading">¶</a></h3>
+<p>The node architecture reduces robot wiring by carrying raw battery power and two-wire 100BASE-T1 Ethernet to the local node on a single 4-pin connector. Power over Data Line (PoDL) was evaluated but rejected because power negotiation would add unnecessary complexity. In robotics systems, power distribution is typically managed by the system architect; a direct battery input therefore provides greater flexibility, higher current capability, and simpler circuitry. The resulting Power Adjacent to Ethernet (PAE) connection carries power and Ethernet through a rugged, latching four-pin connector. The Hub provides the local processing and interfaces required by the attached add-on board.</p>
+</section>
+<section id="hardware-boundaries">
+<h3>2.4 Hardware boundaries<a class="headerlink" href="#hardware-boundaries" title="Link to this heading">¶</a></h3>
+<p>Electrical limits, connector pin assignments, signal direction, power-domain relationships, and assembly options must be confirmed against the released schematic and bill of materials for the applicable board revision. This document provides a system-level hardware overview and should be used with the associated design files. The reference design demonstrates an implementation of the software framework, and its schematics may serve as a starting point; however, the hardware is expected to be adapted to the specific electrical requirements of the target application.</p>
+</section>
+</section>
+<section id="mr-mcxn-t1-hub-hardware">
+<h2>3. MR-MCXN-T1 Hub hardware<a class="headerlink" href="#mr-mcxn-t1-hub-hardware" title="Link to this heading">¶</a></h2>
+<section id="hardware-overview">
+<h3>3.1 Hardware overview<a class="headerlink" href="#hardware-overview" title="Link to this heading">¶</a></h3>
+<p>The MR-MCXN-T1 Hub is the central board in the product family. Its MCXN947 microcontroller performs local processing and manages the interfaces used by the Hub and attached add-on board. The Hub is intended to operate as a network-connected sensor or actuator node rather than as a standalone robot controller.</p>
+<a class="reference internal image-reference" href="../../../../_images/hub-block-diagram.png"><img alt="MR-MCXN-T1 Hub block diagram" class="align-center" src="../../../../_images/hub-block-diagram.png" style="width: 820px;" />
+</a>
+<p>Figure 1. MR-MCXN-T1 Hub block diagram</p>
+</section>
+<section id="processing-subsystem">
+<h3>3.2 Processing subsystem<a class="headerlink" href="#processing-subsystem" title="Link to this heading">¶</a></h3>
+<p>The processing subsystem is based on the NXP MCXN947 microcontroller. The Hub also includes an ICM-45686 accelerometer and gyroscope, a BMP581 pressure sensor, and a BMM350 magnetometer for evaluation and development. The selected MCU interfaces and pin assignments depend on the applicable board revision and Zephyr hardware configuration and should be confirmed against the released schematic and overlay files.</p>
+</section>
+<section id="base-t1-ethernet-interface">
+<h3>3.3 100BASE-T1 Ethernet interface<a class="headerlink" href="#base-t1-ethernet-interface" title="Link to this heading">¶</a></h3>
+<p>The Hub uses an NXP TJA1103 100BASE-T1 Ethernet PHY connected to the MCXN947 through RMII. The two-wire Ethernet pair is routed through the PAE connector together with the separate battery-power conductors. The physical interface, connector implementation, termination, and protection components form part of the hardware design and should be retained when the design is adapted.</p>
+<p>The 100BASE-T1 PHY schematic follows standard design practice. More detail can be found in the datasheet and application notes specific to the TJA1103. A common passive network configuration is used to provide filtering and ESD protection.</p>
+<a class="reference internal image-reference" href="../../../../_images/t1-pae-input-filter.png"><img alt="PAE connector and 100BASE-T1 input filtering" class="align-center" src="../../../../_images/t1-pae-input-filter.png" style="width: 820px;" />
+</a>
+<a class="reference internal image-reference" href="../../../../_images/t1-phy-passive-filter.png"><img alt="100BASE-T1 passive filtering and ESD interface" class="align-center" src="../../../../_images/t1-phy-passive-filter.png" style="width: 640px;" />
+</a>
+<p>Figure 2. 100BASE-T1 simple passive filtering and ESD interface</p>
+<p>The 100BASE-T1 Ethernet TJA1103 PHY drives two configurable status LEDs: D13 (green), typically used to indicate an established 100BASE-T1 link, and D12 (amber), typically used to indicate transmit and receive activity. The precise behavior is determined by the TJA1103 LED-output register configuration in software.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Reference</p></th>
+<th class="head"><p>Color</p></th>
+<th class="head"><p>Indication</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>D13</p></td>
+<td><p>Green</p></td>
+<td><p>Ethernet link status — illuminated when the 100BASE-T1 link is established.</p></td>
+</tr>
+<tr class="row-odd"><td><p>D12</p></td>
+<td><p>Amber</p></td>
+<td><p>Ethernet activity — flashes when Ethernet frames are transmitted or received.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="power-input-and-distribution">
+<h3>3.4 Power input and distribution<a class="headerlink" href="#power-input-and-distribution" title="Link to this heading">¶</a></h3>
+<p>The Hub accepts a 3S-to-12S battery input, up to 60 V, through the PAE node connection and includes reverse-polarity protection. Onboard conversion provides the local rails required by the Hub and attached shield. The verified shield supplies are:</p>
+<ul class="simple">
+<li><p>5 V at up to 1 A</p></li>
+<li><p>3.3 V at up to 500 mA</p></li>
+<li><p>1.8 V at up to 200 mA</p></li>
+</ul>
+<p>The following table describes the power-supply status indicators.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Reference</p></th>
+<th class="head"><p>Schematic name</p></th>
+<th class="head"><p>Color</p></th>
+<th class="head"><p>Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>D2</p></td>
+<td><p>USB VBUS</p></td>
+<td><p>Blue</p></td>
+<td><p>Indicates that the protected 5 V VBUS supply is present. The LED turns off if the associated load switch reports a fault condition.</p></td>
+</tr>
+<tr class="row-odd"><td><p>D3</p></td>
+<td><p>5V-IND</p></td>
+<td><p>Blue</p></td>
+<td><p>Indicates that the 5 V supply rail regulated from the power connector battery input is present. The LED turns off if the associated load switch reports a fault condition.</p></td>
+</tr>
+<tr class="row-even"><td><p>D4</p></td>
+<td><p>3V3-IND</p></td>
+<td><p>Blue</p></td>
+<td><p>Indicates that the 3.3 V supply rail is present.</p></td>
+</tr>
+<tr class="row-odd"><td><p>D5</p></td>
+<td><p>1V8-IND</p></td>
+<td><p>Blue</p></td>
+<td><p>Indicates that the 1.8 V supply rail is present.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Input limits, protection behavior, regulator ratings, available shield current, and sequencing requirements must be confirmed against the released schematic for the board revision in use.</p>
+<a class="reference internal image-reference" href="../../../../_images/wide-input-regulator.png"><img alt="Primary wide-input-voltage regulator" class="align-center" src="../../../../_images/wide-input-regulator.png" style="width: 640px;" />
+</a>
+<p>Figure 3. Primary wide-input-voltage regulator</p>
+</section>
+<section id="add-on-shield-board-to-board-interface">
+<h3>3.5 Add-on shield board-to-board interface<a class="headerlink" href="#add-on-shield-board-to-board-interface" title="Link to this heading">¶</a></h3>
+<p>A key focus of this design is to demonstrate the base 100BASE-T1 plus power functionality and then make provisions for easily prototyped additional small shield boards. This shield interface is provided through two DF40TC board-to-board connectors that supply shield power and configurable MCXN947 signals.</p>
+<p>The interface can expose FlexComm, I3C, GPIO, SDIO/SDHC, FlexIO, SmartDMA, ADC, comparator, operational-amplifier, DAC, FlexPWM, SAI, and PDM functions. Peripheral pin multiplexing and signal mapping are not fixed solely by the hardware; they depend on the active Zephyr configuration and are defined through Zephyr shield definitions and hardware overlays.</p>
+<p>Before attaching an add-on board, verify the applicable shield and overlay configuration together with connector orientation, pin assignment, voltage domain, current demand, and any mutually exclusive functions.</p>
+<blockquote>
+<div><p>Note: Do not interchange shields between Hubs without first confirming the active pin mapping, as configured assignments may not match the connected board.</p>
+</div></blockquote>
+<a class="reference internal image-reference" href="../../../../_images/df40-board-to-board.png"><img alt="DF40 board-to-board interfaces" class="align-center" src="../../../../_images/df40-board-to-board.png" style="width: 640px;" />
+</a>
+<p>Figure 4. DF40 board-to-board interfaces</p>
+</section>
+<section id="programming-and-debug">
+<h3>3.6 Programming and debug<a class="headerlink" href="#programming-and-debug" title="Link to this heading">¶</a></h3>
+<p>The Hub provides a programming and debug connector for the MCXN947 that follows the Dronecode/Pixhawk standard Debug Full interface. Use a compatible debug probe and the cable or adapter specified for this connector and pinout.</p>
+<a class="reference internal image-reference" href="../../../../_images/debug-full-interface.png"><img alt="Standard Dronecode/Pixhawk Debug Full interface" class="align-center" src="../../../../_images/debug-full-interface.png" style="width: 480px;" />
+</a>
+<p>Figure 5. Standard Dronecode/Pixhawk Debug Full interface</p>
+</section>
+<section id="additional-interfaces-indicators-test-points-and-configuration-options">
+<h3>3.7 Additional interfaces, indicators, test points, and configuration options<a class="headerlink" href="#additional-interfaces-indicators-test-points-and-configuration-options" title="Link to this heading">¶</a></h3>
+<p>The T1 Hub centers on the combined 100BASE-T1 Ethernet and power interface, the MCU, the board-to-board peripheral connections, and the Zephyr-based software framework that enables operation as a ROS 2 node. The processor also provides several auxiliary interfaces that, although not central to the design, are exposed for evaluation and experimentation.</p>
+<section id="addressable-rgb-status-led">
+<h4>Addressable RGB status LED<a class="headerlink" href="#addressable-rgb-status-led" title="Link to this heading">¶</a></h4>
+<p>U14 is an SK9822, APA102-compatible, individually addressable RGB LED that may be used to provide software-controlled visual status indication. It uses a synchronous, SPI-like serial interface with separate data and clock signals, allowing the MCU to set the LED color and brightness. Solder pads expose the LED power, ground, data, and clock connections so that additional SK9822-compatible LEDs can be daisy-chained into an external string as required.</p>
+<a class="reference internal image-reference" href="../../../../_images/rgb-led.png"><img alt="SK9822 APA102-compatible addressable RGB LED" class="align-center" src="../../../../_images/rgb-led.png" style="width: 480px;" />
+</a>
+<p>Figure 6. SK9822 APA102-compatible addressable RGB LED</p>
+</section>
+<section id="usb-2-0-through-a-usb-c-connector">
+<h4>USB 2.0 through a USB-C connector<a class="headerlink" href="#usb-2-0-through-a-usb-c-connector" title="Link to this heading">¶</a></h4>
+<p>This interface is available on the MCXN947 and is configured normally per the datasheet guidelines with ESD protection. Zephyr software typically configures this as a console UART.</p>
+<a class="reference internal image-reference" href="../../../../_images/usb-c.png"><img alt="USB 2.0 using a USB-C connector" class="align-center" src="../../../../_images/usb-c.png" style="width: 480px;" />
+</a>
+<p>Figure 7. USB 2.0 using a USB-C connector</p>
+</section>
+<section id="can-fd-can-sic-interfaces">
+<h4>CAN-FD / CAN-SIC interfaces<a class="headerlink" href="#can-fd-can-sic-interfaces" title="Link to this heading">¶</a></h4>
+<p>Two independent CAN FD interfaces (CAN0, CAN1) use TJA1462 transceivers with CAN Signal Improvement Capability (CAN SIC). Each interface includes the recommended ESD protection and filtering network. Each bus provides two parallel connectors for pass-through connections (CAN0A, CAN0B and CAN1A, CAN1B). Bus-termination resistor footprints are provided but intentionally left unpopulated. A practical evaluation use case is the Hub as an Ethernet-to-CAN gateway.</p>
+<a class="reference internal image-reference" href="../../../../_images/can-buses.png"><img alt="CAN0 and CAN1 buses with dual connectors" class="align-center" src="../../../../_images/can-buses.png" style="width: 640px;" />
+</a>
+<p>Figure 8. CAN0 and CAN1 buses with dual connectors</p>
+</section>
+<section id="onboard-sensors">
+<h4>Onboard sensors<a class="headerlink" href="#onboard-sensors" title="Link to this heading">¶</a></h4>
+<p>The Hub includes three onboard motion and environmental sensors for experimentation.</p>
+<p>The BMM350 and BMP581 are currently disabled in software so that their shared pins can provide a dedicated UART console that captures Zephyr logs from the start of boot. To make these pins available to the sensors, the Zephyr console can instead be routed through USB CDC. I3C is the preferred interface for the BMM350 and BMP581 and is expected to be enabled once the upstream Zephyr drivers are stable. The ICM-45686 uses a separate SPI interface and is not affected by this pin-multiplexing constraint.</p>
+<ul class="simple">
+<li><p>ICM-45686: a six-axis inertial measurement unit combining a three-axis accelerometer and three-axis gyroscope for measuring linear acceleration and angular motion.</p></li>
+<li><p>BMM350: a three-axis magnetometer for measuring magnetic-field direction and supporting heading estimation.</p></li>
+<li><p>BMP581: a barometric pressure sensor for measuring atmospheric pressure and supporting altitude estimation.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../../_images/icm-45686-imu.png"><img alt="ICM-45686 IMU on SPI" class="align-center" src="../../../../_images/icm-45686-imu.png" style="width: 480px;" />
+</a>
+<p>Figure 9. ICM-45686 IMU on SPI</p>
+<a class="reference internal image-reference" href="../../../../_images/bmm350-bmp581-sensors.png"><img alt="BMM350 and BMP581 I3C sensors" class="align-center" src="../../../../_images/bmm350-bmp581-sensors.png" style="width: 640px;" />
+</a>
+<p>Figure 10. BMM350 and BMP581 I3C sensors</p>
+</section>
+<section id="schematic-and-design-file-verification">
+<h4>Schematic and design-file verification<a class="headerlink" href="#schematic-and-design-file-verification" title="Link to this heading">¶</a></h4>
+<p>The available schematic-derived information does not identify a complete, verified set of test-point reference designators; therefore, test points, straps, and assembly options must be confirmed directly from the released schematic and board drawing for the applicable revision.</p>
+</section>
+</section>
+</section>
+<section id="mr-mcxn-t1-io-hardware">
+<h2>4. MR-MCXN-T1-IO hardware<a class="headerlink" href="#mr-mcxn-t1-io-hardware" title="Link to this heading">¶</a></h2>
+<section id="overview">
+<h3>4.1 Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h3>
+<p>The MR-MCXN-T1-IO is an input/output shield for the MR-MCXN-T1 Hub. It provides access to node signals through Dronecode standard connectors for robotics integration.</p>
+<a class="reference internal image-reference" href="../../../../_images/io-shield-block-diagram.png"><img alt="MR-MCXN-T1-IO shield block diagram" class="align-center" src="../../../../_images/io-shield-block-diagram.png" style="width: 640px;" />
+</a>
+<p>Figure 11. MR-MCXN-T1-IO shield block diagram</p>
+</section>
+<section id="connector-interfaces">
+<h3>4.2 Connector interfaces<a class="headerlink" href="#connector-interfaces" title="Link to this heading">¶</a></h3>
+<p>The connector set, pin assignments, voltage levels, and signal directions must be verified against the MR-MCXN-T1-IO schematic. External equipment must not be connected until power, ground, and logic compatibility have been confirmed.</p>
+</section>
+<section id="input-output-functions">
+<h3>4.3 Input/output functions<a class="headerlink" href="#input-output-functions" title="Link to this heading">¶</a></h3>
+<p>The IO shield demonstrates typical sensor and actuator connectivity through Dronecode-style interfaces. Verified functions include I3C, I²C, two SPI interfaces, two UART interfaces, a quadrature-decoder input, two ESC interfaces supporting PWM or DShot control with current telemetry, an RTC battery connection, a buzzer, and a Pixhawk-style GPS connection. Exact signal mapping, power rails, and mutually exclusive functions are defined by the schematic and the active Zephyr shield overlay.</p>
+</section>
+<section id="power-and-protection-considerations">
+<h3>4.4 Power and protection considerations<a class="headerlink" href="#power-and-protection-considerations" title="Link to this heading">¶</a></h3>
+<p>Confirm the current available on each connector, the source of each power rail, and any onboard protection before powering attached devices. The combined load of all connected peripherals must remain within the Hub and shield limits.</p>
+</section>
+<section id="integration-checklist">
+<h3>4.5 Integration checklist<a class="headerlink" href="#integration-checklist" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Confirm the Hub and IO board revisions.</p></li>
+<li><p>Verify connector orientation and pinout.</p></li>
+<li><p>Verify the peripheral voltage and current requirements.</p></li>
+<li><p>Check whether any signals are shared or mutually exclusive.</p></li>
+<li><p>Connect or disconnect peripherals only under conditions allowed by the hardware design.</p></li>
+</ul>
+</section>
+</section>
+<section id="mr-mcxn-t1-f9p-hardware">
+<h2>5. MR-MCXN-T1-F9P hardware<a class="headerlink" href="#mr-mcxn-t1-f9p-hardware" title="Link to this heading">¶</a></h2>
+<section id="id1">
+<h3>5.1 Overview<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>The MR-MCXN-T1-F9P is a GPS/GNSS add-on board with RTK capability. It allows the MR-MCXN-T1 node to acquire positioning data locally and deliver it to the robotic system through the Hub Ethernet connection.</p>
+<a class="reference internal image-reference" href="../../../../_images/f9p-shield-block-diagram.png"><img alt="MR-MCXN-T1-F9P shield block diagram" class="align-center" src="../../../../_images/f9p-shield-block-diagram.png" style="width: 640px;" />
+</a>
+<p>Figure 12. MR-MCXN-T1-F9P shield block diagram</p>
+</section>
+<section id="gnss-receiver-subsystem">
+<h3>5.2 GNSS receiver subsystem<a class="headerlink" href="#gnss-receiver-subsystem" title="Link to this heading">¶</a></h3>
+<p>The shield uses a u-blox NEO-F9P-15B GNSS receiver. It provides two UART interfaces as well as a direct USB-C interface to the receiver. Supporting hardware includes a UART connection for an external RTK correction radio and control or status signals for TIMEPULSE, RESET, EXTINT, and SAFEBOOT. A high-sensitivity RM3100 magnetometer is also included on the shield.</p>
+<p>A dedicated low-noise LDO powers the NEO-F9P as a precaution, although it may be unnecessary in a production design.</p>
+</section>
+<section id="antenna-interface">
+<h3>5.3 Antenna interface<a class="headerlink" href="#antenna-interface" title="Link to this heading">¶</a></h3>
+<p>The GNSS antenna connects through a u.FL interface intended for a compatible active antenna. The preferred tested antenna is the TE Connectivity (Tyco) ANT-GNCP-C25L125100 active GNSS antenna. Other compatible antennas may be used; however, electrical compatibility and all required performance and system-level validation must be verified for the chosen antenna.</p>
+</section>
+<section id="rtk-correction-data-path">
+<h3>5.4 RTK correction-data path<a class="headerlink" href="#rtk-correction-data-path" title="Link to this heading">¶</a></h3>
+<p>The NEO-F9P supports correction-data delivery through UART, USB, SPI, and I²C interfaces. The MR-MCXN-T1-F9P shield routes both receiver UARTs and I²C to the Hub, provides USB-C access for direct configuration, and includes a dedicated UART connector for an external correction radio. These hardware paths allow correction data to be supplied through several possible system architectures.</p>
+<p>The current software defaults to a multiplexed UART configuration that carries GNSS data, receiver configuration, and RTK corrections over a single connection. See the separate software documentation for supported configurations and operating modes.</p>
+</section>
+<section id="timing-and-communication-interfaces">
+<h3>5.5 Timing and communication interfaces<a class="headerlink" href="#timing-and-communication-interfaces" title="Link to this heading">¶</a></h3>
+<p>The following table lists the verified NEO-F9P interface connections. These connections reflect the schematic routing; the active Zephyr shield overlay determines the peripheral multiplexing and software configuration.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Verified connection</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NEO-F9P I²C</p></td>
+<td><p>FLEXCOMM9</p></td>
+</tr>
+<tr class="row-odd"><td><p>NEO-F9P UART2</p></td>
+<td><p>FLEXCOMM3 UART</p></td>
+</tr>
+<tr class="row-even"><td><p>NEO-F9P UART1</p></td>
+<td><p>FLEXCOMM7 UART</p></td>
+</tr>
+<tr class="row-odd"><td><p>External correction-radio connector</p></td>
+<td><p>J3, using FLEXCOMM0 UART TX/RX</p></td>
+</tr>
+<tr class="row-even"><td><p>Optional correction-radio timing signal</p></td>
+<td><p>TIMEPULSE on J3</p></td>
+</tr>
+<tr class="row-odd"><td><p>Receiver reset</p></td>
+<td><p>RESET_N — P3_7</p></td>
+</tr>
+<tr class="row-even"><td><p>External interrupt</p></td>
+<td><p>EXTINT — P3_0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Receiver timing output</p></td>
+<td><p>TIMEPULSE — P3_8</p></td>
+</tr>
+<tr class="row-even"><td><p>Safe-boot control</p></td>
+<td><p>SAFEBOOT_N — SW1 / P1_2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Additional user switch</p></td>
+<td><p>SW2 — P1_3</p></td>
+</tr>
+<tr class="row-even"><td><p>Magnetometer interface</p></td>
+<td><p>I3C1 / I²C, with DRDY</p></td>
+</tr>
+<tr class="row-odd"><td><p>Power indicator</p></td>
+<td><p>D4 — POWER</p></td>
+</tr>
+<tr class="row-even"><td><p>RTK-status indicator</p></td>
+<td><p>D5 — RTK_STAT</p></td>
+</tr>
+<tr class="row-odd"><td><p>Timing indicator</p></td>
+<td><p>D7 — TIMEPULSE</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The shield status indicators are:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Reference</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Color</p></th>
+<th class="head"><p>Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>D4</p></td>
+<td><p>POWER</p></td>
+<td><p>Blue</p></td>
+<td><p>Indicates that board power is present.</p></td>
+</tr>
+<tr class="row-odd"><td><p>D5</p></td>
+<td><p>RTK_STAT</p></td>
+<td><p>Red</p></td>
+<td><p>Indicates the NEO-F9P RTK status output.</p></td>
+</tr>
+<tr class="row-even"><td><p>D6</p></td>
+<td><p>GPS-FIX</p></td>
+<td><p>Yellow</p></td>
+<td><p>MCU-controlled indicator that illuminates when the software obtains a GPS fix.</p></td>
+</tr>
+<tr class="row-odd"><td><p>D7</p></td>
+<td><p>TIMEPULSE</p></td>
+<td><p>Yellow</p></td>
+<td><p>Indicates activity on the NEO-F9P TIMEPULSE output.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="installation-considerations">
+<h3>5.6 Installation considerations<a class="headerlink" href="#installation-considerations" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Mount the antenna with a suitable view of the sky.</p></li>
+<li><p>Keep the antenna and cable away from strong interference sources.</p></li>
+<li><p>Verify the antenna connection before applying power.</p></li>
+<li><p>Confirm that the antenna is electrically compatible with the F9P shield, including its supply-voltage and current requirements.</p></li>
+</ul>
+</section>
+</section>
+<section id="mr-mcxn-t1-ofl-hardware">
+<h2>6. MR-MCXN-T1-OFL hardware<a class="headerlink" href="#mr-mcxn-t1-ofl-hardware" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h3>6.1 Overview<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>The MR-MCXN-T1-OFL is an optical-flow add-on board that combines optical-flow measurement with distance sensing. The board is intended to provide local motion-related measurements to the MR-MCXN-T1 Hub.</p>
+<a class="reference internal image-reference" href="../../../../_images/ofl-shield-block-diagram.png"><img alt="MR-MCXN-T1-OFL shield block diagram" class="align-center" src="../../../../_images/ofl-shield-block-diagram.png" style="width: 640px;" />
+</a>
+<p>Figure 13. MR-MCXN-T1-OFL shield block diagram</p>
+</section>
+<section id="optical-flow-subsystem">
+<h3>6.2 Optical-flow subsystem<a class="headerlink" href="#optical-flow-subsystem" title="Link to this heading">¶</a></h3>
+<p>The optical-flow subsystem uses a PAA3905E1 sensor with a dedicated illumination LED driver and high-power LED. It communicates with the Hub through a configured FlexComm/SPI path. Optical performance depends on target texture, lighting, working distance, mounting, and motion conditions.</p>
+<blockquote>
+<div><p>Note: Alternative illumination sources may be used, including infrared LEDs such as the ams OSRAM SFH 4775S. A 940 nm LED can reduce optical interference with the AFBR distance sensor.</p>
+</div></blockquote>
+</section>
+<section id="distance-sensor-subsystem">
+<h3>6.3 Distance-sensor subsystem<a class="headerlink" href="#distance-sensor-subsystem" title="Link to this heading">¶</a></h3>
+<p>Distance measurement is provided by an AFBR-S50LX85D time-of-flight sensor. Its field of view, operating limits, optical clearance, interface, and power requirements must be considered when integrating the board.</p>
+</section>
+<section id="inertial-measurement-units">
+<h3>6.4 Inertial measurement units<a class="headerlink" href="#inertial-measurement-units" title="Link to this heading">¶</a></h3>
+<p>The board includes two six-axis inertial measurement units for motion sensing and evaluation:</p>
+<ul class="simple">
+<li><p>ICM-42688-P: a three-axis accelerometer and three-axis gyroscope that provides angular-rate and linear-acceleration measurements.</p></li>
+<li><p>ICM-45686: a newer three-axis accelerometer and three-axis gyroscope available as an alternative IMU for evaluation and software development.</p></li>
+</ul>
+<p>Both devices are available to the MCXN947 through configured FlexComm/SPI paths. The active Zephyr shield overlay determines the selected interface, chip-select routing, interrupt signals, and software enablement.</p>
+</section>
+<section id="mechanical-placement">
+<h3>6.5 Mechanical placement<a class="headerlink" href="#mechanical-placement" title="Link to this heading">¶</a></h3>
+<p>Mount the board so that the optical path is unobstructed and the sensing direction matches the intended application. Avoid covers, fasteners, wiring, or structural parts within the sensor fields of view.</p>
+</section>
+<section id="environmental-considerations">
+<h3>6.6 Environmental considerations<a class="headerlink" href="#environmental-considerations" title="Link to this heading">¶</a></h3>
+<p>Surface reflectivity, texture, ambient light, contamination, vibration, and mounting height can affect measurements. Validate the installed configuration under the expected operating conditions.</p>
+</section>
+<section id="electrical-integration">
+<h3>6.7 Electrical integration<a class="headerlink" href="#electrical-integration" title="Link to this heading">¶</a></h3>
+<p>The shield includes ICM-42688-P and ICM-45686 inertial sensors, provisions for IMU synchronization, and configured FlexComm/SPI communication paths for the optical-flow, distance, and inertial devices. Verify shield orientation, power rails, chip-select routing, synchronization signals, reset or interrupt lines, and the active Zephyr overlay against the released schematic before operation.</p>
+</section>
+</section>
+<section id="software-context">
+<h2>7. Software context<a class="headerlink" href="#software-context" title="Link to this heading">¶</a></h2>
+<p>This section provides only the software context needed to understand the intended hardware role. Software installation, build procedures, configuration, APIs, middleware, examples, and troubleshooting are outside the scope of this hardware application note; see the <a class="reference internal" href="#../../user-manual/index.md"><span class="xref myst">MR-MCXN-T1 User Manual</span></a>.</p>
+<p>The software enablement framework uses Zephyr on the MCU and separates local driver work from ROS-oriented data exchange. It provides a path for sensor and actuator data to move between the MR-MCXN-T1 node and a ROS 2-based host system over 100BASE-T1 Ethernet.</p>
+<p>ZROS is an open-source library that provides a ROS-oriented topic layer on the MCU. It supports preparing, formatting, inspecting, and exchanging sensor or actuator data in a manner similar to ROS 2 topics on a Linux host and includes an efficient zero-copy buffer mechanism.</p>
+<p>ZROS uses FlatBuffers internally for efficient MCU-side data handling. For ROS 2 interoperability, data can be statically packed into the CDR representation generated from ROS 2 IDL definitions. Zenoh-pico provides the transport and routing layer used to move data between the MCU node and the rest of the robotics system.</p>
+<p>The NXP Robotic Platforms SDK provides a curated and validated set of software components, tools, and documentation tested together on this hardware platform. NXP contributes improvements and fixes to upstream projects on a scheduled basis, so the latest upstream code may differ from the version included in an SDK release.</p>
+</section>
+<section id="hardware-installation-and-bring-up">
+<h2>8. Hardware installation and bring-up<a class="headerlink" href="#hardware-installation-and-bring-up" title="Link to this heading">¶</a></h2>
+<section id="before-applying-power">
+<h3>8.1 Before applying power<a class="headerlink" href="#before-applying-power" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Confirm the Hub and add-on board part numbers and revisions.</p></li>
+<li><p>Inspect both boards for damage, contamination, or misplaced components.</p></li>
+<li><p>Verify connector orientation and mating.</p></li>
+<li><p>Confirm the input supply range and polarity from the applicable schematic.</p></li>
+<li><p>Confirm the expected current demand of the Hub and attached peripherals.</p></li>
+<li><p>Connect antennas or optical assemblies required by the selected add-on board.</p></li>
+</ul>
+</section>
+<section id="initial-power-on-checks">
+<h3>8.2 Initial power-on checks<a class="headerlink" href="#initial-power-on-checks" title="Link to this heading">¶</a></h3>
+<p>Use a current-limited supply where appropriate. Check for abnormal current, unexpected heating, and the expected local power rails before connecting the node to the wider robotic system.</p>
+</section>
+<section id="ethernet-connection">
+<h3>8.3 Ethernet connection<a class="headerlink" href="#ethernet-connection" title="Link to this heading">¶</a></h3>
+<p>Connect the 100BASE-T1 interface using the intended cable and mating hardware. Verify the physical link before proceeding to software-level communication checks. Although 100BASE-T1 connections are polarity-sensitive, many PHYs can correct reversed polarity automatically or under software control.</p>
+</section>
+<section id="peripheral-verification">
+<h3>8.4 Peripheral verification<a class="headerlink" href="#peripheral-verification" title="Link to this heading">¶</a></h3>
+<p>Verify the attached add-on board one functional block at a time. Hardware verification should establish correct power, connectivity, signal levels, and basic device presence before application-level testing.</p>
+</section>
+<section id="handling-and-integration">
+<h3>8.5 Handling and integration<a class="headerlink" href="#handling-and-integration" title="Link to this heading">¶</a></h3>
+<p>Use appropriate electrostatic-discharge precautions. Do not hot-plug interfaces unless the applicable board documentation explicitly permits it. Provide mechanical support and strain relief appropriate to the installation.</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>9. Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h2>
+<p>The MR-MCXN-T1 family provides a compact hardware approach for distributed sensing, connectivity, and edge processing in mobile robotics, and specifically acts as an efficient physical embodiment of a ROS 2 node. The MCXN947-based Hub combines local processing with two-wire 100BASE-T1 Ethernet, while the IO, F9P, and OFL add-on boards demonstrate common robotics input/output, positioning, and motion-sensing functions.</p>
+<p>Hardware integration should always be checked against the released schematic, bill of materials, and board-revision documentation. Detailed software enablement is intentionally covered in a separate document.</p>
+</section>
+<section id="abbreviations">
+<h2>10. Abbreviations<a class="headerlink" href="#abbreviations" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Acronym</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ADC</p></td>
+<td><p>Analog-to-digital converter</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN</p></td>
+<td><p>Controller Area Network</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN FD</p></td>
+<td><p>Controller Area Network Flexible Data-rate</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN SIC</p></td>
+<td><p>Controller Area Network Signal Improvement Capability</p></td>
+</tr>
+<tr class="row-even"><td><p>CDR</p></td>
+<td><p>Common Data Representation</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAC</p></td>
+<td><p>Digital-to-analog converter</p></td>
+</tr>
+<tr class="row-even"><td><p>ESD</p></td>
+<td><p>Electrostatic discharge</p></td>
+</tr>
+<tr class="row-odd"><td><p>FBS</p></td>
+<td><p>FlatBuffers schema</p></td>
+</tr>
+<tr class="row-even"><td><p>GNSS</p></td>
+<td><p>Global Navigation Satellite System</p></td>
+</tr>
+<tr class="row-odd"><td><p>GPIO</p></td>
+<td><p>General-purpose input/output</p></td>
+</tr>
+<tr class="row-even"><td><p>GPS</p></td>
+<td><p>Global Positioning System</p></td>
+</tr>
+<tr class="row-odd"><td><p>I²C</p></td>
+<td><p>Inter-Integrated Circuit</p></td>
+</tr>
+<tr class="row-even"><td><p>I3C</p></td>
+<td><p>Improved Inter-Integrated Circuit</p></td>
+</tr>
+<tr class="row-odd"><td><p>IDL</p></td>
+<td><p>Interface Definition Language</p></td>
+</tr>
+<tr class="row-even"><td><p>IMU</p></td>
+<td><p>Inertial measurement unit</p></td>
+</tr>
+<tr class="row-odd"><td><p>IO</p></td>
+<td><p>Input/output</p></td>
+</tr>
+<tr class="row-even"><td><p>LDO</p></td>
+<td><p>Low-dropout regulator</p></td>
+</tr>
+<tr class="row-odd"><td><p>LED</p></td>
+<td><p>Light-emitting diode</p></td>
+</tr>
+<tr class="row-even"><td><p>MCU</p></td>
+<td><p>Microcontroller unit</p></td>
+</tr>
+<tr class="row-odd"><td><p>OFL</p></td>
+<td><p>Optical flow</p></td>
+</tr>
+<tr class="row-even"><td><p>PAE</p></td>
+<td><p>Power Adjacent to Ethernet</p></td>
+</tr>
+<tr class="row-odd"><td><p>PDM</p></td>
+<td><p>Pulse-density modulation</p></td>
+</tr>
+<tr class="row-even"><td><p>PHY</p></td>
+<td><p>Physical-layer transceiver</p></td>
+</tr>
+<tr class="row-odd"><td><p>PoDL</p></td>
+<td><p>Power over Data Line</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM</p></td>
+<td><p>Pulse-width modulation</p></td>
+</tr>
+<tr class="row-odd"><td><p>RMII</p></td>
+<td><p>Reduced Media-Independent Interface</p></td>
+</tr>
+<tr class="row-even"><td><p>ROS 2</p></td>
+<td><p>Robot Operating System 2</p></td>
+</tr>
+<tr class="row-odd"><td><p>RTC</p></td>
+<td><p>Real-time clock</p></td>
+</tr>
+<tr class="row-even"><td><p>RTK</p></td>
+<td><p>Real-Time Kinematic</p></td>
+</tr>
+<tr class="row-odd"><td><p>RTOS</p></td>
+<td><p>Real-time operating system</p></td>
+</tr>
+<tr class="row-even"><td><p>SAI</p></td>
+<td><p>Serial audio interface</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDHC</p></td>
+<td><p>Secure Digital High Capacity</p></td>
+</tr>
+<tr class="row-even"><td><p>SDIO</p></td>
+<td><p>Secure Digital Input Output</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDK</p></td>
+<td><p>Software development kit</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI</p></td>
+<td><p>Serial Peripheral Interface</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART</p></td>
+<td><p>Universal asynchronous receiver-transmitter</p></td>
+</tr>
+<tr class="row-even"><td><p>USB</p></td>
+<td><p>Universal Serial Bus</p></td>
+</tr>
+<tr class="row-odd"><td><p>USB CDC</p></td>
+<td><p>USB Communications Device Class</p></td>
+</tr>
+<tr class="row-even"><td><p>VBUS</p></td>
+<td><p>USB bus-supply voltage</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="references">
+<h2>11. References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/NXP-Robotics/mr_mcxn_t1_hub" rel="noreferer noopener" target="_blank">MR-MCXN-T1 Hub repository</a></p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+<div class="related-pages">
+  <a class="next-page" href="../zenoh/index.html">
+    <div class="page-info">
+      <div class="context"><span>Next</span></div>
+      <div class="title">MR-MCXN-T1 Zenoh Communication Modes</div>
+    </div>
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+  </a>
+  <a class="prev-page" href="../index.html">
+    <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+    <div class="page-info">
+      <div class="context"><span>Previous</span></div>
+      
+      <div class="title">Application Notes</div>
+      
+    </div>
+  </a>
+</div>
+<div class="bottom-of-page">
+  <div class="left-details">
+    <div class="copyright">Copyright 2026 NXP</div>
+    Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+    
+    <a href="https://github.com/pradyunsg/furo">Furo</a>
+    
+  </div>
+  <div class="right-details">
+  </div>
+</div>
+
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">MR-MCXN-T1 Hardware Architecture and Reference Design</a><ul>
+<li><a class="reference internal" href="#introduction">1. Introduction</a><ul>
+<li><a class="reference internal" href="#the-mr-mcxn-t1-hub">1.1 The MR-MCXN-T1 Hub</a></li>
+<li><a class="reference internal" href="#system-design-objectives">1.2 System design objectives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#system-hardware-architecture">2. System hardware architecture</a><ul>
+<li><a class="reference internal" href="#system-overview">2.1 System overview</a></li>
+<li><a class="reference internal" href="#functional-partitioning">2.2 Functional partitioning</a></li>
+<li><a class="reference internal" href="#single-connector-node-concept">2.3 Single-connector node concept</a></li>
+<li><a class="reference internal" href="#hardware-boundaries">2.4 Hardware boundaries</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mr-mcxn-t1-hub-hardware">3. MR-MCXN-T1 Hub hardware</a><ul>
+<li><a class="reference internal" href="#hardware-overview">3.1 Hardware overview</a></li>
+<li><a class="reference internal" href="#processing-subsystem">3.2 Processing subsystem</a></li>
+<li><a class="reference internal" href="#base-t1-ethernet-interface">3.3 100BASE-T1 Ethernet interface</a></li>
+<li><a class="reference internal" href="#power-input-and-distribution">3.4 Power input and distribution</a></li>
+<li><a class="reference internal" href="#add-on-shield-board-to-board-interface">3.5 Add-on shield board-to-board interface</a></li>
+<li><a class="reference internal" href="#programming-and-debug">3.6 Programming and debug</a></li>
+<li><a class="reference internal" href="#additional-interfaces-indicators-test-points-and-configuration-options">3.7 Additional interfaces, indicators, test points, and configuration options</a><ul>
+<li><a class="reference internal" href="#addressable-rgb-status-led">Addressable RGB status LED</a></li>
+<li><a class="reference internal" href="#usb-2-0-through-a-usb-c-connector">USB 2.0 through a USB-C connector</a></li>
+<li><a class="reference internal" href="#can-fd-can-sic-interfaces">CAN-FD / CAN-SIC interfaces</a></li>
+<li><a class="reference internal" href="#onboard-sensors">Onboard sensors</a></li>
+<li><a class="reference internal" href="#schematic-and-design-file-verification">Schematic and design-file verification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mr-mcxn-t1-io-hardware">4. MR-MCXN-T1-IO hardware</a><ul>
+<li><a class="reference internal" href="#overview">4.1 Overview</a></li>
+<li><a class="reference internal" href="#connector-interfaces">4.2 Connector interfaces</a></li>
+<li><a class="reference internal" href="#input-output-functions">4.3 Input/output functions</a></li>
+<li><a class="reference internal" href="#power-and-protection-considerations">4.4 Power and protection considerations</a></li>
+<li><a class="reference internal" href="#integration-checklist">4.5 Integration checklist</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mr-mcxn-t1-f9p-hardware">5. MR-MCXN-T1-F9P hardware</a><ul>
+<li><a class="reference internal" href="#id1">5.1 Overview</a></li>
+<li><a class="reference internal" href="#gnss-receiver-subsystem">5.2 GNSS receiver subsystem</a></li>
+<li><a class="reference internal" href="#antenna-interface">5.3 Antenna interface</a></li>
+<li><a class="reference internal" href="#rtk-correction-data-path">5.4 RTK correction-data path</a></li>
+<li><a class="reference internal" href="#timing-and-communication-interfaces">5.5 Timing and communication interfaces</a></li>
+<li><a class="reference internal" href="#installation-considerations">5.6 Installation considerations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mr-mcxn-t1-ofl-hardware">6. MR-MCXN-T1-OFL hardware</a><ul>
+<li><a class="reference internal" href="#id2">6.1 Overview</a></li>
+<li><a class="reference internal" href="#optical-flow-subsystem">6.2 Optical-flow subsystem</a></li>
+<li><a class="reference internal" href="#distance-sensor-subsystem">6.3 Distance-sensor subsystem</a></li>
+<li><a class="reference internal" href="#inertial-measurement-units">6.4 Inertial measurement units</a></li>
+<li><a class="reference internal" href="#mechanical-placement">6.5 Mechanical placement</a></li>
+<li><a class="reference internal" href="#environmental-considerations">6.6 Environmental considerations</a></li>
+<li><a class="reference internal" href="#electrical-integration">6.7 Electrical integration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#software-context">7. Software context</a></li>
+<li><a class="reference internal" href="#hardware-installation-and-bring-up">8. Hardware installation and bring-up</a><ul>
+<li><a class="reference internal" href="#before-applying-power">8.1 Before applying power</a></li>
+<li><a class="reference internal" href="#initial-power-on-checks">8.2 Initial power-on checks</a></li>
+<li><a class="reference internal" href="#ethernet-connection">8.3 Ethernet connection</a></li>
+<li><a class="reference internal" href="#peripheral-verification">8.4 Peripheral verification</a></li>
+<li><a class="reference internal" href="#handling-and-integration">8.5 Handling and integration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conclusion">9. Conclusion</a></li>
+<li><a class="reference internal" href="#abbreviations">10. Abbreviations</a></li>
+<li><a class="reference internal" href="#references">11. References</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/pinout-hover.js?v=f98146ba"></script>
+    </body>
+</html>

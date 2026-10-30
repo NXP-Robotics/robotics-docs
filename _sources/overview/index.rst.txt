@@ -1,0 +1,79 @@
+Robotic Platforms SDK Introduction
+==================================
+
+Welcome to the NXP Robotic Platforms documentation. This portal brings together the
+getting-started, setup, and reference guides for building robotics applications
+on the NXP Mobile Robotics platforms (MR-NavQ95, MR-VMU-Tropic, MR-MCXN-T1,
+MR-ESC-AM32; i.MX 95, eIQ Neutron NPU, Kinara ARA-240 DNPU, and the
+PX4 flight stack).
+
+The NXP Robotic Platforms SDK provides validated software support across these
+platforms, spanning two software domains:
+
+- Real-time domain -- flight- and motion-control firmware (PX4 on NuttX,
+  Zephyr RTOS, ESC firmware, System Manager, and the real-time control core).
+- Compute domain (Linux / Application Processor) -- the application-processor
+  software stack (Linux BSP, U-Boot, ROS2, camera and vision pipeline, NPU
+  inference, and connectivity).
+
+New here? Head to Getting Started to set up and build the SDK, then pick
+your platform under Platforms.
+
+Supported platforms
+--------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 26 30 22
+
+   * - Platform
+     - Based on
+     - Role
+     - Start here
+   * - MR-NavQ95
+     - i.MX 95 (Cortex-A55 and Cortex-M7)
+     - Compute and real-time vehicle computer
+     - :doc:`../platforms/mr-navq95/index`
+   * - MR-MCXN-T1
+     - MCXN947 (Zephyr)
+     - Sensor / shield node (GNSS, IO, OFLO)
+     - :doc:`../platforms/mr-mcxn-t1/index`
+   * - MR-VMU-Tropic
+     - i.MX RT1064 (PX4 / NuttX)
+     - Flight controller
+     - :doc:`../platforms/mr-vmu-tropic/index`
+   * - MR-ESC-AM32
+     - MCXA133 (AM32)
+     - Motor-control ESC
+     - :doc:`../platforms/mr-esc-am32-mcxa133/index`
+
+Explore the docs
+-----------------
+
+.. grid:: 2
+
+   .. grid-item-card:: Release Notes
+      :link: ../reference/nxp-robotics-sdk-release-notes
+      :link-type: doc
+
+      Cumulative release-notes record for the NXP Robotic Platforms SDK, newest first.
+
+   .. grid-item-card:: Getting Started
+      :link: ../sdk/index
+      :link-type: doc
+
+      Set up and build the NXP Robotic Platforms SDK: prerequisites, download, and the
+      ``west`` build/command reference.
+
+   .. grid-item-card:: Platforms
+      :link: ../platforms/mr-navq95/index
+      :link-type: doc
+
+      Per-platform guides: board bring-up, connectivity and peripherals,
+      on-device AI, and robotics middleware.
+
+   .. grid-item-card:: System
+      :link: ../system/system-solution-an/index
+      :link-type: doc
+
+      Cross-platform topics that apply across the robotics hardware.

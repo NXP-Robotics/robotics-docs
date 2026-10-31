@@ -38,7 +38,7 @@ This guide covers ROS2 communication between NavQ95 and other platforms in a mul
 ROS2 multinode communication on NavQ95 is based on [Zenoh](https://zenoh.io/) as the underlying transport. The key components are:
 
 - zenohd — the Zenoh router. Acts as the central broker: all participants connect to it and it routes messages between them.
-- rmw_zenoh_cpp — the ROS2 RMW (Robot Middleware) implementation that bridges ROS2 nodes to the Zenoh transport. ROS2 nodes are unaware of Zenoh — `rmw_zenoh_cpp` handles the translation transparently.
+- rmw_zenoh_cpp — the ROS2 RMW (ROS Middleware) implementation that bridges ROS2 nodes to the Zenoh transport. ROS2 nodes are unaware of Zenoh — `rmw_zenoh_cpp` handles the translation transparently.
 - zenoh-pico — a lightweight Zenoh client library targeting resource-constrained platforms. Supports multiple physical transports (TCP, serial, and others).
 
 The topology described in this guide uses Zenoh over TCP as the transport between MCXN-T1 and NavQ95, with `zenohd` and ROS2 CLI running on the NavQ95 A55, and PX4 running on the NavQ95 M7. Interoperability is possible because `zenoh-pico` publishes messages in the same wire format that `rmw_zenoh_cpp` expects — no dedicated translation layer is required on any of the participants.

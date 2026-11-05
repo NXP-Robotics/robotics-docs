@@ -1,0 +1,11 @@
+Application Notes
+=================
+
+Hardware- and design-level application notes for the MR-ESC-AM32: the
+ESC hardware architecture and reference design, aimed at hardware engineers and
+ESC designers.
+
+.. toctree::
+   :maxdepth: 1
+
+   Hardware Architecture and Reference Design <hardware-overview/index>

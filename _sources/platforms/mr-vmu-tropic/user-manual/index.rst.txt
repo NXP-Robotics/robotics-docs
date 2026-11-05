@@ -1,0 +1,16 @@
+User Manual
+===========
+
+Get to know the MR-VMU-Tropic flight controller: review the board hardware,
+prepare and flash the firmware, and run the PX4 flight stack.
+
+.. toctree::
+   :maxdepth: 1
+
+   introduction
+   Finding platform resources <finding-resources>
+   Getting ready <getting-ready>
+   Getting to know the hardware <hardware>
+   Configuring the hardware <configuring-the-hardware>
+   abbreviations
+   references

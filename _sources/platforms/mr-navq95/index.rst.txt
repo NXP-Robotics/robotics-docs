@@ -1,0 +1,16 @@
+MR-NavQ95
+=========
+
+The MR-NavQ95 is the i.MX 95 vehicle computer of the NXP Mobile Robotics
+family (Cortex-A55 compute and Cortex-M7 real-time). Bring up the board, then add
+connectivity, on-device AI, and robotics middleware.
+
+.. toctree::
+   :maxdepth: 2
+
+   Overview <overview>
+   getting-started/index
+   user-manual/index
+   application-notes/index
+   middleware/index
+   flight-stack/index

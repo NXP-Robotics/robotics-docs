@@ -1,0 +1,13 @@
+Application Notes
+=================
+
+Hardware- and design-level application notes for the MR-VMU-Tropic: the flight
+controller's hardware architecture and reference design, and the boot
+configuration fuse programming procedure, aimed at hardware engineers
+integrating the board into a vehicle.
+
+.. toctree::
+   :maxdepth: 1
+
+   Hardware Architecture and Reference Design <hardware-overview/index>
+   Programming Boot Configuration Fuses <fuse-programming/index>

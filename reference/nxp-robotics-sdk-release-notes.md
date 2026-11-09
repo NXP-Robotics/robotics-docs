@@ -245,3 +245,17 @@ Hardware
 Software
 - The AM32 upstream code does not implement the DShot150 / BDShot150 protocol, so likewise these
   cannot be configured on MR-ESC-AM32. (TARS-340)
+
+#### Post-release patches
+
+The patches listed below were applied on top of the v0.7.0 pinned component revisions
+to address issues found during post-release validation. They are already present in the
+`robotics-0.7.0-navq95` branch of the listed component repository, so a `git pull` on
+that branch brings them in. The patches apply only to v0.7.0.
+
+| Patch ID | Component repository | Description | Affected platforms |
+| --- | --- | --- | --- |
+| 0001 | [robotics-PX4-Autopilot](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | Correct the NavQ95 onboard BMM350 compass orientation (fixes the ~90° heading error at every boot). | MR-NavQ95 |
+| 0002 | [robotics-PX4-Autopilot](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | Increase the `navigator` task stack to clear the load_mon low-stack warning. | MR-NavQ95 |
+| 0003 | [robotics-PX4-Autopilot](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | Increase the `gps` driver task stack to clear the load_mon low-stack warning. | MR-NavQ95 |
+| 0004 | [robotics-PX4-Autopilot](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | Size the uavcan and TTY work queues for NuttX 12 to restore the stack headroom. | MR-NavQ95 |

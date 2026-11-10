@@ -249,13 +249,14 @@ Software
 #### Post-release patches
 
 The patches listed below were applied on top of the v0.7.0 pinned component revisions
-to address issues found during post-release validation. They are already present in the
-`robotics-0.7.0-navq95` branch of the listed component repository, so a `git pull` on
-that branch brings them in. The patches apply only to v0.7.0.
+to address issues found during post-release validation. Each patch is already present
+on the branch of the component repository it links to; take the top of tree of each
+listed repository and branch to pick up the fixes. The patches apply only to v0.7.0.
 
-| Patch ID | Component repository | Description | Affected platforms |
-| --- | --- | --- | --- |
-| 0001 | [robotics-PX4-Autopilot](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | Correct the NavQ95 onboard BMM350 compass orientation (fixes the ~90° heading error at every boot). | MR-NavQ95 |
-| 0002 | [robotics-PX4-Autopilot](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | Increase the `navigator` task stack to clear the load_mon low-stack warning. | MR-NavQ95 |
-| 0003 | [robotics-PX4-Autopilot](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | Increase the `gps` driver task stack to clear the load_mon low-stack warning. | MR-NavQ95 |
-| 0004 | [robotics-PX4-Autopilot](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | Size the uavcan and TTY work queues for NuttX 12 to restore the stack headroom. | MR-NavQ95 |
+| Patch | Component repository | Affected platform |
+| --- | --- | --- |
+| Correct the NavQ95 onboard BMM350 compass orientation (fixes the ~90° heading error at every boot). | [robotics-PX4-Autopilot (`robotics-0.7.0-navq95`)](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | MR-NavQ95 |
+| Increase the `navigator` task stack to clear the load_mon low-stack warning. | [robotics-PX4-Autopilot (`robotics-0.7.0-navq95`)](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | MR-NavQ95 |
+| Increase the `gps` driver task stack to clear the load_mon low-stack warning. | [robotics-PX4-Autopilot (`robotics-0.7.0-navq95`)](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | MR-NavQ95 |
+| Size the uavcan and TTY work queues for NuttX 12 to restore the stack headroom. | [robotics-PX4-Autopilot (`robotics-0.7.0-navq95`)](https://github.com/nxp-robotics/robotics-PX4-Autopilot/tree/robotics-0.7.0-navq95) | MR-NavQ95 |
+| Applied the right RIHS hash for SensorGps PX4 message type to match the release/1.17 version of px4_msgs repo installed automatically into rootfs. | [robotics-apps (`robotics-0.7.0`)](https://github.com/nxp-robotics/robotics-apps/tree/robotics-0.7.0) | MR-MCXN-T1 |

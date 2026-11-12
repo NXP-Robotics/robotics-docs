@@ -15,6 +15,24 @@ The design demonstrates the convenience of a single-connector sensor node that c
 
 The design intent is to provide a seamless Ethernet-connected node for roboticists using ROS 2, and it can be thought of as the physical embodiment of a ROS 2 node.
 
+## Radio Equipment Directive compliance information
+
+The MR-MCXN-T1-F9P incorporates a GNSS receiver and is therefore considered radio equipment within the scope of the EU Radio Equipment Directive (RED) 2014/53/EU. The GNSS functionality is receive-only and does not transmit radio-frequency signals.
+
+Table 1. MR-MCXN-T1-F9P specifications
+
+| Parameter | Information |
+|---|---|
+| Radio function | GNSS reception |
+| Operating mode | Receive only |
+| Maximum transmitted power | N/A, receiver only |
+
+The MR-MCXN-T1 Hub, MR-MCXN-T1-IO, and MR-MCXN-T1-OFL do not incorporate a radio transmitter or receiver and are not radio equipment within the scope of the Radio Equipment Directive 2014/53/EU.
+
+EUROPEAN DECLARATION OF CONFORMITY
+
+(Simplified DoC per Article 10.9 of the Radio Equipment Directive 2014/53/EU). This apparatus, namely the MR-MCXN-T1-F9P, conforms to the Radio Equipment Directive 2014/53/EU. The full EU Declaration of Conformity for this apparatus is available at [European Union Declaration of Conformity for MR-MCXN-T1-F9P](https://www.nxp.com/design/design-center/development-boards-and-designs/MR-MCXN-T1).
+
 ## NXP Robotics SDK and upstream open-source software
 
 NXP embraces an open-source development model and actively participates in the communities behind the software used by this product. The NXP Robotics SDK provides a curated and validated set of software components, tools, and documentation that have been tested together on this hardware platform.

@@ -40,6 +40,15 @@ The reference design integrates the following main NXP components and interfaces
 NXP also provides the complete hardware Bill of Materials and design files, enabling customers to
 evaluate, reproduce, and customize the reference platform for their own products.
 
+## Cable issues in initial kits
+
+> Warning: A small number of initial MR-NavQ95 kits contain an XT30 power
+> cable with insufficient insulation at the solder joint and an incorrectly
+> assembled optional PM02DHV adapter cable. Inspect these cables before use
+> and follow the corrective actions described in the
+> [Cable issues in initial MR-NavQ95 kits](product-notices/cable-issues/index.md)
+> product notice.
+
 For overview information, documentation, software, tools, and ordering details, see the
 [MR-NavQ95 product page](https://www.nxp.com/design/design-center/development-boards-and-designs/MR-NAVQ95)
 on the NXP web site.

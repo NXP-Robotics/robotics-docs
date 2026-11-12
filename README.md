@@ -45,6 +45,8 @@ The i.MX 95 mobile-robotics vehicle computer.
 - Middleware
   - [ROS 2 Setup](platforms/mr-navq95/middleware/ros2/ros2-setup.md)
   - [ROS 2 Multinode Communication](platforms/mr-navq95/middleware/ros2/ros2-multinode.md)
+- Product Notices
+  - [Cable issues in initial kits](platforms/mr-navq95/product-notices/cable-issues/index.md)
 
 ### MR-VMU-Tropic
 

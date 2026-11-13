@@ -1,0 +1,18 @@
+User Manual
+===========
+
+Bring up the MR-NAVQ95-KIT: review the board hardware, get or build the
+Cortex-A Linux image and the Cortex-M RTOS firmware, flash them, and manage
+device-tree overlays.
+
+.. toctree::
+   :maxdepth: 1
+
+   introduction
+   Finding platform resources <finding-resources>
+   Getting ready <getting-ready>
+   Getting to know the hardware <hardware>
+   Installing and configuring software tools <installing-software-tools>
+   Configuring the hardware <configuring-the-hardware>
+   abbreviations
+   references

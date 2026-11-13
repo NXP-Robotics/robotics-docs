@@ -1,0 +1,11 @@
+Product Notices
+===============
+
+Product notices for the MR-NavQ95: kit-shipping advisories, errata, and other
+notices that apply to specific units rather than to the reference design as
+a whole.
+
+.. toctree::
+   :maxdepth: 1
+
+   Cable issues in initial kits <cable-issues/index>

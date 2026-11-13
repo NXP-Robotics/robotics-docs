@@ -1,0 +1,13 @@
+MR-ESC-AM32
+===========
+
+The MR-ESC-AM32 is the AM32-based Electronic Speed Controller (ESC)
+motor-control platform of the NXP Mobile Robotics family (MCX A / AM32).
+
+.. toctree::
+   :maxdepth: 2
+
+   Overview <overview>
+   getting-started/index
+   User Manual <user-manual/index>
+   application-notes/index

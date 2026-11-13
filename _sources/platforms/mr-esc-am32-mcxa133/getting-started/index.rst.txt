@@ -1,0 +1,9 @@
+Getting Started
+===============
+
+Deploy and run on the MR-ESC-AM32 ESC.
+
+.. toctree::
+   :maxdepth: 1
+
+   Deploy and Run Quick Start <mr-esc-am32-mcxa133-quick-start>

@@ -1,0 +1,9 @@
+Getting Started
+===============
+
+Deploy and run on the MR-MCXN-T1 sensor / shield node.
+
+.. toctree::
+   :maxdepth: 1
+
+   Deploy and Run Quick Start <mr-mcxn-t1-quick-start>
